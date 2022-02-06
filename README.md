@@ -1,2 +1,2 @@
-# NapierGrouF
+# NapierGroupF
 GitHub Repository Coursework
