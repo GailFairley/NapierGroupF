@@ -3,7 +3,7 @@ on: push
 
 jobs:
   build:
-    name: Hello world action
+    name: Course work Action
     runs-on: ubuntu-20.04
     steps:
       - name: Checkout
@@ -13,21 +13,17 @@ jobs:
         with:
           java-version: '17'
           distribution: 'adopt'
-      - name: Compile with Maven
-        run: mvn compile
-      - name: Build Docker Image
-        run: docker build -t semimage .
-      - name: Run image
-        run: docker run --name semcontainer -d semimage
-      - name: view logs
-        run: docker logs semcontainer
-
-      # Runs a single command using the runners shell
-      - name: Run a one-line script
-        run: echo Hello, world!
-
-      # Runs a set of commands using the runners shell
-      - name: Run a multi-line script
+      - name: Setup network
         run: |
-          echo Add other actions to build,
-          echo test, and deploy your project.
+          docker network create --driver bridge course-work
+          docker pull mongo
+          docker run -d --name mongo-dbserver --network course-work mongo
+      - name: Build with Maven
+        run: mvn package
+      - name: Build Docker Image
+        run: docker build -t course_work .
+      - name: Run image
+        run: docker run --network course-work --name cwcontainer course_work
+      - name: view logs
+        run: docker logs cwcontainer
+
