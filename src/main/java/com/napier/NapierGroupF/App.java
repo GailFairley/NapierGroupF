@@ -21,7 +21,7 @@ public class App
                 .append("members", "Gail, Katrina, Josh, Hamza")
                 .append("class", "Software Engineering Methods")
                 .append("year", "2022")
-                .append("result", new Document("CW", 100).append("EX", 100));
+                .append("result", new Document("CW", 100).append("EX", 100))
         //Add document to Collection
         collection.insertOne(doc);
 
