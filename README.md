@@ -1,5 +1,5 @@
 ## NapierGroupF
-
+Kate is awesome
 GitHub Repository for Coursework
 
 Master Build Status:
