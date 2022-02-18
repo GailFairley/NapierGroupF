@@ -17,6 +17,7 @@ public class App
         //Get a Collection from the DB
         MongoCollection<Document> collection = database.getCollection("test");
         //Create a Document to store
+        // testing if I edit this, does my push counts
         Document doc = new Document("group", "Group F")
                 .append("members", "Gail, Katrina, Josh, Hamza")
                 .append("class", "Software Engineering Methods")
