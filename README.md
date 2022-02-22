@@ -1,5 +1,5 @@
 ## NapierGroupF
-Kate is awesome and wants to test things
+
 GitHub Repository for Coursework
 
 Master Build Status:
