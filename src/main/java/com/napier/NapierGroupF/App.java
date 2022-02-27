@@ -1,7 +1,18 @@
+/**
+ * Project Name: coursework
+ * Package: com.napier.NapierGroupF
+ * User Created: Josh McQueen
+ * Date Created: 06/02/2022
+ * Date Last Updated: 27/02/2022
+ * File Description: The main java file which will connect to db and display all the relevant reports.
+ **/
+
 package com.napier.NapierGroupF;
 
+//Imports
 import java.sql.*;
 
+//Main class to connect to db and display reports
 public class App
 {
     public static void main(String[] args)
@@ -10,7 +21,8 @@ public class App
         App a = new App();
 
         // Connect to database
-        a.connect();
+        //a.connect("localhost:33060"); // Local test connection
+        a.connect("db:3306");
 
         // Disconnect from database
         a.disconnect();
@@ -22,9 +34,10 @@ public class App
     private Connection con = null;
 
     /**
-     * Connect to the MySQL database.
+     * Connecting to MySql world db
+     * @param loc
      */
-    public void connect()
+    public void connect(String loc)
     {
         try
         {
@@ -46,7 +59,7 @@ public class App
                 // Wait a bit for db to start
                 Thread.sleep(30000);
                 // Connect to database
-                con = DriverManager.getConnection("jdbc:mysql://db:3306/employees?useSSL=false", "root", "example");
+                con = DriverManager.getConnection("jdbc:mysql://" + loc + "/world?useSSL=false", "root", "world");
                 System.out.println("Successfully connected");
                 break;
             }
