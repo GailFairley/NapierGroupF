@@ -10,7 +10,9 @@
 package com.napier.NapierGroupF;
 
 //Imports
+
 import java.sql.*;
+import java.util.ArrayList;
 
 //Main class to connect to db and display reports
 public class App
@@ -20,9 +22,18 @@ public class App
         // Create new Application
         App a = new App();
 
-        // Connect to database
-        //a.connect("localhost:33060"); // Local test connection
-        a.connect("db:3306");
+        // Connect to world database
+
+        a.connect("localhost:33060"); // Local test connection
+        //a.connect("db:3306");
+
+        //Reports
+        //All countries organised by population Largest to Smallest
+        ArrayList<Country> countries = a.getCountriesOrganisedByPopulation();
+        if (countries != null)
+        {
+            a.displayCountries(countries);
+        }
 
         // Disconnect from database
         a.disconnect();
@@ -35,7 +46,7 @@ public class App
 
     /**
      * Connecting to MySql world db
-     * @param loc
+     * @param loc - Specifies the Location to connect to
      */
     public void connect(String loc)
     {
@@ -46,6 +57,7 @@ public class App
         }
         catch (ClassNotFoundException e)
         {
+            //Catch Drive error
             System.out.println("Could not load SQL driver");
             System.exit(-1);
         }
@@ -58,6 +70,7 @@ public class App
             {
                 // Wait a bit for db to start
                 Thread.sleep(30000);
+
                 // Connect to database
                 con = DriverManager.getConnection("jdbc:mysql://" + loc + "/world?useSSL=false", "root", "world");
                 System.out.println("Successfully connected");
@@ -65,11 +78,13 @@ public class App
             }
             catch (SQLException sqle)
             {
-                System.out.println("Failed to connect to database attempt " + Integer.toString(i));
+                //Catch sql Connection or Query error
+                System.out.println("Failed to connect to database attempt " + i);
                 System.out.println(sqle.getMessage());
             }
             catch (InterruptedException ie)
             {
+                //Catch interruption error
                 System.out.println("Thread interrupted? Should not happen.");
             }
         }
@@ -91,6 +106,70 @@ public class App
             {
                 System.out.println("Error closing connection to database");
             }
+        }
+    }
+
+    /**
+     * All countries organised by population Largest to Smallest
+     * @return ArrayList of Countries
+     */
+    public ArrayList<Country> getCountriesOrganisedByPopulation()
+    {
+        try
+        {
+            //Create an SQL Statement
+            Statement stmnt = con.createStatement();
+
+            //Add string for the SQL statement
+            String sql = "SELECT Code, c.Name AS Name, Continent, Region, c.Population AS Population, cp.Name AS Capital "
+                       + "From country c "
+                       + "JOIN city cp on c.Capital = cp.ID "
+                       + "Order By Population DESC";
+
+            //Execute the SQL statement
+            ResultSet rset = stmnt.executeQuery(sql);
+
+            //Extract each Country information
+            ArrayList<Country> countries = new ArrayList<>();
+            //While there is a Row
+            while (rset.next())
+            {
+                //Get Each Country information and add it to countries arraylist
+                Country country = new Country();
+                country.Code = rset.getString("Code");
+                country.Name = rset.getString("Name");
+                country.Continent = rset.getString("Continent");
+                country.Region = rset.getString("Region");
+                country.Population = rset.getInt("Population");
+                country.Capital = rset.getString("Capital");
+                countries.add(country);
+            }
+
+            return countries;
+        }
+        //Catch Exception
+        catch (SQLException e)
+        {
+            //Print Exception error message
+            System.out.println(e.getMessage());
+            System.out.println("Failed to get country details");
+            return null;
+        }
+    }
+
+    /**
+     * Displays the list of Countries
+     * @param countries The list of countries to Display
+     */
+    public void displayCountries(ArrayList<Country> countries)
+    {
+        //Display the Header
+        System.out.println(String.format("%-4s %-60s %-15s %-26s %-30s %-10s", "Code", "Name", "Continent", "Region", "Population", "Capital"));
+
+        //For each Country Display each country information
+        for (Country c : countries)
+        {
+            System.out.println(String.format("%-4s %-60s %-15s %-26s %-30s %-10s", c.Code, c.Name, c.Continent, c.Region, c.Population, c.Capital));
         }
     }
 }
