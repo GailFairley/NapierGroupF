@@ -23,7 +23,7 @@ public class App
         App a = new App();
 
         // Connect to world database
-        //a.connect("localhost:33060"); // Local test connection
+        //a.connect("localhost:33069"); // Local test connection
         a.connect("db:3306");
 
         //Reports
