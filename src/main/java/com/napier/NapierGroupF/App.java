@@ -23,8 +23,8 @@ public class App
         App a = new App();
 
         // Connect to world database
-        //a.connect("localhost:33069"); // Local test connection
-        a.connect("db:3306");
+        a.connect("localhost:33069"); // Local test connection
+        //a.connect("db:3306");
 
         //Reports
         //All countries organised by population Largest to Smallest
@@ -146,6 +146,7 @@ public class App
 
             return countries;
         }
+
         //Catch Exception
         catch (SQLException e)
         {
