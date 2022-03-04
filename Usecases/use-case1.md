@@ -16,11 +16,11 @@ As an employee of World health organisation, I require reports which organise al
 
 ### Preconditions
 
-*Database contains current relevant country population data *
+*Database contains the population for countries, continents and regions.
 
 ### Success End Condition
 
-*Reports are available for marketing to complete their work.*
+*Reports are available to to direct resources.
 
 ### Failed End Condition
 
