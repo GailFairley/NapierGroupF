@@ -16,7 +16,7 @@ As an employee of World health organisation, I require reports which organise al
 
 ### Preconditions
 
-*Database contains the population for countries, continents and regions.
+Database contains the population for countries, continents and regions.
 
 ### Success End Condition
 
@@ -31,17 +31,19 @@ Employee of World Health Organisation
 
 ### Trigger
 
-A request for the population breakdown in the world is requested by Marketing.
+Request for the population breakdown to direct resources.
 
 ## MAIN SUCCESS SCENARIO
 
-*put here the steps of the scenario from trigger to goal delivery, and any cleanup after*
+Population breakdown
 
-1. action description
+1. Requests for population of all countries from largest to the smallest 
+3. Requests for population of all continents from largest to the smallest.
+4. Brand Manager provides report for Marketing.
 
 ## EXTENSIONS
 
-*put here the extensions, one at a time, each referring to the step of the main scenario*
+Population breakdown of countries, continents and regions.
 
 1. **Condition**: action of sub use case
 
