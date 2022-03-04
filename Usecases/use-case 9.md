@@ -4,7 +4,7 @@
 
 ### Goal in Context
 
-As an employee of World health organisation, I require reports which organise all countries in the world, continent or region by largest population to smallest so I know where to direct resource first.
+*a longer statement of the goal, if needed*
 
 ### Scope
 
@@ -12,26 +12,27 @@ As an employee of World health organisation, I require reports which organise al
 
 ### Level
 
-*Primary Task*
+*one of: Summary, Primary task, subfunction*
 
 ### Preconditions
 
-*Database contains current relevant country population data *
+*what we expect is already the state of the world*
 
 ### Success End Condition
 
-*Reports are available for marketing to complete their work.*
+*the state of the world upon successful completion*
 
 ### Failed End Condition
 
-*No reports are produced.*
+*the state of the world if goal abandoned*
+
 ### Primary Actor
 
-Employee of World Health Organisation
+*a role name for the primary actor, or description*
 
 ### Trigger
 
-A request for the population breakdown in the world is requested by Marketing.
+*the action upon the system that starts the use case, may be a time event*
 
 ## MAIN SUCCESS SCENARIO
 
