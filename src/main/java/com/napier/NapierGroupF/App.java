@@ -23,12 +23,12 @@ public class App
         App a = new App();
 
         // Connect to world database
-        a.connect("localhost:33069"); // Local test connection
-        //a.connect("db:3306");
+        //a.connect("localhost:33069"); // Local test connection
+        a.connect("db:3306");
 
         //Reports
         //All countries organised by population Largest to Smallest
-        ArrayList<Country> countries = a.getCountriesOrganisedByPopulation();
+        ArrayList<Country> countries = a.getCountriesOrganisedByPopulation(Country.class);
         if (countries != null)
         {
             a.displayCountries(countries);
@@ -112,7 +112,7 @@ public class App
      * All countries organised by population Largest to Smallest
      * @return ArrayList of Countries
      */
-    public ArrayList<Country> getCountriesOrganisedByPopulation()
+    public <T> ArrayList<T> getCountriesOrganisedByPopulation(Class<T> t)
     {
         try
         {
@@ -128,23 +128,46 @@ public class App
             //Execute the SQL statement
             ResultSet rset = stmnt.executeQuery(sql);
 
-            //Extract each Country information
-            ArrayList<Country> countries = new ArrayList<>();
-            //While there is a Row
-            while (rset.next())
+            if (t.isInstance(new Country()))
             {
-                //Get Each Country information and add it to countries arraylist
-                Country country = new Country();
-                country.Code = rset.getString("Code");
-                country.Name = rset.getString("Name");
-                country.Continent = rset.getString("Continent");
-                country.Region = rset.getString("Region");
-                country.Population = rset.getInt("Population");
-                country.Capital = rset.getString("Capital");
-                countries.add(country);
+                //Extract each Country information
+                ArrayList<T> countries = new ArrayList<>();
+                //While there is a Row
+                while (rset.next())
+                {
+                    //Get Each Country information and add it to countries arraylist
+                    Country country = new Country();
+                    country.Code = rset.getString("Code");
+                    country.Name = rset.getString("Name");
+                    country.Continent = rset.getString("Continent");
+                    country.Region = rset.getString("Region");
+                    country.Population = rset.getInt("Population");
+                    country.Capital = rset.getString("Capital");
+                    countries.add(t.cast(country));
+                }
+
+                return countries;
+            }
+            else if (t.isInstance(new City()))
+            {
+                //Extract each City information
+                ArrayList<T> cities = new ArrayList<>();
+                //While there is a Row
+                while (rset.next())
+                {
+                    //Get Each City information and add it to cities arraylist
+                    City city = new City();
+                    city.Country.Name = rset.getString("Country");
+                    city.Name = rset.getString("Name");
+                    city.District = rset.getString("District");
+                    city.Population = rset.getInt("Population");
+                    cities.add(t.cast(city));
+                }
+
+                return cities;
             }
 
-            return countries;
+            return null;
         }
 
         //Catch Exception
