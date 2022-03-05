@@ -3,14 +3,13 @@
  * Package: com.napier.NapierGroupF
  * User Created: Josh McQueen
  * Date Created: 06/02/2022
- * Date Last Updated: 27/02/2022
+ * Date Last Updated: 05/03/2022
  * File Description: The main java file which will connect to db and display all the relevant reports.
  **/
 
 package com.napier.NapierGroupF;
 
 //Imports
-
 import java.sql.*;
 import java.util.ArrayList;
 
@@ -28,11 +27,7 @@ public class App
 
         //Reports
         //All countries organised by population Largest to Smallest
-        ArrayList<Country> countries = a.getCountriesOrganisedByPopulation(Country.class);
-        if (countries != null)
-        {
-            a.displayCountries(countries);
-        }
+        a.getCountriesOrganisedByPopulationAndDisplay();
 
         // Disconnect from database
         a.disconnect();
@@ -109,21 +104,16 @@ public class App
     }
 
     /**
-     * All countries organised by population Largest to Smallest
-     * @return ArrayList of Countries
+     * Get a report by passing a Class type and Sql
+     * @param Report of the Class type required and Sql
+     * @return ArrayList of Passed Class
      */
-    public <T> ArrayList<T> getCountriesOrganisedByPopulation(Class<T> t)
+    public <T> ArrayList<T> getReport(Class<T> t, String sql)
     {
         try
         {
             //Create an SQL Statement
             Statement stmnt = con.createStatement();
-
-            //Add string for the SQL statement
-            String sql = "SELECT Code, c.Name AS Name, Continent, Region, c.Population AS Population, cp.Name AS Capital "
-                       + "From country c "
-                       + "JOIN city cp on c.Capital = cp.ID "
-                       + "Order By Population DESC";
 
             //Execute the SQL statement
             ResultSet rset = stmnt.executeQuery(sql);
@@ -177,6 +167,28 @@ public class App
             System.out.println(e.getMessage());
             System.out.println("Failed to get country details");
             return null;
+        }
+    }
+
+    /**
+     *Get report for All countries organised by population Largest to Smallest and Display these in terminal
+     */
+    public void getCountriesOrganisedByPopulationAndDisplay()
+    {
+        //Add string for the SQL statement
+        String sql = "SELECT Code, c.Name AS Name, Continent, Region, c.Population AS Population, cp.Name AS Capital "
+                   + "From country c "
+                   + "JOIN city cp on c.Capital = cp.ID "
+                   + "Order By Population DESC";
+
+        //Get All countries organised by population Largest to Smallest
+        ArrayList<Country> countries = getReport(Country.class, sql);
+
+        //Check if retrieved any Countries
+        if (countries != null)
+        {
+            //Display the retrieved Countries
+            displayCountries(countries);
         }
     }
 
