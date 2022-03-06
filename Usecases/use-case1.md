@@ -8,7 +8,7 @@ As an employee of World Health Organisation, I require reports which organise al
 
 ### Scope
 
-*what system is considered black-box under design*
+*
 
 ### Level
 
