@@ -1,10 +1,10 @@
-# USE CASE: <number> <the name should be the goal as a short active verb phrase>
+# USE CASE: 2. <the name should be the goal as a short active verb phrase>
 
 ## CHARACTERISTIC INFORMATION
 
 ### Goal in Context
 
-*a longer statement of the goal, if needed*
+As an employee of World health organisation, I require the top X most populated countries in the world, continent and region where I am able to enter the X, so I am able to know the first countries I will need to contact regarding any health risks.
 
 ### Scope
 
@@ -12,11 +12,11 @@
 
 ### Level
 
-*one of: Summary, Primary task, subfunction*
+Primary task
 
 ### Preconditions
 
-*what we expect is already the state of the world*
+*Database contains the population for countries, continents and regions.*
 
 ### Success End Condition
 
@@ -24,7 +24,7 @@
 
 ### Failed End Condition
 
-*the state of the world if goal abandoned*
+No reports are produced.
 
 ### Primary Actor
 

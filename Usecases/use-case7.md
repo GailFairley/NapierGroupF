@@ -4,7 +4,7 @@
 
 ### Goal in Context
 
-*a longer statement of the goal, if needed*
+7. As an employee of World health organisation, I require the breakdown of people living in urban or non-urbanised areas in each continent, region or country,so I am able to swiftly predict the spread of disease.
 
 ### Scope
 
@@ -12,11 +12,11 @@
 
 ### Level
 
-*one of: Summary, Primary task, subfunction*
+Primary task
 
 ### Preconditions
 
-*what we expect is already the state of the world*
+*Database contains the population for countries, continents and regions.*
 
 ### Success End Condition
 

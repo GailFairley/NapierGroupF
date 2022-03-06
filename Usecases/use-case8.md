@@ -4,7 +4,7 @@
 
 ### Goal in Context
 
-*a longer statement of the goal, if needed*
+8. As an employee of World health organisation, I require the population of the world, continents, regions, countries, districts and cities report, so I am able to plan needed resource accordingly.
 
 ### Scope
 
@@ -12,11 +12,11 @@
 
 ### Level
 
-*one of: Summary, Primary task, subfunction*
+Primary task
 
 ### Preconditions
 
-*what we expect is already the state of the world*
+*Database contains the population for countries, continents and regions.*
 
 ### Success End Condition
 

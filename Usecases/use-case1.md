@@ -20,11 +20,11 @@ Database contains the population for countries, continents and regions.
 
 ### Success End Condition
 
-*Reports are available to to direct resources.
+Reports are made available to direct resources.
 
 ### Failed End Condition
 
-*No reports are produced.*
+No reports are produced.
 ### Primary Actor
 
 Employee of World Health Organisation

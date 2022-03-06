@@ -4,7 +4,7 @@
 
 ### Goal in Context
 
-*a longer statement of the goal, if needed*
+As an employee of World health organisation, I require the top X most populated cities in the world, continent, region, country or district where I am able to enter the X, so I have easy access to the first city representatives I will need to contact regarding any health risks.
 
 ### Scope
 
@@ -12,11 +12,11 @@
 
 ### Level
 
-*one of: Summary, Primary task, subfunction*
+Primary task
 
 ### Preconditions
 
-*what we expect is already the state of the world*
+*Database contains the population for countries, continents and regions.*
 
 ### Success End Condition
 

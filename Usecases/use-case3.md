@@ -1,22 +1,21 @@
-# USE CASE: <number> <the name should be the goal as a short active verb phrase>
+# USE CASE: 1. <the name should be the goal as a short active verb phrase>
 
 ## CHARACTERISTIC INFORMATION
 
 ### Goal in Context
 
-*a longer statement of the goal, if needed*
-
+As an employee of World health organisation, I require reports which organise all cities in the world, continent, region, country or district by largest population to smallest so I know which cities are at risk first.
 ### Scope
 
 *what system is considered black-box under design*
 
 ### Level
 
-*one of: Summary, Primary task, subfunction*
+Primary task
 
 ### Preconditions
 
-*what we expect is already the state of the world*
+*Database contains the population for countries, continents and regions.*
 
 ### Success End Condition
 

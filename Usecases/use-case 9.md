@@ -4,7 +4,7 @@
 
 ### Goal in Context
 
-*a longer statement of the goal, if needed*
+9. As an employee of World health organisation, it would be nice to see how big of a percentage of the world speak Chinese, English, Hindi, Spanish or Arabic from most spoken to least, so I know how many employees we need to hire who speak those languages.
 
 ### Scope
 
@@ -12,11 +12,11 @@
 
 ### Level
 
-*one of: Summary, Primary task, subfunction*
+Subfunction
 
 ### Preconditions
 
-*what we expect is already the state of the world*
+*Database contains the population for countries, continents and regions.*
 
 ### Success End Condition
 
