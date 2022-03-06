@@ -4,7 +4,7 @@
 
 ### Goal in Context
 
-As an employee of World health organisation, I require reports which organise all countries in the world, continent or region by largest population to smallest so I know where to direct resource first.
+As an employee of World Health Organisation, I require reports which organise all countries in the world, continent or region by largest population to smallest so I know where to direct resource first.
 
 ### Scope
 
