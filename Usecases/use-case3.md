@@ -1,4 +1,4 @@
-# USE CASE: 1. <the name should be the goal as a short active verb phrase>
+# USE CASE: 3. Reports which organise all cities in the world, continent, region, country or district by population.
 
 ## CHARACTERISTIC INFORMATION
 
@@ -7,7 +7,7 @@
 As an employee of World health organisation, I require reports which organise all cities in the world, continent, region, country or district by largest population to smallest so I know which cities are at risk first.
 ### Scope
 
-*what system is considered black-box under design*
+Company.
 
 ### Level
 
@@ -15,19 +15,19 @@ Primary task
 
 ### Preconditions
 
-*Database contains the population for countries, continents and regions.*
+Database contains the population and location of cities.
 
 ### Success End Condition
 
-*the state of the world upon successful completion*
+Three different reports segmented by area are made available to the employees.
 
 ### Failed End Condition
 
-*the state of the world if goal abandoned*
+No reports are produced.
 
 ### Primary Actor
 
-*a role name for the primary actor, or description*
+Employee of World Health Organisation
 
 ### Trigger
 
@@ -53,6 +53,4 @@ Primary task
 
 ## SCHEDULE
 
-**DUE DATE**: *date or release of deployment*
-
-*any other schedule/staffing information you need*
+12/04/2022: All requested reports provided 

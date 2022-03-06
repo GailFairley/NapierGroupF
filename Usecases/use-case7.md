@@ -8,7 +8,7 @@
 
 ### Scope
 
-*what system is considered black-box under design*
+Company.
 
 ### Level
 
@@ -16,19 +16,19 @@ Primary task
 
 ### Preconditions
 
-*Database contains the population for countries, continents and regions.*
+Database contains the population and location of countries.
 
 ### Success End Condition
 
-*the state of the world upon successful completion*
+Three different reports segmented by area are made available to the employees.
 
 ### Failed End Condition
 
-*the state of the world if goal abandoned*
+No reports are produced.
 
 ### Primary Actor
 
-*a role name for the primary actor, or description*
+Employee of World Health Organisation
 
 ### Trigger
 
@@ -54,6 +54,4 @@ Primary task
 
 ## SCHEDULE
 
-**DUE DATE**: *date or release of deployment*
-
-*any other schedule/staffing information you need*
+12/04/2022: All requested reports provided 

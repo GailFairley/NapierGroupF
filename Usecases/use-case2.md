@@ -1,4 +1,4 @@
-# USE CASE: 2. <the name should be the goal as a short active verb phrase>
+# USE CASE: 2. Three reports for top X most populated countries in world, continent or region where X is manually entered. 
 
 ## CHARACTERISTIC INFORMATION
 
@@ -8,7 +8,7 @@ As an employee of World health organisation, I require the top X most populated 
 
 ### Scope
 
-*what system is considered black-box under design*
+Company.
 
 ### Level
 
@@ -16,11 +16,11 @@ Primary task
 
 ### Preconditions
 
-*Database contains the population for countries, continents and regions.*
+Database contains the population and location of countries.
 
 ### Success End Condition
 
-*the state of the world upon successful completion*
+Three different reports segmented by area are made available to the employees where they can enter the top X they want to review.
 
 ### Failed End Condition
 
@@ -28,11 +28,11 @@ No reports are produced.
 
 ### Primary Actor
 
-*a role name for the primary actor, or description*
+Employee of World Health Organisation
 
 ### Trigger
 
-*the action upon the system that starts the use case, may be a time event*
+Request for the top X most populated cities in an area.
 
 ## MAIN SUCCESS SCENARIO
 
@@ -54,6 +54,4 @@ No reports are produced.
 
 ## SCHEDULE
 
-**DUE DATE**: *date or release of deployment*
-
-*any other schedule/staffing information you need*
+12/04/2022: All requested reports provided 

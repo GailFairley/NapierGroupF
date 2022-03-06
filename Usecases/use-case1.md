@@ -8,7 +8,7 @@ As an employee of World Health Organisation, I require reports which organise al
 
 ### Scope
 
-IntelJ and the world data base.
+Company.
 
 ### Level
 
@@ -20,7 +20,7 @@ Database contains the population for countries, continents and regions.
 
 ### Success End Condition
 
-3 different reports are made available to the employees.
+Three different reports segmented by area are made available to the employees.
 
 ### Failed End Condition
 
@@ -32,7 +32,7 @@ Employee of World Health Organisation
 
 ### Trigger
 
-Request for the population breakdown per area to direct resources.
+Request for the population breakdown per area.
 
 ## MAIN SUCCESS SCENARIO
 
