@@ -20,7 +20,7 @@ Database contains the population for countries, continents and regions.
 
 ### Success End Condition
 
-Reports are made available to the employees.
+3 different reports are made available to the employees.
 
 ### Failed End Condition
 
@@ -32,14 +32,14 @@ Employee of World Health Organisation
 
 ### Trigger
 
-Request for the population breakdown to direct resources.
+Request for the population breakdown per area to direct resources.
 
 ## MAIN SUCCESS SCENARIO
 
 1. Requests for population of all countries from largest to the smallest 
 2. Requests for population of all continents from largest to the smallest.
 3. Requests for population of all regions from largest to the smallest.
-4. Employee has easy access to the reports.
+4. Employee has easy access to the 3 different reports.
 
 ## EXTENSIONS
 
