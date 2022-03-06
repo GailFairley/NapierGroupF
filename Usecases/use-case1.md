@@ -1,4 +1,4 @@
-# USE CASE: <number> <the name should be the goal as a short active verb phrase>
+# USE CASE: 1. Reports which organise all countries in the world, continent or region by largest population to smallest.
 
 ## CHARACTERISTIC INFORMATION
 
@@ -8,7 +8,7 @@ As an employee of World Health Organisation, I require reports which organise al
 
 ### Scope
 
-*
+IntelJ and the world data base.
 
 ### Level
 
@@ -20,11 +20,12 @@ Database contains the population for countries, continents and regions.
 
 ### Success End Condition
 
-Reports are made available to direct resources.
+Reports are made available to the employees.
 
 ### Failed End Condition
 
 No reports are produced.
+
 ### Primary Actor
 
 Employee of World Health Organisation
@@ -35,11 +36,10 @@ Request for the population breakdown to direct resources.
 
 ## MAIN SUCCESS SCENARIO
 
-Population breakdown
-
 1. Requests for population of all countries from largest to the smallest 
-3. Requests for population of all continents from largest to the smallest.
-4. Brand Manager provides report for Marketing.
+2. Requests for population of all continents from largest to the smallest.
+3. Requests for population of all regions from largest to the smallest.
+4. Employee has easy access to the reports.
 
 ## EXTENSIONS
 
@@ -55,6 +55,4 @@ Population breakdown of countries, continents and regions.
 
 ## SCHEDULE
 
-**DUE DATE**: *date or release of deployment*
-
-*any other schedule/staffing information you need*
+12/04/2022: All requested reports provided 
