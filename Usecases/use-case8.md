@@ -22,6 +22,14 @@ Database contains the population and location of countries.
 
 Three different reports segmented by area are made available to the employees.
 
+Information that should be accessible for the organisation:
+The population of the world.
+The population of a continent.
+The population of a region.
+The population of a country.
+The population of a district.
+The population of a city.
+
 ### Failed End Condition
 
 No reports are produced.
@@ -32,7 +40,7 @@ Employee of World Health Organisation
 
 ### Trigger
 
-*the action upon the system that starts the use case, may be a time event*
+Request to see the cities by population in different areas.
 
 ## MAIN SUCCESS SCENARIO
 

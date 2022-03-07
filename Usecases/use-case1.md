@@ -21,6 +21,10 @@ Database contains the population for countries, continents and regions.
 ### Success End Condition
 
 Three different reports segmented by area are made available to the employees.
+Reports:
+- All the countries in the world organised by largest population to smallest.
+- All the countries in a continent organised by largest population to smallest.
+- All the countries in a region organised by largest population to smallest.
 
 ### Failed End Condition
 

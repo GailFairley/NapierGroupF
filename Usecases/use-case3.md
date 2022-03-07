@@ -19,7 +19,14 @@ Database contains the population and location of cities.
 
 ### Success End Condition
 
-Three different reports segmented by area are made available to the employees.
+Five different reports segmented by area showing the cities from most populated to least are made available to the employees.
+
+Reports:
+ - All the cities in the world organised by largest population to smallest.
+ - All the cities in a continent organised by largest population to smallest.
+ - All the cities in a region organised by largest population to smallest.
+ - All the cities in a country organised by largest population to smallest.
+ - All the cities in a district organised by largest population to smallest.
 
 ### Failed End Condition
 
@@ -31,7 +38,7 @@ Employee of World Health Organisation
 
 ### Trigger
 
-*the action upon the system that starts the use case, may be a time event*
+Request to see the cities by population in different areas.
 
 ## MAIN SUCCESS SCENARIO
 

@@ -22,6 +22,13 @@ Database contains the population and location of countries.
 
 Three different reports segmented by area are made available to the employees.
 
+Provide number of people who speak the following languages from greatest number to smallest, including the percentage of the world population:
+- Chinese.
+- English.
+- Hindi.
+- Spanish.
+- Arabic.
+
 ### Failed End Condition
 
 No reports are produced.
@@ -32,7 +39,7 @@ Employee of World Health Organisation
 
 ### Trigger
 
-*the action upon the system that starts the use case, may be a time event*
+Request to see the cities by population in different areas.
 
 ## MAIN SUCCESS SCENARIO
 

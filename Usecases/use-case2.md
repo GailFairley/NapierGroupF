@@ -21,6 +21,10 @@ Database contains the population and location of countries.
 ### Success End Condition
 
 Three different reports segmented by area are made available to the employees where they can enter the top X they want to review.
+Reports:
+ - The top N populated countries in the world where N is provided by the user.
+ - The top N populated countries in a continent where N is provided by the user.
+ - The top N populated countries in a region where N is provided by the user.
 
 ### Failed End Condition
 

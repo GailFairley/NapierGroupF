@@ -22,6 +22,11 @@ Database contains the population and location of countries.
 
 Three different reports segmented by area are made available to the employees.
 
+Reports:
+- All the capital cities in the world organised by largest population to smallest.
+- All the capital cities in a continent organised by largest population to smallest.
+- All the capital cities in a region organised by largest to smallest.
+
 ### Failed End Condition
 
 No reports are produced.
@@ -32,7 +37,7 @@ Employee of World Health Organisation
 
 ### Trigger
 
-*the action upon the system that starts the use case, may be a time event*
+Request to see the cities by population in different areas.
 
 ## MAIN SUCCESS SCENARIO
 
