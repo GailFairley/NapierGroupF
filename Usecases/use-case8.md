@@ -1,10 +1,10 @@
-# USE CASE: <number> <the name should be the goal as a short active verb phrase>
+# USE CASE: 8. Access to the population of the world, continents, regions, countries, districts and cities.
 
 ## CHARACTERISTIC INFORMATION
 
 ### Goal in Context
 
-8. As an employee of World health organisation, I require the population of the world, continents, regions, countries, districts and cities report, so I am able to plan needed resource accordingly.
+8. As an employee of World health organisation, I require the population of the world, continents, regions, countries, districts and cities reports, so I am able to plan needed resource accordingly.
 
 ### Scope
 
@@ -16,19 +16,17 @@ Primary task
 
 ### Preconditions
 
-Database contains the population and location of countries.
+Database contains the population of different areas.
 
 ### Success End Condition
 
-Three different reports segmented by area are made available to the employees.
-
 Information that should be accessible for the organisation:
-The population of the world.
-The population of a continent.
-The population of a region.
-The population of a country.
-The population of a district.
-The population of a city.
+- The population of the world.
+- The population of a continent.
+- The population of a region.
+- The population of a country.
+- The population of a district.
+- The population of a city.
 
 ### Failed End Condition
 
@@ -40,7 +38,7 @@ Employee of World Health Organisation
 
 ### Trigger
 
-Request to see the cities by population in different areas.
+Request to see the population in different areas.
 
 ## MAIN SUCCESS SCENARIO
 

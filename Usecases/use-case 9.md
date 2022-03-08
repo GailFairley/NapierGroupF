@@ -1,4 +1,4 @@
-# USE CASE: <number> <the name should be the goal as a short active verb phrase>
+# USE CASE: 9. Most spoken languages.
 
 ## CHARACTERISTIC INFORMATION
 
@@ -16,7 +16,7 @@ Subfunction
 
 ### Preconditions
 
-Database contains the population and location of countries.
+Database contains the population breakdown by languages spoken.
 
 ### Success End Condition
 
@@ -39,7 +39,7 @@ Employee of World Health Organisation
 
 ### Trigger
 
-Request to see the cities by population in different areas.
+Request to see the most commonly spoken languages.
 
 ## MAIN SUCCESS SCENARIO
 

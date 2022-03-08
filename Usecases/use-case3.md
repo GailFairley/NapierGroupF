@@ -1,4 +1,4 @@
-# USE CASE: 3. Reports which organise all cities in the world, continent, region, country or district by population.
+# USE CASE: 3. Five reports which organise all cities in the world, continent, region, country or district by population.
 
 ## CHARACTERISTIC INFORMATION
 

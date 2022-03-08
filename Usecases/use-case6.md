@@ -1,4 +1,4 @@
-# USE CASE: <number> <the name should be the goal as a short active verb phrase>
+# USE CASE: 6. Three reports for top X most populated capital cities in world, continent or region where X is manually entered.
 
 ## CHARACTERISTIC INFORMATION
 
@@ -16,7 +16,7 @@ Primary task
 
 ### Preconditions
 
-Database contains the population and location of countries.
+Database contains the population and location of capital cities.
 
 ### Success End Condition
 
@@ -37,7 +37,7 @@ Employee of World Health Organisation
 
 ### Trigger
 
-Request to see the cities by population in different areas.
+Request to see the top X capital cities by population in different areas.
 
 ## MAIN SUCCESS SCENARIO
 

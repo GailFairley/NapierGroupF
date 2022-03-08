@@ -1,4 +1,4 @@
-# USE CASE: 1. Reports which organise all countries in the world, continent or region by largest population to smallest.
+# USE CASE: 1. Three reports which organise all countries in the world, continent or region by largest population to smallest.
 
 ## CHARACTERISTIC INFORMATION
 

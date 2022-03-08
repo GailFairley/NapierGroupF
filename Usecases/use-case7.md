@@ -1,4 +1,4 @@
-# USE CASE: <number> <the name should be the goal as a short active verb phrase>
+# USE CASE: 7. Three reports that segment people who live in rural areas vs cities in each continent,region or country. 
 
 ## CHARACTERISTIC INFORMATION
 
@@ -16,7 +16,7 @@ Primary task
 
 ### Preconditions
 
-Database contains the population and location of countries.
+Database contains the population and their living location.
 
 ### Success End Condition
 
@@ -37,7 +37,7 @@ Employee of World Health Organisation
 
 ### Trigger
 
-Request to see the cities by population in different areas.
+Request to see the population divided by their living location in different areas.
 
 ## MAIN SUCCESS SCENARIO
 
