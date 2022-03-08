@@ -41,21 +41,19 @@ Request to see the capital cities by population in different areas.
 
 ## MAIN SUCCESS SCENARIO
 
-*put here the steps of the scenario from trigger to goal delivery, and any cleanup after*
-
-1. action description
+1. Requests for all capital cities in the world by largest population to smallest.
+2. Requests for all capital cities in the continent by largest population to smallest.
+3. Requests for all capital cities in the region by largest population to smallest.
+4. Employee has easy access to the 3 different reports.
 
 ## EXTENSIONS
 
-*put here the extensions, one at a time, each referring to the step of the main scenario*
-
-1. **Condition**: action of sub use case
+1. User misspells the area they want to see information for.
+2. User enters an area outside the scope of the report.
 
 ## SUB-VARIATIONS
 
-*put here the sub-variations that will cause eventual branching in the scenario
-
-1. list of sub-variations
+None.
 
 ## SCHEDULE
 

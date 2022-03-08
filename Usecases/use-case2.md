@@ -40,21 +40,20 @@ Request for the top X most populated cities in an area.
 
 ## MAIN SUCCESS SCENARIO
 
-*put here the steps of the scenario from trigger to goal delivery, and any cleanup after*
-
-1. action description
+1. Requests for population top X of all countries from largest to the smallest
+2. Requests for population top X of all continents from largest to the smallest.
+3. Requests for population top X of all regions from largest to the smallest.
+4. Employee has easy access to the 3 different reports where they can enter X.
 
 ## EXTENSIONS
 
-*put here the extensions, one at a time, each referring to the step of the main scenario*
-
-1. **Condition**: action of sub use case
+1. User enters 0 so the report returns 0 values.
+2. User enters more values than the table has available.
+3. User enters non numerical value.
 
 ## SUB-VARIATIONS
 
-*put here the sub-variations that will cause eventual branching in the scenario
-
-1. list of sub-variations
+None.
 
 ## SCHEDULE
 

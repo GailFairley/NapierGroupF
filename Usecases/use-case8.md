@@ -42,21 +42,17 @@ Request to see the population in different areas.
 
 ## MAIN SUCCESS SCENARIO
 
-*put here the steps of the scenario from trigger to goal delivery, and any cleanup after*
-
-1. action description
+1. User requests to see the population of a certain area.
+2. User is provided with the requested information. 
 
 ## EXTENSIONS
 
-*put here the extensions, one at a time, each referring to the step of the main scenario*
-
-1. **Condition**: action of sub use case
+1. User misspells the area they want to see information for.
+2. User enters an area outside the scope of the report.
 
 ## SUB-VARIATIONS
 
-*put here the sub-variations that will cause eventual branching in the scenario
-
-1. list of sub-variations
+None.
 
 ## SCHEDULE
 

@@ -41,21 +41,19 @@ Request to see the population divided by their living location in different area
 
 ## MAIN SUCCESS SCENARIO
 
-*put here the steps of the scenario from trigger to goal delivery, and any cleanup after*
-
-1. action description
+1. Requests for a report which displays the breakdown of the population who live in rural areas vs cities in a continent.
+2. Requests for a report which displays the breakdown of the population who live in rural areas vs cities in a region.
+3. Requests for a report which displays the breakdown of the population who live in rural areas vs cities in a country.
+4. Employee has easy access to the 3 different reports.
 
 ## EXTENSIONS
 
-*put here the extensions, one at a time, each referring to the step of the main scenario*
-
-1. **Condition**: action of sub use case
+1. User misspells the area they want to see information for.
+2. User enters an area outside the scope of the report.
 
 ## SUB-VARIATIONS
 
-*put here the sub-variations that will cause eventual branching in the scenario
-
-1. list of sub-variations
+None.
 
 ## SCHEDULE
 

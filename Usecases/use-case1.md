@@ -47,15 +47,12 @@ Request for the population breakdown per area.
 
 ## EXTENSIONS
 
-Population breakdown of countries, continents and regions.
-
-1. **Condition**: action of sub use case
+1. User misspells the area they want to see information for.
+2. User enters an area outside the scope of the report.
 
 ## SUB-VARIATIONS
 
-*put here the sub-variations that will cause eventual branching in the scenario
-
-1. list of sub-variations
+None.
 
 ## SCHEDULE
 

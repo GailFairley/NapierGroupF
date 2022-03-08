@@ -42,21 +42,21 @@ Request to see the cities by population in different areas.
 
 ## MAIN SUCCESS SCENARIO
 
-*put here the steps of the scenario from trigger to goal delivery, and any cleanup after*
-
-1. action description
+1. Requests for all cities in the world by population from largest to the smallest.
+2. Requests for all cities in the continent by population from largest to the smallest.
+3. Requests for all cities in the region by population from largest to the smallest.
+4. Requests for all cities in the country by population from largest to the smallest.
+5. Requests for all cities in the district by population from largest to the smallest.
+6. Employee has easy access to the 5 different reports.
 
 ## EXTENSIONS
 
-*put here the extensions, one at a time, each referring to the step of the main scenario*
-
-1. **Condition**: action of sub use case
+1. User misspells the area they want to see information for. 
+2. User enters an area outside the scope of the report.
 
 ## SUB-VARIATIONS
 
-*put here the sub-variations that will cause eventual branching in the scenario
-
-1. list of sub-variations
+None.
 
 ## SCHEDULE
 
