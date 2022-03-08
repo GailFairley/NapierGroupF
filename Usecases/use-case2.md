@@ -40,9 +40,9 @@ Request for the top X most populated cities in an area.
 
 ## MAIN SUCCESS SCENARIO
 
-1. Requests for population top X of all countries from largest to the smallest
-2. Requests for population top X of all continents from largest to the smallest.
-3. Requests for population top X of all regions from largest to the smallest.
+1. Requests top X countries by population from largest to the smallest.
+2. Requests top X continents by population from largest to the smallest.
+3. Requests top X regions by population from largest to the smallest.
 4. Employee has easy access to the 3 different reports where they can enter X.
 
 ## EXTENSIONS
