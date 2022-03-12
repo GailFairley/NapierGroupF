@@ -37,10 +37,10 @@ public class Country
     /**
      * The Total Population of the Country
      */
-    public int Population;
+    public Population Population;
 
     /**
      * The Capital City of the Country
      */
-    public String Capital;
+    public City Capital;
 }

@@ -32,5 +32,36 @@ public class City
     /**
      * The total population of the current City
      */
-    public int Population;
+    public Population Population;
+
+    /**
+     * Constructor with all variables
+     * @param n Name of City
+     * @param c Country the City belongs to
+     * @param d District of city
+     * @param p Population of the City
+     */
+    public City (String n, Country c, String d, Population p)
+    {
+        Name = n;
+        Country = c;
+        District = d;
+        Population = p;
+    }
+
+    /**
+     * Constructors with only the name
+     * @param n Name of the City
+     */
+    public City (String n)
+    {
+        Name = n;
+    }
+
+    /**
+     * Empty Constructor
+     */
+    public City ()
+    {
+    }
 }

@@ -105,7 +105,7 @@ public class App
 
     /**
      * Get a report by passing a Class type and Sql
-     * @param Report of the Class type required and Sql
+     * @param t, sql Generic t of the Class type required and Sql
      * @return ArrayList of Passed Class
      */
     public <T> ArrayList<T> getReport(Class<T> t, String sql)
@@ -131,8 +131,8 @@ public class App
                     country.Name = rset.getString("Name");
                     country.Continent = rset.getString("Continent");
                     country.Region = rset.getString("Region");
-                    country.Population = rset.getInt("Population");
-                    country.Capital = rset.getString("Capital");
+                    country.Population = new Population(rset.getInt("Population"));
+                    country.Capital = new City(rset.getString("Capital"));
                     countries.add(t.cast(country));
                 }
 
@@ -150,7 +150,7 @@ public class App
                     city.Country.Name = rset.getString("Country");
                     city.Name = rset.getString("Name");
                     city.District = rset.getString("District");
-                    city.Population = rset.getInt("Population");
+                    city.Population = new Population(rset.getInt("Population"));
                     cities.add(t.cast(city));
                 }
 
@@ -204,7 +204,7 @@ public class App
         //For each Country Display each country information
         for (Country c : countries)
         {
-            System.out.println(String.format("%-4s %-60s %-15s %-26s %-30s %-10s", c.Code, c.Name, c.Continent, c.Region, c.Population, c.Capital));
+            System.out.println(String.format("%-4s %-60s %-15s %-26s %-30s %-10s", c.Code, c.Name, c.Continent, c.Region, c.Population, c.Capital != null ? c.Capital.Name : ""));
         }
     }
 }
