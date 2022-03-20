@@ -28,7 +28,7 @@ public class App
 
         //Reports
         //All countries organised by population Largest to Smallest
-        ArrayList<Country> countries = a.getCountriesOrganisedByPopulation(Country.class);
+        ArrayList<Country> countries = a.getCountriesOrganisedByPopulation();
         if (countries != null)
         {
             a.displayCountries(countries);
@@ -112,18 +112,27 @@ public class App
      * All countries organised by population Largest to Smallest
      * @return ArrayList of Countries
      */
-    public <T> ArrayList<T> getCountriesOrganisedByPopulation(Class<T> t)
+    public ArrayList<Country> getCountriesOrganisedByPopulation()
+    {
+        //Add string for the SQL statement
+        String sql = "SELECT Code, c.Name AS Name, Continent, Region, c.Population AS Population, cp.Name AS Capital "
+                   + "From country c "
+                   + "JOIN city cp on c.Capital = cp.ID "
+                   + "Order By Population DESC";
+
+        return getreport ( Country.class, sql );
+    }
+
+    /**
+     * Get report of the Given Class
+     * @return ArrayList of the Class provided
+     */
+    public <T> ArrayList<T> getreport(Class<T> t, String sql)
     {
         try
         {
             //Create an SQL Statement
             Statement stmnt = con.createStatement();
-
-            //Add string for the SQL statement
-            String sql = "SELECT Code, c.Name AS Name, Continent, Region, c.Population AS Population, cp.Name AS Capital "
-                       + "From country c "
-                       + "JOIN city cp on c.Capital = cp.ID "
-                       + "Order By Population DESC";
 
             //Execute the SQL statement
             ResultSet rset = stmnt.executeQuery(sql);
