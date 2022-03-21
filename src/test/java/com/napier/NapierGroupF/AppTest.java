@@ -32,6 +32,8 @@ public class AppTest<T>
     static void init()
     {
         app = new App();
+        app.connect("localhost:33069", 30000);
+
     }
 
     //Display Countries Test
@@ -240,7 +242,6 @@ public class AppTest<T>
     @Test
     void getReportNullTypeTest()
     {
-        app.connect("localhost:33069", 3000);
         //get Report but type is null
         app.getReport(null, "SELECT * FROM country");
     }
@@ -251,7 +252,6 @@ public class AppTest<T>
     @Test
     void getReportNullSqlTest()
     {
-        app.connect("localhost:33069", 3000);
         //get Report but Sql is null
         app.getReport(Country.class, null);
     }
@@ -262,7 +262,6 @@ public class AppTest<T>
     @Test
     void getReportEmptySqlTest()
     {
-        app.connect("localhost:33069", 3000);
         //get Report but Sql is null
         app.getReport(Country.class, "");
     }
@@ -273,7 +272,6 @@ public class AppTest<T>
     @Test
     void getReportInvalidSqlTest()
     {
-        app.connect("localhost:33069", 3000);
         //get Report but Sql is null
         app.getReport(Country.class, "SELECT * frm country");
     }
