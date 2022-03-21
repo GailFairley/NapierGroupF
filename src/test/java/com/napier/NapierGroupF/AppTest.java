@@ -13,8 +13,6 @@ package com.napier.NapierGroupF;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInstance;
-
-import java.math.BigInteger;
 import java.util.ArrayList;
 
 /**

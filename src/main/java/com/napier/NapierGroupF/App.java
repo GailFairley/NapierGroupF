@@ -24,13 +24,21 @@ public class App
         // Connect to world database
         //if no args given run with local host
         if (args.length < 1)
+        {
             a.connect("localhost:33069", 30000);
-        else //else use args given connection and timer
+        }
+        else
+        {
+            //else use args given connection and timer
             a.connect(args[0], Integer.parseInt(args[1]));
+        }
 
         //Reports
         //All countries organised by population Largest to Smallest
-        a.getCountriesOrganisedByPopulationAndDisplay();
+        ArrayList<Country> countries = a.getCountriesOrganisedByPopulation();
+        //Display the retrieved Countries
+        a.displayCountries(countries);
+
 
         // Disconnect from database
         a.disconnect();
@@ -180,9 +188,10 @@ public class App
     }
 
     /**
-     *Get report for All countries organised by population Largest to Smallest and Display these in terminal
+     * Get report for All countries organised by population Largest to Smallest and Display these in terminal
+     * @return countries List of all Countries retrieved from the db
      */
-    public void getCountriesOrganisedByPopulationAndDisplay()
+    public ArrayList<Country> getCountriesOrganisedByPopulation()
     {
         //Add string for the SQL statement
         String sql = "SELECT Code, c.Name AS Name, Continent, Region, c.Population AS Population, cp.Name AS Capital "
@@ -191,14 +200,7 @@ public class App
                    + "Order By Population DESC";
 
         //Get All countries organised by population Largest to Smallest
-        ArrayList<Country> countries = getReport(Country.class, sql);
-
-        //Check if retrieved any Countries
-        if (countries != null)
-        {
-            //Display the retrieved Countries
-            displayCountries(countries);
-        }
+        return getReport(Country.class, sql);
     }
 
     /**
