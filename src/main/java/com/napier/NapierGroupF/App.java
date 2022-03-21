@@ -232,6 +232,28 @@ public class App
         //Display the retrieved Cities
         displayCities(getTopCitiesInDistrictOrganisedByPopulation);
 
+        //Use Case 5
+        //17
+        System.out.println("\nAll the Capital Cities in the World Organised by largest population to smallest.\n");
+        //All the Capital cities in the world organised by largest population to smallest.
+        ArrayList<City> getCapitalCitiesOrganisedByPopulation = getCapitalCitiesOrganisedByPopulation();
+        //Display the retrieved Cities
+        displayCities(getCapitalCitiesOrganisedByPopulation);
+
+        //18
+        System.out.println("\nAll the Capital Cities in a Continent 'Europe' organised by largest population to smallest.\n");
+        //All the Capital cities in a continent organised by largest population to smallest.
+        ArrayList<City> getCapitalCitiesInContinentOrganisedByPopulation = getCapitalCitiesInContinentOrganisedByPopulation("Europe");
+        //Display the retrieved Cities
+        displayCities(getCapitalCitiesInContinentOrganisedByPopulation);
+
+        //19
+        System.out.println("\nAll the Capital Cities in a Region 'Western Europe' organised by largest population to smallest.\n");
+        //All the Capital cities in a region organised by largest population to smallest.
+        ArrayList<City> getCapitalCitiesInARegionOrganisedByPopulation = getCapitalCitiesInARegionOrganisedByPopulation("Western Europe");
+        //Display the retrieved Cities
+        displayCities(getCapitalCitiesInARegionOrganisedByPopulation);
+
         //End
         System.out.println("\nThe End.");
     }
@@ -636,6 +658,58 @@ public class App
                    + "LIMIT " + n ;  // Limit the Results by N
 
         //The top N populated cities in a district where N is provided by the user.
+        return getReport(City.class, sql);
+    }
+
+    /**
+     * Get report for All the capital cities in the world organised by largest population to smallest.
+     * @return cities List of all Capital Cities retrieved from the db
+     */
+    public ArrayList<City> getCapitalCitiesOrganisedByPopulation()
+    {
+        //Add string for the SQL statement
+        String sql = "SELECT city.Name AS Name, country.name as Country, District, city.Population AS Population "
+                   + "From city "
+                   + "JOIN country on city.id = country.capital "
+                   + "Order By city.Population DESC ";
+
+        //All the capital cities in the world organised by largest population to smallest.
+        return getReport(City.class, sql);
+    }
+
+    /**
+     * Get report for All the capital cities in a continent organised by largest population to smallest.
+     * @param continent The continent to filter the Capital Cities by
+     * @return cities List of all Capital Cities retrieved from the db
+     */
+    public ArrayList<City> getCapitalCitiesInContinentOrganisedByPopulation(String continent)
+    {
+        //Add string for the SQL statement
+        String sql = "SELECT city.Name AS Name, country.name as Country, District, city.Population AS Population, country.Continent AS Continent "
+                   + "From city "
+                   + "JOIN country on city.id = country.capital "
+                   + "WHERE country.Continent = '" + continent + "' " // Given continent
+                   + "Order By city.Population DESC ";
+
+        //All the capital cities in a continent organised by largest population to smallest.
+        return getReport(City.class, sql);
+    }
+
+    /**
+     * Get report for All the capital cities in a region organised by largest to smallest.
+     * @param region The Country Region to filter the Capital Cities by
+     * @return cities List of all Capital Cities retrieved from the db
+     */
+    public ArrayList<City> getCapitalCitiesInARegionOrganisedByPopulation(String region)
+    {
+        //Add string for the SQL statement
+        String sql = "SELECT city.Name AS Name, country.name as Country, District, city.Population AS Population, country.Region AS Region "
+                + "From city "
+                + "JOIN country on city.id = country.capital "
+                + "WHERE country.Region = '" + region + "' " // Given region
+                + "Order By city.Population DESC ";
+
+        //All the capital cities in a region organised by largest to smallest.
         return getReport(City.class, sql);
     }
 

@@ -341,4 +341,52 @@ public class AppIntegrationTest
             assertEquals(district, c.District);
         }
     }
+
+    /**
+     * Test get all Capital Cities organised by population
+     */
+    @Test
+    void testGetCapitalCities()
+    {
+        //Get all Capital Cities
+        ArrayList<City> cities = app.getCapitalCitiesOrganisedByPopulation();
+        //Check if the returned list isn't null or empty
+        assertTrue( cities != null && cities.size() > 0);
+    }
+
+    /**
+     * Test get all Capital Cities organised by population given a Continent
+     */
+    @Test
+    void testGetCapitalCitiesInContinent()
+    {
+        //Get all Capital Cities in a Continent
+        String continent = "Europe";
+        ArrayList<City> cities = app.getCapitalCitiesInContinentOrganisedByPopulation(continent);
+        //Check if the returned list isn't null or empty
+        assertTrue( cities != null && cities.size() > 0);
+        //Check if all Capital cities' continent is Europe
+        for (City c : cities)
+        {
+            assertEquals(continent, c.Country.Continent);
+        }
+    }
+
+    /**
+     * Test get all Cities organised by population given a Region
+     */
+    @Test
+    void testGetCapitalCitiesInRegion()
+    {
+        //Get all Capital Cities in a Region
+        String region = "Eastern Europe";
+        ArrayList<City> cities = app.getCapitalCitiesInARegionOrganisedByPopulation(region);
+        //Check if the returned list isn't null or empty
+        assertTrue( cities != null && cities.size() > 0);
+        //Check if all Capital cities' Region is Eastern Europe
+        for (City c : cities)
+        {
+            assertEquals(region, c.Country.Region);
+        }
+    }
 }
