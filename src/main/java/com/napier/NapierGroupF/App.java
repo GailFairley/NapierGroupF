@@ -10,7 +10,6 @@
 package com.napier.NapierGroupF;
 
 //Imports
-import java.math.BigInteger;
 import java.sql.*;
 import java.util.ArrayList;
 
@@ -23,8 +22,11 @@ public class App
         App a = new App();
 
         // Connect to world database
-        //a.connect("localhost:33069"); // Local test connection
-        a.connect("db:3306");
+        //if no args given run with local host
+        if (args.length < 1)
+            a.connect("localhost:33069", 30000);
+        else //else use args given connection and timer
+            a.connect(args[0], Integer.parseInt(args[1]));
 
         //Reports
         //All countries organised by population Largest to Smallest
@@ -43,7 +45,7 @@ public class App
      * Connecting to MySql world db
      * @param loc - Specifies the Location to connect to
      */
-    public void connect(String loc)
+    public void connect(String loc, int delay)
     {
         try
         {
@@ -57,6 +59,7 @@ public class App
             System.exit(-1);
         }
 
+        //Try Connecting for ten times
         int retries = 10;
         for (int i = 0; i < retries; ++i)
         {
@@ -64,10 +67,10 @@ public class App
             try
             {
                 // Wait a bit for db to start
-                Thread.sleep(30000);
+                Thread.sleep(delay);
 
                 // Connect to database
-                con = DriverManager.getConnection("jdbc:mysql://" + loc + "/world?useSSL=false", "root", "world");
+                con = DriverManager.getConnection("jdbc:mysql://" + loc + "/world?allowPublicKeyRetrieval=true&useSSL=false", "root", "world");
                 System.out.println("Successfully connected");
                 break;
             }
