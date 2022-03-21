@@ -15,10 +15,12 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInstance;
 import java.util.ArrayList;
 
+import static org.junit.jupiter.api.Assertions.assertTrue;
+
 /**
  * AppTest class for App.java unit tests
  */
-public class AppTest
+public class AppTest<T>
 {
     // App static declaration
     static App app;

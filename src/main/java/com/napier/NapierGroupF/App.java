@@ -25,7 +25,7 @@ public class App
         //if no args given run with local host
         if (args.length < 1)
         {
-            a.connect("localhost:33069", 30000);
+            a.connect("localhost:33069", 3000);
         }
         else
         {
@@ -33,12 +33,8 @@ public class App
             a.connect(args[0], Integer.parseInt(args[1]));
         }
 
-        //Reports
-        //All countries organised by population Largest to Smallest
-        ArrayList<Country> countries = a.getCountriesOrganisedByPopulation();
-        //Display the retrieved Countries
-        a.displayCountries(countries);
-
+        // Display All the Reports in terminal
+        a.getAndDisplayAllReports();
 
         // Disconnect from database
         a.disconnect();
@@ -116,9 +112,58 @@ public class App
         }
     }
 
+    public void getAndDisplayAllReports()
+    {
+        //Reports
+        //1
+        System.out.println("\nAll Countries organised by population Largest to Smallest\n");
+        //All countries organised by population Largest to Smallest
+        ArrayList<Country> countriesOrganisedByPopulation = getCountriesOrganisedByPopulation();
+        //Display the retrieved Countries
+        displayCountries(countriesOrganisedByPopulation);
+
+        //2
+        System.out.println("\nAll Countries Given Continent 'Europe' organised by population Largest to Smallest\n");
+        //All countries organised by population Largest to Smallest
+        ArrayList<Country> countriesInAContinentOrganisedByPopulation = getCountriesInAContinentOrganisedByPopulation("Europe");
+        //Display the retrieved Countries
+        displayCountries(countriesInAContinentOrganisedByPopulation);
+
+        //3
+        System.out.println("\nAll Countries Given Region 'Eastern Europe' organised by population Largest to Smallest\n");
+        //All the countries in a region organised by largest population to smallest.
+        ArrayList<Country> countriesInARegionOrganisedByPopulation = getCountriesInARegionOrganisedByPopulation("Eastern Europe");
+        //Display the retrieved Countries
+        displayCountries(countriesInARegionOrganisedByPopulation);
+
+        //4
+        System.out.println("\nThe top '100' populated countries in the world.\n");
+        //The top N populated countries in the world where N is provided by the user.
+        ArrayList<Country> getTopNCountries = getTopNCountries(100);
+        //Display the retrieved Countries
+        displayCountries(getTopNCountries);
+
+        //5
+        System.out.println("\nThe top '20' populated countries in the world in the continent 'Europe'.\n");
+        //The top N populated countries in a continent where N is provided by the user.
+        ArrayList<Country> getTopNCountriesInAContinent = getTopNCountriesInAContinent(20, "Europe");
+        //Display the retrieved Countries
+        displayCountries(getTopNCountriesInAContinent);
+
+        //6
+        System.out.println("\nThe top '10' populated countries in the world in the Region 'Eastern Europe'.\n");
+        //The top N populated countries in a region where N is provided by the user.
+        ArrayList<Country> getTopNCountriesInARegion = getTopNCountriesInARegion(10, "Eastern Europe");
+        //Display the retrieved Countries
+        displayCountries(getTopNCountriesInARegion);
+
+        //End
+    }
+
     /**
      * Get a report by passing a Class type and Sql
-     * @param t, sql Generic t of the Class type required and Sql
+     * @param t Generic t of the Class type required
+     * @param sql The SQL statement provided
      * @return ArrayList of Passed Class
      */
     public <T> ArrayList<T> getReport(Class<T> t, String sql)
@@ -128,8 +173,22 @@ public class App
             //Create an SQL Statement
             Statement stmnt = con.createStatement();
 
+            //Check if sql is not null
+            if(sql == null || sql.isEmpty())
+            {
+                System.out.println("Empty or Null Sql Statement provided!");
+                return null;
+            }
+
             //Execute the SQL statement
             ResultSet rset = stmnt.executeQuery(sql);
+
+            //Check if Class type provided
+            if(t == null)
+            {
+                System.out.println("Null Class Given!");
+                return null;
+            }
 
             if (t.isInstance(new Country()))
             {
@@ -188,7 +247,7 @@ public class App
     }
 
     /**
-     * Get report for All countries organised by population Largest to Smallest and Display these in terminal
+     * Get report for All countries organised by population Largest to Smallest.
      * @return countries List of all Countries retrieved from the db
      */
     public ArrayList<Country> getCountriesOrganisedByPopulation()
@@ -200,6 +259,100 @@ public class App
                    + "Order By Population DESC";
 
         //Get All countries organised by population Largest to Smallest
+        return getReport(Country.class, sql);
+    }
+
+    /**
+     * Get report for All the countries in a continent organised by largest population to smallest.
+     * @return countries List of all Countries retrieved from the db
+     * @param continent The Continent to get Countries for
+     */
+    public ArrayList<Country> getCountriesInAContinentOrganisedByPopulation(String continent)
+    {
+        //Add string for the SQL statement
+        String sql = "SELECT Code, country.Name AS Name, Continent, Region, country.Population AS Population, city.Name AS Capital "
+                   + "From country "
+                   + "JOIN city on country.Capital = city.ID "
+                   + "where Continent = '" + continent + "' "//Given Continent
+                   + "Order By country.Population DESC ";
+
+        //Get All the countries in a continent organised by largest population to smallest
+        return getReport(Country.class, sql);
+    }
+
+    /**
+     * Get report for All the countries in a Region organised by largest population to smallest.
+     * @return countries List of all Countries retrieved from the db
+     * @param region The Region to Filter Countries for
+     */
+    public ArrayList<Country> getCountriesInARegionOrganisedByPopulation(String region)
+    {
+        //Add string for the SQL statement
+        String sql = "SELECT Code, country.Name AS Name, Continent, Region, country.Population AS Population, city.Name AS Capital "
+                   + "From country "
+                   + "JOIN city on country.Capital = city.ID "
+                   + "WHERE Region = '" + region + "' "//Given Region
+                   + "Order By country.Population DESC ";
+
+        //All the countries in a region organised by largest population to smallest.
+        return getReport(Country.class, sql);
+    }
+
+    /**
+     * Get report for The top N populated countries in the world where N is provided by the user.
+     * @return countries List of all Countries retrieved from the db
+     * @param n The limit given by user
+     */
+    public ArrayList<Country> getTopNCountries(int n)
+    {
+        //Add string for the SQL statement
+        String sql = "SELECT Code, country.Name AS Name, Continent, Region, country.Population AS Population, city.Name AS Capital "
+                   + "From country "
+                   + "JOIN city on country.Capital = city.ID "
+                   + "Order By country.Population DESC "
+                   + "LIMIT " + n;//Given number to limit by
+
+        //The top N populated countries in the world where N is provided by the user.
+        return getReport(Country.class, sql);
+    }
+
+    /**
+     * Get report for The top N populated countries in the world in a given continent where N and continent is provided by the user.
+     * @return countries List of all Countries retrieved from the db
+     * @param n the limit given by user
+     * @param continent the continent to filter the Countries by
+     */
+    public ArrayList<Country> getTopNCountriesInAContinent(int n, String continent)
+    {
+        //Add string for the SQL statement
+        String sql = "SELECT Code, country.Name AS Name, Continent, Region, country.Population AS Population, city.Name AS Capital "
+                   + "From country "
+                   + "JOIN city on country.Capital = city.ID "
+                   + "where Continent = '" + continent + "' "//Given Continent
+                   + "Order By country.Population DESC "
+                   + "LIMIT " + n;//Given number to limit by
+
+        //The top N populated countries in a continent where N is provided by the user.
+        return getReport(Country.class, sql);
+    }
+
+    /**
+     * Get report for The top N populated countries in the world in a given Region where N and region is provided by the user.
+     * @return countries List of all Countries retrieved from the db
+     * @param n the limit given by user
+     * @param region the Region to filter the Countries by
+     */
+    public ArrayList<Country> getTopNCountriesInARegion(int n, String region)
+    {
+        //Add string for the SQL statement
+        String sql = "SELECT Code, country.Name AS Name, Continent, Region, country.Population AS Population, city.Name AS Capital "
+                   + "From country "
+                   + "JOIN city on country.Capital = city.ID "
+                   + "where Region = '" + region + "' "//Given region
+                   + "Order By country.Population DESC "
+                   + "LIMIT " + n;//Given number to limit by
+
+        //The top N populated countries in a region where N is provided by the user.
         return getReport(Country.class, sql);
     }
 
