@@ -196,6 +196,42 @@ public class App
         //Display the retrieved Cities
         displayCities(getCitiesInDistrictOrganisedByPopulation);
 
+        //Use Case 4
+        //12
+        System.out.println("\nThe Top N '100' Cities in the World Organised by largest population to smallest.\n");
+        //The top N populated cities in the world where N is provided by the user.
+        ArrayList<City> getTopCitiesOrganisedByPopulation = getTopCitiesOrganisedByPopulation(100);
+        //Display the retrieved Cities
+        displayCities(getTopCitiesOrganisedByPopulation);
+
+        //13
+        System.out.println("\nThe Top N '100' Cities in a Continent 'Asia' organised by largest population to smallest.\n");
+        //The top N populated cities in a continent where N is provided by the user.
+        ArrayList<City> getTopCitiesInContinentOrganisedByPopulation = getTopCitiesInContinentOrganisedByPopulation("Asia", 100);
+        //Display the retrieved Cities
+        displayCities(getTopCitiesInContinentOrganisedByPopulation);
+
+        //14
+        System.out.println("\nThe Top N '50' Cities in a Region 'Eastern Europe' organised by largest population to smallest.\n");
+        //The top N populated cities in a region where N is provided by the user.
+        ArrayList<City> getTopCitiesInARegionOrganisedByPopulation = getTopCitiesInARegionOrganisedByPopulation("Eastern Europe", 50);
+        //Display the retrieved Cities
+        displayCities(getTopCitiesInARegionOrganisedByPopulation);
+
+        //15
+        System.out.println("\nThe Top N '50' Cities in a Country 'China' organised by largest population to smallest.\n");
+        //The top N populated cities in a country where N is provided by the user.
+        ArrayList<City> getTopCitiesInCountryOrganisedByPopulation = getTopCitiesInCountryOrganisedByPopulation("China", 50);
+        //Display the retrieved Cities
+        displayCities(getTopCitiesInCountryOrganisedByPopulation);
+
+        //16
+        System.out.println("\nThe Top N '5' Cities in a District 'Noord-Holland' organised by largest population to smallest.\n");
+        //The top N populated cities in a district where N is provided by the user.
+        ArrayList<City> getTopCitiesInDistrictOrganisedByPopulation = getTopCitiesInDistrictOrganisedByPopulation("Noord-Holland", 5);
+        //Display the retrieved Cities
+        displayCities(getTopCitiesInDistrictOrganisedByPopulation);
+
         //End
         System.out.println("\nThe End.");
     }
@@ -502,6 +538,104 @@ public class App
                    + "Order By city.Population DESC ";
 
         //All the cities in a District organised by largest population to smallest.
+        return getReport(City.class, sql);
+    }
+
+    /**
+     * Get report for The top N populated cities in the world where N is provided by the user.
+     * @param n Number to limit the result by
+     * @return cities List of all Cities retrieved from the db
+     */
+    public ArrayList<City> getTopCitiesOrganisedByPopulation(int n)
+    {
+        //Add string for the SQL statement
+        String sql = "SELECT city.Name AS Name, country.name as Country, District, city.Population AS Population "
+                   + "From city "
+                   + "JOIN country on city.CountryCode = country.code "
+                   + "Order By city.Population DESC "
+                   + "LIMIT " + n ; // Limit the Results by N
+
+        //The top N populated cities in the world where N is provided by the user.
+        return getReport(City.class, sql);
+    }
+
+    /**
+     * Get report for The top N populated cities in a continent where N is provided by the user.
+     * @param continent The continent to filter the Cities by
+     * @param n Number to limit the result by
+     * @return cities List of all Cities retrieved from the db
+     */
+    public ArrayList<City> getTopCitiesInContinentOrganisedByPopulation(String continent, int n)
+    {
+        //Add string for the SQL statement
+        String sql = "SELECT city.Name AS Name, country.name as Country, District, city.Population AS Population, country.Continent AS Continent "
+                   + "From city "
+                   + "JOIN country on city.CountryCode = country.code "
+                   + "WHERE country.Continent = '" + continent + "' " // Given continent
+                   + "Order By city.Population DESC "
+                   + "LIMIT " + n ; // Limit the Results by N
+
+        //The top N populated cities in a continent where N is provided by the user.
+        return getReport(City.class, sql);
+    }
+
+    /**
+     * Get report for The top N populated cities in a region where N is provided by the user.
+     * @param region The Country Region to filter the Cities by
+     * @param n Number to limit the result by
+     * @return cities List of all Cities retrieved from the db
+     */
+    public ArrayList<City> getTopCitiesInARegionOrganisedByPopulation(String region, int n)
+    {
+        //Add string for the SQL statement
+        String sql = "SELECT city.Name AS Name, country.name as Country, District, city.Population AS Population, country.Region AS Region "
+                   + "From city "
+                   + "JOIN country on city.CountryCode = country.code "
+                   + "WHERE country.Region = '" + region + "' " // Given region
+                   + "Order By city.Population DESC "
+                   + "LIMIT " + n ; // Limit the Results by N
+
+        //The top N populated cities in a region where N is provided by the user.
+        return getReport(City.class, sql);
+    }
+
+    /**
+     * Get Report of The top N populated cities in a country where N is provided by the user.
+     * @param country The Country to filter the Cities by
+     * @param n Number to limit the result by
+     * @return cities List of all Cities retrieved from the db
+     */
+    public ArrayList<City> getTopCitiesInCountryOrganisedByPopulation(String country, int n)
+    {
+        //Add string for the SQL statement
+        String sql = "SELECT city.Name AS Name, country.name as Country, District, city.Population AS Population "
+                   + "From city "
+                   + "JOIN country on city.CountryCode = country.code "
+                   + "WHERE country.Name = '" + country + "' " // Given Country
+                   + "Order By city.Population DESC "
+                   + "LIMIT " + n ; // Limit the Results by N
+
+        //The top N populated cities in a country where N is provided by the user.
+        return getReport(City.class, sql);
+    }
+
+    /**
+     * Get Report of The top N populated cities in a district where N is provided by the user.
+     * @param district The District to filter the Cities by
+     * @param n Number to limit the result by
+     * @return cities List of all Cities retrieved from the db
+     */
+    public ArrayList<City> getTopCitiesInDistrictOrganisedByPopulation(String district, int n)
+    {
+        //Add string for the SQL statement
+        String sql = "SELECT city.Name AS Name, country.name as Country, District, city.Population AS Population "
+                   + "From city "
+                   + "JOIN country on city.CountryCode = country.code "
+                   + "WHERE District = '" + district + "' " // Given District
+                   + "Order By city.Population DESC "
+                   + "LIMIT " + n ;  // Limit the Results by N
+
+        //The top N populated cities in a district where N is provided by the user.
         return getReport(City.class, sql);
     }
 

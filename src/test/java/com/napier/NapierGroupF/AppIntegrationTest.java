@@ -210,7 +210,7 @@ public class AppIntegrationTest
     @Test
     void testGetCitiesInRegion()
     {
-        //Get all Countries in a Region
+        //Get all Cities in a Region
         String region = "Eastern Europe";
         ArrayList<City> cities = app.getCitiesInARegionOrganisedByPopulation(region);
         //Check if the returned list isn't null or empty
@@ -233,7 +233,7 @@ public class AppIntegrationTest
         ArrayList<City> cities = app.getCitiesInCountryOrganisedByPopulation(country);
         //Check if the returned list isn't null or empty
         assertTrue( cities != null && cities.size() > 0);
-        //Check if all cities' continent is Europe
+        //Check if all cities' Country is China
         for (City c : cities)
         {
             assertEquals(country, c.Country.Name);
@@ -246,11 +246,95 @@ public class AppIntegrationTest
     @Test
     void testGetCitiesInDistrict()
     {
-        //Get all Countries in a Region
+        //Get all Cities in a District
         String district = "Noord-Holland";
         ArrayList<City> cities = app.getCitiesInDistrictOrganisedByPopulation(district);
         //Check if the returned list isn't null or empty
         assertTrue( cities != null && cities.size() > 0);
+        //Check if all cities' District is Noord-Holland
+        for (City c : cities)
+        {
+            assertEquals(district, c.District);
+        }
+    }
+
+    /**
+     * Test get Top N Cities organised by population
+     */
+    @Test
+    void testGetTopCities()
+    {
+        //Get Top 100 Cities
+        ArrayList<City> cities = app.getTopCitiesOrganisedByPopulation(100);
+        //Check if the returned list isn't null the total size equals 100
+        assertTrue( cities != null && cities.size() == 100);
+    }
+
+    /**
+     * Test get Top N Cities organised by population given a Continent
+     */
+    @Test
+    void testGetTopCitiesInContinent()
+    {
+        //Get Top 100 Cities in a Continent
+        String continent = "Europe";
+        ArrayList<City> cities = app.getTopCitiesInContinentOrganisedByPopulation(continent, 100);
+        //Check if the returned list isn't null the total size equals 100
+        assertTrue( cities != null && cities.size() == 100);
+        //Check if all cities' continent is Europe
+        for (City c : cities)
+        {
+            assertEquals(continent, c.Country.Continent);
+        }
+    }
+
+    /**
+     * Test get Top N Cities organised by population given a Region
+     */
+    @Test
+    void testGetTopCitiesInRegion()
+    {
+        //Get Top 50 cities in a Region
+        String region = "Eastern Europe";
+        ArrayList<City> cities = app.getTopCitiesInARegionOrganisedByPopulation(region, 50);
+        //Check if the returned list isn't null the total size equals 50
+        assertTrue( cities != null && cities.size() == 50);
+        //Check if all cities' Region is Eastern Europe
+        for (City c : cities)
+        {
+            assertEquals(region, c.Country.Region);
+        }
+    }
+
+    /**
+     * Test get Top N Cities organised by population given a Country
+     */
+    @Test
+    void testGetTopCitiesInCountry()
+    {
+        //Get Top 100 Cities in a Country
+        String country = "China";
+        ArrayList<City> cities = app.getTopCitiesInCountryOrganisedByPopulation(country, 100);
+        //Check if the returned list isn't null and the total size equals 100
+        assertTrue( cities != null && cities.size() == 100);
+        //Check if all cities' Country is China
+        for (City c : cities)
+        {
+            assertEquals(country, c.Country.Name);
+        }
+    }
+
+    /**
+     * Test get Top N Cities organised by population given a District
+     */
+    @Test
+    void testGetTopCitiesInDistrict()
+    {
+        //Get Top 5 Cities in a District
+        String district = "Noord-Holland";
+        ArrayList<City> cities = app.getTopCitiesInDistrictOrganisedByPopulation(district, 5);
+        //Check if the returned list isn't null and either the total size equals 5 or the list is not empty
+        assertTrue( cities != null && (cities.size() == 5 || cities.size() > 0));
         //Check if all cities' District is Noord-Holland
         for (City c : cities)
         {
