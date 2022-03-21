@@ -25,7 +25,7 @@ public class App
         //if no args given run with local host
         if (args.length < 1)
         {
-            a.connect("localhost:33069", 3000);
+            a.connect("localhost:33069", 30000);
         }
         else
         {
@@ -115,6 +115,8 @@ public class App
     public void getAndDisplayAllReports()
     {
         //Reports
+
+        //Use Case 1
         //1
         System.out.println("\nAll Countries organised by population Largest to Smallest\n");
         //All countries organised by population Largest to Smallest
@@ -136,6 +138,7 @@ public class App
         //Display the retrieved Countries
         displayCountries(countriesInARegionOrganisedByPopulation);
 
+        //Use Case 2
         //4
         System.out.println("\nThe top '100' populated countries in the world.\n");
         //The top N populated countries in the world where N is provided by the user.
@@ -157,7 +160,44 @@ public class App
         //Display the retrieved Countries
         displayCountries(getTopNCountriesInARegion);
 
+        //Use Case 3
+        //7
+        System.out.println("\nAll the Cities in the World Organised by largest population to smallest.\n");
+        //All the cities in the world organised by largest population to smallest.
+        ArrayList<City> getCitiesOrganisedByPopulation = getCitiesOrganisedByPopulation();
+        //Display the retrieved Cities
+        displayCities(getCitiesOrganisedByPopulation);
+
+        //8
+        System.out.println("\nAll the Cities in a Continent 'Asia' organised by largest population to smallest.\n");
+        //All the cities in a continent organised by largest population to smallest.
+        ArrayList<City> getCitiesInContinentOrganisedByPopulation = getCitiesInContinentOrganisedByPopulation("Asia");
+        //Display the retrieved Cities
+        displayCities(getCitiesInContinentOrganisedByPopulation);
+
+        //9
+        System.out.println("\nAll the Cities in a Region 'Eastern Europe' organised by largest population to smallest.\n");
+        //All the cities in a region organised by largest population to smallest.
+        ArrayList<City> getCitiesInARegionOrganisedByPopulation = getCitiesInARegionOrganisedByPopulation("Eastern Europe");
+        //Display the retrieved Cities
+        displayCities(getCitiesInARegionOrganisedByPopulation);
+
+        //10
+        System.out.println("\nAll the Cities in a Country 'China' organised by largest population to smallest.\n");
+        //All the cities in a Country organised by largest population to smallest.
+        ArrayList<City> getCitiesInCountryOrganisedByPopulation = getCitiesInCountryOrganisedByPopulation("China");
+        //Display the retrieved Cities
+        displayCities(getCitiesInCountryOrganisedByPopulation);
+
+        //11
+        System.out.println("\nAll the Cities in a District 'Noord-Holland' organised by largest population to smallest.\n");
+        //All the cities in a District organised by largest population to smallest.
+        ArrayList<City> getCitiesInDistrictOrganisedByPopulation = getCitiesInDistrictOrganisedByPopulation("Noord-Holland");
+        //Display the retrieved Cities
+        displayCities(getCitiesInDistrictOrganisedByPopulation);
+
         //End
+        System.out.println("\nThe End.");
     }
 
     /**
@@ -224,6 +264,10 @@ public class App
                     //Get Each City information and add it to cities arraylist
                     City city = new City();
                     city.Country = new Country(rset.getString("Country"));//Country Name
+                    //Extra Columns for tests
+                    city.Country.Continent = findColumn(rset,"Continent")  ? rset.getString("Continent") : "";
+                    city.Country.Region = findColumn(rset,"Region") ? rset.getString("Region") : "";
+
                     city.Name = rset.getString("Name");//city Name
                     city.District = rset.getString("District");
                     city.Population = new Population(rset.getLong("Population"));
@@ -241,9 +285,26 @@ public class App
         {
             //Print Exception error message
             System.out.println(e.getMessage());
-            System.out.println("Failed to get country details");
+            System.out.println("Failed to get " + t.getSimpleName() + " details");
             return null;
         }
+    }
+
+    /**
+     * Method to Check if a given Column exists in the Result set
+     * @param rs The Result set
+     * @param column The column name to find
+     * @return boolean True if found else False
+     */
+    public boolean findColumn(ResultSet rs, String column)
+    {
+        try
+        {
+            rs.findColumn(column);
+            return true;
+        }
+        catch (SQLException ignored) {}
+        return false;
     }
 
     /**
@@ -357,6 +418,94 @@ public class App
     }
 
     /**
+     * Get report for All the cities in the world organised by largest population to smallest.
+     * @return cities List of all Cities retrieved from the db
+     */
+    public ArrayList<City> getCitiesOrganisedByPopulation()
+    {
+        //Add string for the SQL statement
+        String sql = "SELECT city.Name AS Name, country.name as Country, District, city.Population AS Population "
+                   + "From city "
+                   + "JOIN country on city.CountryCode = country.code "
+                   + "Order By city.Population DESC ";
+
+        //All the cities in the world organised by largest population to smallest.
+        return getReport(City.class, sql);
+    }
+
+    /**
+     * Get report for All the cities in a continent organised by largest population to smallest.
+     * @param continent The continent to filter the Cities by
+     * @return cities List of all Cities retrieved from the db
+     */
+    public ArrayList<City> getCitiesInContinentOrganisedByPopulation(String continent)
+    {
+        //Add string for the SQL statement
+        String sql = "SELECT city.Name AS Name, country.name as Country, District, city.Population AS Population, country.Continent AS Continent "
+                   + "From city "
+                   + "JOIN country on city.CountryCode = country.code "
+                   + "WHERE country.Continent = '" + continent + "' " // Given continent
+                   + "Order By city.Population DESC ";
+
+        //All the cities in a continent organised by largest population to smallest.
+        return getReport(City.class, sql);
+    }
+
+    /**
+     * Get report for All the cities in a region organised by largest population to smallest.
+     * @param region The Country Region to filter the Cities by
+     * @return cities List of all Cities retrieved from the db
+     */
+    public ArrayList<City> getCitiesInARegionOrganisedByPopulation(String region)
+    {
+        //Add string for the SQL statement
+        String sql = "SELECT city.Name AS Name, country.name as Country, District, city.Population AS Population, country.Region AS Region "
+                   + "From city "
+                   + "JOIN country on city.CountryCode = country.code "
+                   + "WHERE country.Region = '" + region + "' " // Given region
+                   + "Order By city.Population DESC ";
+
+        //All the cities in a region organised by largest population to smallest.
+        return getReport(City.class, sql);
+    }
+
+    /**
+     * Get Report of All the cities in a Country organised by largest population to smallest.
+     * @param country The Country to filter the Cities by
+     * @return cities List of all Cities retrieved from the db
+     */
+    public ArrayList<City> getCitiesInCountryOrganisedByPopulation(String country)
+    {
+        //Add string for the SQL statement
+        String sql = "SELECT city.Name AS Name, country.name as Country, District, city.Population AS Population "
+                   + "From city "
+                   + "JOIN country on city.CountryCode = country.code "
+                   + "WHERE country.Name = '" + country + "' " // Given Country
+                   + "Order By city.Population DESC ";
+
+        //All the cities in a Country organised by largest population to smallest.
+        return getReport(City.class, sql);
+    }
+
+    /**
+     * Get Report of All the cities in a district organised by largest population to smallest
+     * @param district The District to filter the Cities by
+     * @return cities List of all Cities retrieved from the db
+     */
+    public ArrayList<City> getCitiesInDistrictOrganisedByPopulation(String district)
+    {
+        //Add string for the SQL statement
+        String sql = "SELECT city.Name AS Name, country.name as Country, District, city.Population AS Population "
+                   + "From city "
+                   + "JOIN country on city.CountryCode = country.code "
+                   + "WHERE District = '" + district + "' " // Given District
+                   + "Order By city.Population DESC ";
+
+        //All the cities in a District organised by largest population to smallest.
+        return getReport(City.class, sql);
+    }
+
+    /**
      * Displays the list of Countries
      * @param countries The list of countries to Display
      */
@@ -382,7 +531,7 @@ public class App
             }
 
             //Display country information
-            System.out.printf("%-4s %-60s %-15s %-26s %-30s %-10s%n", c.Code, c.Name, c.Continent, c.Region, c.Population != null ? c.Population.TotalPopulation : "", c.Capital != null ? c.Capital.Name : "");
+            System.out.printf("%-4s %-60s %-15s %-26s %-30s %-10s%n", c.Code, c.Name, c.Continent, c.Region, c.Population != null ? c.Population.TotalPopulation : "-", c.Capital != null ? c.Capital.Name : "-");
         }
     }
 
@@ -400,7 +549,7 @@ public class App
             return;
         }
         //Display the Header
-        System.out.printf("%-25s %-60s %-15s %-20s", "Name", "Country", "District", "Population");
+        System.out.printf("%-36s %-60s %-25s %-20s%n", "Name", "Country", "District", "Population");
 
         //For each Country Display each country information
         for (City c : cities)
@@ -412,7 +561,7 @@ public class App
             }
 
             //Display city information
-            System.out.printf("%-25s %-60s %-15s %-20s", c.Name, c.Country != null ? c.Country.Name : "", c.District, c.Population != null ? c.Population.TotalPopulation : "");
+            System.out.printf("%-36s %-60s %-25s %-20s%n", c.Name, c.Country != null ? c.Country.Name : "-", c.District, c.Population != null ? c.Population.TotalPopulation : "-");
         }
     }
 }

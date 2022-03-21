@@ -31,7 +31,7 @@ public class AppIntegrationTest
     static void init()
     {
         app = new App();
-        app.connect("localhost:33069", 30000);
+        app.connect("localhost:33069", 3000);
 
     }
 
@@ -171,6 +171,90 @@ public class AppIntegrationTest
         for (Country c : countries)
         {
             assertEquals(region, c.Region);
+        }
+    }
+
+    /**
+     * Test get all Cities organised by population
+     */
+    @Test
+    void testGetCities()
+    {
+        //Get all Cities
+        ArrayList<City> cities = app.getCitiesOrganisedByPopulation();
+        //Check if the returned list isn't null or empty
+        assertTrue( cities != null && cities.size() > 0);
+    }
+
+    /**
+     * Test get all Cities organised by population given a Continent
+     */
+    @Test
+    void testGetCitiesInContinent()
+    {
+        //Get all Cities in a Continent
+        String continent = "Europe";
+        ArrayList<City> cities = app.getCitiesInContinentOrganisedByPopulation(continent);
+        //Check if the returned list isn't null or empty
+        assertTrue( cities != null && cities.size() > 0);
+        //Check if all cities' continent is Europe
+        for (City c : cities)
+        {
+            assertEquals(continent, c.Country.Continent);
+        }
+    }
+
+    /**
+     * Test get all Cities organised by population given a Region
+     */
+    @Test
+    void testGetCitiesInRegion()
+    {
+        //Get all Countries in a Region
+        String region = "Eastern Europe";
+        ArrayList<City> cities = app.getCitiesInARegionOrganisedByPopulation(region);
+        //Check if the returned list isn't null or empty
+        assertTrue( cities != null && cities.size() > 0);
+        //Check if all cities' Region is Eastern Europe
+        for (City c : cities)
+        {
+            assertEquals(region, c.Country.Region);
+        }
+    }
+
+    /**
+     * Test get all Cities organised by population given a Country
+     */
+    @Test
+    void testGetCitiesInCountry()
+    {
+        //Get all Cities in a Country
+        String country = "China";
+        ArrayList<City> cities = app.getCitiesInCountryOrganisedByPopulation(country);
+        //Check if the returned list isn't null or empty
+        assertTrue( cities != null && cities.size() > 0);
+        //Check if all cities' continent is Europe
+        for (City c : cities)
+        {
+            assertEquals(country, c.Country.Name);
+        }
+    }
+
+    /**
+     * Test get all Cities organised by population given a District
+     */
+    @Test
+    void testGetCitiesInDistrict()
+    {
+        //Get all Countries in a Region
+        String district = "Noord-Holland";
+        ArrayList<City> cities = app.getCitiesInDistrictOrganisedByPopulation(district);
+        //Check if the returned list isn't null or empty
+        assertTrue( cities != null && cities.size() > 0);
+        //Check if all cities' District is Noord-Holland
+        for (City c : cities)
+        {
+            assertEquals(district, c.District);
         }
     }
 }
