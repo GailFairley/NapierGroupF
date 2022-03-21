@@ -22,7 +22,7 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
  */
 public class AppTest<T>
 {
-    // App static declaration
+    //Global App static declaration
     static App app;
 
     /**
@@ -232,5 +232,49 @@ public class AppTest<T>
         cities.add(c);
 
         app.displayCities(cities);
+    }
+
+    /**
+     * Test for getReport when the given Type is null
+     */
+    @Test
+    void getReportNullTypeTest()
+    {
+        app.connect("localhost:33069", 3000);
+        //get Report but type is null
+        app.getReport(null, "SELECT * FROM country");
+    }
+
+    /**
+     * Test for getReport when the sql is null
+     */
+    @Test
+    void getReportNullSqlTest()
+    {
+        app.connect("localhost:33069", 3000);
+        //get Report but Sql is null
+        app.getReport(Country.class, null);
+    }
+
+    /**
+     * Test for getReport when the sql is Empty
+     */
+    @Test
+    void getReportEmptySqlTest()
+    {
+        app.connect("localhost:33069", 3000);
+        //get Report but Sql is null
+        app.getReport(Country.class, "");
+    }
+
+    /**
+     * Test for getReport when the sql is invalid
+     */
+    @Test
+    void getReportInvalidSqlTest()
+    {
+        app.connect("localhost:33069", 3000);
+        //get Report but Sql is null
+        app.getReport(Country.class, "SELECT * frm country");
     }
 }

@@ -21,7 +21,7 @@ import java.util.ArrayList;
  */
 public class AppIntegrationTest
 {
-    // App static declaration
+    // Global App static declaration
     static App app;
 
     /**

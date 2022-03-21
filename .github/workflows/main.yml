@@ -14,7 +14,13 @@ jobs:
           java-version: '17'
           distribution: 'adopt'
       - name: Unit Tests
-        run: mvn -Dtest=com.napier.NapierGroupF.AppTest test
+        run: |
+          docker build -t database ./world-db 
+          docker run --name world -dp 33069:3306 database
+          mvn -Dtest=com.napier.NapierGroupF.AppTest test
+          docker stop world
+          docker rm world
+          docker image rm database
 
   IntegrationTests:
     name: Integration Tests
