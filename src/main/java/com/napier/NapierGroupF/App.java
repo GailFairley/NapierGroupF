@@ -3,7 +3,7 @@
  * Package: com.napier.NapierGroupF
  * User Created: Josh McQueen
  * Date Created: 06/02/2022
- * Date Last Updated: 05/03/2022
+ * Date Last Updated: 21/03/2022
  * File Description: The main java file which will connect to db and display all the relevant reports.
  **/
 
@@ -98,6 +98,7 @@ public class App
             }
             catch (Exception e)
             {
+                // Display error - why cannot close the connection
                 System.out.println("Error closing connection to database");
             }
         }
@@ -126,7 +127,11 @@ public class App
                 while (rset.next())
                 {
                     //Get Each Country information and add it to countries arraylist
+
+                    //Initialize Country
                     Country country = new Country();
+
+                    //Map SQL Column values to Country Variables
                     country.Code = rset.getString("Code");
                     country.Name = rset.getString("Name");
                     country.Continent = rset.getString("Continent");

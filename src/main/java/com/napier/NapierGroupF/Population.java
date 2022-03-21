@@ -3,7 +3,7 @@
  * Package: com.napier.NapierGroupF
  * User: Hamza Shabir - 40425459
  * Date Created: 2/27/22 5:09 PM
- * Date last updated: <<Enter Date updated here>>
+ * Date last updated: 21/03/2022
  * Class Description: A Population class which represents the required columns for a Population report.
  */
 
@@ -12,12 +12,12 @@ package com.napier.NapierGroupF;
 /**
  * Population Report Class
  */
-public class Population<T>
+public class Population
 {
     /**
      * The name of Continent/Region/Country
      */
-    public T Name;
+    public String Name;
 
     /**
      * The Total population of the Continent/Region/Country
@@ -53,7 +53,7 @@ public class Population<T>
      * @param pnic The population of a Continent/Region/Country not living in Cities
      * @param popnic The population of a Continent/Region/Country not living in Cities as a Percentage
      */
-    public Population (T n, int tp, int pic, int popic, int pnic, int popnic)
+    public Population (String n, int tp, int pic, int popic, int pnic, int popnic)
     {
         Name = n;
         TotalPopulation = tp;
