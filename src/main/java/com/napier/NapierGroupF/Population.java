@@ -9,6 +9,8 @@
 
 package com.napier.NapierGroupF;
 
+import java.math.BigInteger;
+
 /**
  * Population Report Class
  */
@@ -22,12 +24,12 @@ public class Population
     /**
      * The Total population of the Continent/Region/Country
      */
-    public int TotalPopulation;
+    public long TotalPopulation;
 
     /**
      * The population of a Continent/Region/Country living in Cities
      */
-    public int PopulationInCities;
+    public long PopulationInCities;
 
     /**
      * The population of a Continent/Region/Country living in Cities as a Percentage
@@ -37,7 +39,7 @@ public class Population
     /**
      * The population of a Continent/Region/Country not living in Cities
      */
-    public int PopulationNotInCities;
+    public long PopulationNotInCities;
 
     /**
      * The population of a Continent/Region/Country not living in Cities as a Percentage
@@ -53,7 +55,7 @@ public class Population
      * @param pnic The population of a Continent/Region/Country not living in Cities
      * @param popnic The population of a Continent/Region/Country not living in Cities as a Percentage
      */
-    public Population (String n, int tp, int pic, int popic, int pnic, int popnic)
+    public Population (String n, long tp, long pic, int popic, long pnic, int popnic)
     {
         Name = n;
         TotalPopulation = tp;
@@ -67,7 +69,7 @@ public class Population
      * Constructor with only Total Population
      * @param tp Total Population
      */
-    public Population (int tp)
+    public Population (long tp)
     {
         TotalPopulation = tp;
     }

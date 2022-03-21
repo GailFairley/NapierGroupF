@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Diagram>
+  <ID>JAVA</ID>
+  <OriginalElement>com.napier.NapierGroupF.App</OriginalElement>
+  <nodes>
+    <node x="0.0" y="0.0">com.napier.NapierGroupF.Country</node>
+    <node x="0.0" y="574.0">com.napier.NapierGroupF.App</node>
+    <node x="0.0" y="298.0">com.napier.NapierGroupF.Population</node>
+    <node x="382.0" y="574.0">com.napier.NapierGroupF.City</node>
+  </nodes>
+  <notes />
+  <edges />
+  <settings layout="Hierarchic" zoom="1.0" showDependencies="true" x="317.5" y="392.0" />
+  <SelectedNodes />
+  <Categories>
+    <Category>Constructors</Category>
+    <Category>Fields</Category>
+    <Category>Inner Classes</Category>
+    <Category>Methods</Category>
+  </Categories>
+  <SCOPE>All</SCOPE>
+  <VISIBILITY>private</VISIBILITY>
+</Diagram>
+

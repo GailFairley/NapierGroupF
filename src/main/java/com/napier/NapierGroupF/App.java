@@ -10,6 +10,7 @@
 package com.napier.NapierGroupF;
 
 //Imports
+import java.math.BigInteger;
 import java.sql.*;
 import java.util.ArrayList;
 
@@ -136,7 +137,7 @@ public class App
                     country.Name = rset.getString("Name");
                     country.Continent = rset.getString("Continent");
                     country.Region = rset.getString("Region");
-                    country.Population = new Population(rset.getInt("Population"));
+                    country.Population = new Population(rset.getLong("Population"));
                     country.Capital = new City(rset.getString("Capital"));
                     countries.add(t.cast(country));
                 }
@@ -152,10 +153,10 @@ public class App
                 {
                     //Get Each City information and add it to cities arraylist
                     City city = new City();
-                    city.Country.Name = rset.getString("Country");
-                    city.Name = rset.getString("Name");
+                    city.Country = new Country(rset.getString("Country"));//Country Name
+                    city.Name = rset.getString("Name");//city Name
                     city.District = rset.getString("District");
-                    city.Population = new Population(rset.getInt("Population"));
+                    city.Population = new Population(rset.getLong("Population"));
                     cities.add(t.cast(city));
                 }
 
@@ -203,13 +204,57 @@ public class App
      */
     public void displayCountries(ArrayList<Country> countries)
     {
+        //check if countries in null
+        if (countries == null)
+        {
+            //If null display error and exit this method
+            System.out.println("The Countries list provided is null!");
+            return;
+        }
         //Display the Header
-        System.out.println(String.format("%-4s %-60s %-15s %-26s %-30s %-10s", "Code", "Name", "Continent", "Region", "Population", "Capital"));
+        System.out.printf("%-4s %-60s %-15s %-26s %-30s %-10s%n", "Code", "Name", "Continent", "Region", "Population", "Capital");
 
         //For each Country Display each country information
         for (Country c : countries)
         {
-            System.out.println(String.format("%-4s %-60s %-15s %-26s %-30s %-10s", c.Code, c.Name, c.Continent, c.Region, c.Population, c.Capital != null ? c.Capital.Name : ""));
+            //Continue if this country is null
+            if (c == null)
+            {
+                continue;
+            }
+
+            //Display country information
+            System.out.printf("%-4s %-60s %-15s %-26s %-30s %-10s%n", c.Code, c.Name, c.Continent, c.Region, c.Population != null ? c.Population.TotalPopulation : "", c.Capital != null ? c.Capital.Name : "");
+        }
+    }
+
+    /**
+     * Displays the list of cities
+     * @param cities The list of cities to Display
+     */
+    public void displayCities(ArrayList<City> cities)
+    {
+        //check if cities in null
+        if (cities == null)
+        {
+            //If null display error and exit this method
+            System.out.println("The Cities list provided is null!");
+            return;
+        }
+        //Display the Header
+        System.out.printf("%-25s %-60s %-15s %-20s", "Name", "Country", "District", "Population");
+
+        //For each Country Display each country information
+        for (City c : cities)
+        {
+            //Continue if this City is null
+            if (c == null)
+            {
+                continue;
+            }
+
+            //Display city information
+            System.out.printf("%-25s %-60s %-15s %-20s", c.Name, c.Country != null ? c.Country.Name : "", c.District, c.Population != null ? c.Population.TotalPopulation : "");
         }
     }
 }
