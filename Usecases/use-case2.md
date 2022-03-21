@@ -1,59 +1,60 @@
-# USE CASE: <number> <the name should be the goal as a short active verb phrase>
+# USE CASE: 2. Three reports for top X most populated countries in world, continent or region where X is manually entered. 
 
 ## CHARACTERISTIC INFORMATION
 
 ### Goal in Context
 
-*a longer statement of the goal, if needed*
+As an employee of World health organisation, I require the top X most populated countries in the world, continent and region where I am able to enter the X, so I am able to know the first countries I will need to contact regarding any health risks.
 
 ### Scope
 
-*what system is considered black-box under design*
+Company.
 
 ### Level
 
-*one of: Summary, Primary task, subfunction*
+Primary task
 
 ### Preconditions
 
-*what we expect is already the state of the world*
+Database contains the population and location of countries.
 
 ### Success End Condition
 
-*the state of the world upon successful completion*
+Three different reports segmented by area are made available to the employees where they can enter the top X they want to review.
+Reports:
+ - The top N populated countries in the world where N is provided by the user.
+ - The top N populated countries in a continent where N is provided by the user.
+ - The top N populated countries in a region where N is provided by the user.
 
 ### Failed End Condition
 
-*the state of the world if goal abandoned*
+No reports are produced.
 
 ### Primary Actor
 
-*a role name for the primary actor, or description*
+Employee of World Health Organisation
 
 ### Trigger
 
-*the action upon the system that starts the use case, may be a time event*
+Request for the top X most populated cities in an area.
 
 ## MAIN SUCCESS SCENARIO
 
-*put here the steps of the scenario from trigger to goal delivery, and any cleanup after*
-
-1. action description
+1. Requests top X countries by population from largest to the smallest.
+2. Requests top X continents by population from largest to the smallest.
+3. Requests top X regions by population from largest to the smallest.
+4. Employee has easy access to the 3 different reports where they can enter X.
 
 ## EXTENSIONS
 
-*put here the extensions, one at a time, each referring to the step of the main scenario*
-
-1. **Condition**: action of sub use case
+1. User enters 0 so the report returns 0 values.
+2. User enters more values than the table has available.
+3. User enters non numerical value.
 
 ## SUB-VARIATIONS
 
-*put here the sub-variations that will cause eventual branching in the scenario
-
-1. list of sub-variations
+None.
 
 ## SCHEDULE
 
-**DUE DATE**: *date or release of deployment*
-
-*any other schedule/staffing information you need*
+12/04/2022: All requested reports provided 

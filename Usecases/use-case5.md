@@ -1,59 +1,60 @@
-# USE CASE: <number> <the name should be the goal as a short active verb phrase>
+# USE CASE: 5. Three reports which organise all capital cities in the world, continent or region by largest population to smallest.
 
 ## CHARACTERISTIC INFORMATION
 
 ### Goal in Context
 
-*a longer statement of the goal, if needed*
+5. As an employee of World health organisation, I require reports which organise all capital cities in the world, continent or region by largest population to smallest so I know which capital cities are potentially more condenced and need to be prioritised in case of an emergency.
 
 ### Scope
 
-*what system is considered black-box under design*
+Company.
 
 ### Level
 
-*one of: Summary, Primary task, subfunction*
+Primary task
 
 ### Preconditions
 
-*what we expect is already the state of the world*
+Database contains the population and location of capital cities.
 
 ### Success End Condition
 
-*the state of the world upon successful completion*
+Three different reports segmented by area are made available to the employees.
+
+Reports:
+- All the capital cities in the world organised by largest population to smallest.
+- All the capital cities in a continent organised by largest population to smallest.
+- All the capital cities in a region organised by largest to smallest.
 
 ### Failed End Condition
 
-*the state of the world if goal abandoned*
+No reports are produced.
 
 ### Primary Actor
 
-*a role name for the primary actor, or description*
+Employee of World Health Organisation
 
 ### Trigger
 
-*the action upon the system that starts the use case, may be a time event*
+Request to see the capital cities by population in different areas.
 
 ## MAIN SUCCESS SCENARIO
 
-*put here the steps of the scenario from trigger to goal delivery, and any cleanup after*
-
-1. action description
+1. Requests for all capital cities in the world by largest population to smallest.
+2. Requests for all capital cities in the continent by largest population to smallest.
+3. Requests for all capital cities in the region by largest population to smallest.
+4. Employee has easy access to the 3 different reports.
 
 ## EXTENSIONS
 
-*put here the extensions, one at a time, each referring to the step of the main scenario*
-
-1. **Condition**: action of sub use case
+1. User misspells the area they want to see information for.
+2. User enters an area outside the scope of the report.
 
 ## SUB-VARIATIONS
 
-*put here the sub-variations that will cause eventual branching in the scenario
-
-1. list of sub-variations
+None.
 
 ## SCHEDULE
 
-**DUE DATE**: *date or release of deployment*
-
-*any other schedule/staffing information you need*
+12/04/2022: All requested reports provided 

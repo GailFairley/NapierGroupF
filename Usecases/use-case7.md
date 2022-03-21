@@ -1,59 +1,60 @@
-# USE CASE: <number> <the name should be the goal as a short active verb phrase>
+# USE CASE: 7. Three reports that segment people who live in rural areas vs cities in each continent,region or country. 
 
 ## CHARACTERISTIC INFORMATION
 
 ### Goal in Context
 
-*a longer statement of the goal, if needed*
+7. As an employee of World health organisation, I require the breakdown of people living in urban or non-urbanised areas in each continent, region or country,so I am able to swiftly predict the spread of disease.
 
 ### Scope
 
-*what system is considered black-box under design*
+Company.
 
 ### Level
 
-*one of: Summary, Primary task, subfunction*
+Primary task
 
 ### Preconditions
 
-*what we expect is already the state of the world*
+Database contains the population and their living location.
 
 ### Success End Condition
 
-*the state of the world upon successful completion*
+Three different reports segmented by area are made available to the employees.
+
+Reports:
+- The population of people, people living in cities, and people not living in cities in each continent.
+- The population of people, people living in cities, and people not living in cities in each region.
+- The population of people, people living in cities, and people not living in cities in each country.
 
 ### Failed End Condition
 
-*the state of the world if goal abandoned*
+No reports are produced.
 
 ### Primary Actor
 
-*a role name for the primary actor, or description*
+Employee of World Health Organisation
 
 ### Trigger
 
-*the action upon the system that starts the use case, may be a time event*
+Request to see the population divided by their living location in different areas.
 
 ## MAIN SUCCESS SCENARIO
 
-*put here the steps of the scenario from trigger to goal delivery, and any cleanup after*
-
-1. action description
+1. Requests for a report which displays the breakdown of the population who live in rural areas vs cities in a continent.
+2. Requests for a report which displays the breakdown of the population who live in rural areas vs cities in a region.
+3. Requests for a report which displays the breakdown of the population who live in rural areas vs cities in a country.
+4. Employee has easy access to the 3 different reports.
 
 ## EXTENSIONS
 
-*put here the extensions, one at a time, each referring to the step of the main scenario*
-
-1. **Condition**: action of sub use case
+1. User misspells the area they want to see information for.
+2. User enters an area outside the scope of the report.
 
 ## SUB-VARIATIONS
 
-*put here the sub-variations that will cause eventual branching in the scenario
-
-1. list of sub-variations
+None.
 
 ## SCHEDULE
 
-**DUE DATE**: *date or release of deployment*
-
-*any other schedule/staffing information you need*
+12/04/2022: All requested reports provided 

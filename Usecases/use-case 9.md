@@ -1,59 +1,60 @@
-# USE CASE: <number> <the name should be the goal as a short active verb phrase>
+# USE CASE: 9. Most spoken languages.
 
 ## CHARACTERISTIC INFORMATION
 
 ### Goal in Context
 
-*a longer statement of the goal, if needed*
+9. As an employee of World health organisation, it would be nice to see how big of a percentage of the world speak Chinese, English, Hindi, Spanish or Arabic from most spoken to least, so I know how many employees we need to hire who speak those languages.
 
 ### Scope
 
-*what system is considered black-box under design*
+Company.
 
 ### Level
 
-*one of: Summary, Primary task, subfunction*
+Subfunction
 
 ### Preconditions
 
-*what we expect is already the state of the world*
+Database contains the population breakdown by languages spoken.
 
 ### Success End Condition
 
-*the state of the world upon successful completion*
+Three different reports segmented by area are made available to the employees.
+
+Provide number of people who speak the following languages from greatest number to smallest, including the percentage of the world population:
+- Chinese.
+- English.
+- Hindi.
+- Spanish.
+- Arabic.
 
 ### Failed End Condition
 
-*the state of the world if goal abandoned*
+No reports are produced.
 
 ### Primary Actor
 
-*a role name for the primary actor, or description*
+Employee of World Health Organisation
 
 ### Trigger
 
-*the action upon the system that starts the use case, may be a time event*
+Request to see the most commonly spoken languages.
 
 ## MAIN SUCCESS SCENARIO
 
-*put here the steps of the scenario from trigger to goal delivery, and any cleanup after*
-
-1. action description
+1. User requests to see how big of a percentage of the world speak Chinese, English, Hindi, Spanish or Arabic from most spoken to least.
+2. User is provided with the requested information.
 
 ## EXTENSIONS
 
-*put here the extensions, one at a time, each referring to the step of the main scenario*
-
-1. **Condition**: action of sub use case
+1. User misspells the area they want to see information for.
+2. User enters an area outside the scope of the report.
 
 ## SUB-VARIATIONS
 
-*put here the sub-variations that will cause eventual branching in the scenario
-
-1. list of sub-variations
+None.
 
 ## SCHEDULE
 
-**DUE DATE**: *date or release of deployment*
-
-*any other schedule/staffing information you need*
+12/04/2022: All requested reports provided 

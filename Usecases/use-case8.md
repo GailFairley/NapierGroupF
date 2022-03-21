@@ -1,59 +1,59 @@
-# USE CASE: <number> <the name should be the goal as a short active verb phrase>
+# USE CASE: 8. Access to the population of the world, continents, regions, countries, districts and cities.
 
 ## CHARACTERISTIC INFORMATION
 
 ### Goal in Context
 
-*a longer statement of the goal, if needed*
+8. As an employee of World health organisation, I require the population of the world, continents, regions, countries, districts and cities reports, so I am able to plan needed resource accordingly.
 
 ### Scope
 
-*what system is considered black-box under design*
+Company.
 
 ### Level
 
-*one of: Summary, Primary task, subfunction*
+Primary task
 
 ### Preconditions
 
-*what we expect is already the state of the world*
+Database contains the population of different areas.
 
 ### Success End Condition
 
-*the state of the world upon successful completion*
+Information that should be accessible for the organisation:
+- The population of the world.
+- The population of a continent.
+- The population of a region.
+- The population of a country.
+- The population of a district.
+- The population of a city.
 
 ### Failed End Condition
 
-*the state of the world if goal abandoned*
+No reports are produced.
 
 ### Primary Actor
 
-*a role name for the primary actor, or description*
+Employee of World Health Organisation
 
 ### Trigger
 
-*the action upon the system that starts the use case, may be a time event*
+Request to see the population in different areas.
 
 ## MAIN SUCCESS SCENARIO
 
-*put here the steps of the scenario from trigger to goal delivery, and any cleanup after*
-
-1. action description
+1. User requests to see the population of a certain area.
+2. User is provided with the requested information. 
 
 ## EXTENSIONS
 
-*put here the extensions, one at a time, each referring to the step of the main scenario*
-
-1. **Condition**: action of sub use case
+1. User misspells the area they want to see information for.
+2. User enters an area outside the scope of the report.
 
 ## SUB-VARIATIONS
 
-*put here the sub-variations that will cause eventual branching in the scenario
-
-1. list of sub-variations
+None.
 
 ## SCHEDULE
 
-**DUE DATE**: *date or release of deployment*
-
-*any other schedule/staffing information you need*
+12/04/2022: All requested reports provided 
