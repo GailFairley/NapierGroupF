@@ -254,6 +254,14 @@ public class App
         //Display the retrieved Cities
         displayCities(getCapitalCitiesInARegionOrganisedByPopulation);
 
+        //Use Case 6
+        //20
+        System.out.println("\nThe Top N '100' Capital Cities in the world organised by largest population to smallest.\n");
+        //The top N populated Capital cities in the world where N is provided by the user.
+        ArrayList<City> getTopCapitalCitiesOrganisedByPopulation = getTopCapitalCitiesOrganisedByPopulation( 100);
+        //Display the retrieved Cities
+        displayCities(getTopCapitalCitiesOrganisedByPopulation);
+
         //End
         System.out.println("\nThe End.");
     }
@@ -710,6 +718,24 @@ public class App
                 + "Order By city.Population DESC ";
 
         //All the capital cities in a region organised by largest to smallest.
+        return getReport(City.class, sql);
+    }
+
+    /**
+     * Get Report of The top N capital cities in the world where N is provided by the user.
+     * @param n determines the number to limit number of rows in results
+     * @return list of retrieved cities from the database
+     */
+    public ArrayList<City> getTopCapitalCitiesOrganisedByPopulation(int n)
+    {
+        //Add string for the SQL statement
+        String sql = "SELECT city.name as Name, country.name as Country, city.population AS Population, District "
+                   + "From city "
+                   + "JOIN country on city.id = country.capital "
+                   + "Order By city.Population DESC "
+                   + "Limit " + n ;  // Limit the Results by N
+
+        //Get Report of The top N capital cities in the world where N is provided by the user.
         return getReport(City.class, sql);
     }
 

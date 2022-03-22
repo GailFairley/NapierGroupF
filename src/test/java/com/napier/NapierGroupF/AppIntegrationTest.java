@@ -389,4 +389,16 @@ public class AppIntegrationTest
             assertEquals(region, c.Country.Region);
         }
     }
+
+    /**
+     * Test get Top N Capital Cities organised by population
+     */
+    @Test
+    void testGetTopCapitalCities()
+    {
+        //Get Top 100 Cities
+        ArrayList<City> cities = app.getTopCapitalCitiesOrganisedByPopulation(100);
+        //Check if the returned list isn't null the total size equals 100
+        assertTrue( cities != null && cities.size() == 100);
+    }
 }
