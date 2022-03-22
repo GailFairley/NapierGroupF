@@ -403,23 +403,46 @@ public class AppIntegrationTest
     }
 
     /**
-     * Test get Top N Capital Cities organised by population
+     * Test get Top N Capital Cities in Continent organised by population
      */
     @Test
     void testGetTopCapitalCitiesInContinent()
     {
+        //User Given Inputs
         String continent = "Europe";
         int n = 100;
 
         //Get Top 100 Cities
         ArrayList<City> cities = app.getTopCapitalCitiesInContinentOrganisedByPopulation(n, continent);
-        //Check if the returned list isn't null the total size equals 100
+        //Check if the returned list isn't null the and either total size equals 100 or the list size is greater than 0
         assertTrue( cities != null && (cities.size() == n || cities.size() > 0));
 
-        //Check if all Capital cities' Region is Eastern Europe
+        //Check if all Capital cities' Continent is Europe
         for (City c : cities)
         {
             assertEquals(continent, c.Country.Continent);
+        }
+    }
+
+    /**
+     * Test get Top N Capital Cities in a Region organised by population
+     */
+    @Test
+    void testGetTopCapitalCitiesInRegion()
+    {
+        //User Given Inputs
+        String region = "Western Europe";
+        int n = 10;
+
+        //Get Top 100 Cities
+        ArrayList<City> cities = app.getTopCapitalCitiesInRegionOrganisedByPopulation(n, region);
+        //Check if the returned list isn't null the and either total size equals 100 or the list size is greater than 0
+        assertTrue( cities != null && (cities.size() == n || cities.size() > 0));
+
+        //Check if all Capital cities' Region is Western Europe
+        for (City c : cities)
+        {
+            assertEquals(region, c.Country.Region);
         }
     }
 }

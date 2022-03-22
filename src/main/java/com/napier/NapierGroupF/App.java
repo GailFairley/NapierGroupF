@@ -263,11 +263,18 @@ public class App
         displayCities(getTopCapitalCitiesOrganisedByPopulation);
 
         //21
-        System.out.println("\nThe Top N '100' Capital Cities in the world organised by largest population to smallest.\n");
-        //The top N populated Capital cities in the world where N is provided by the user.
-        ArrayList<City> getTopCapitalCitiesInContinentOrganisedByPopulation = getTopCapitalCitiesInContinentOrganisedByPopulation(100, "Europe");
+        System.out.println("\nThe Top N '20' Capital Cities in the Continent 'Europe' organised by largest population to smallest.\n");
+        //The top N populated Capital cities in the continent where N is provided by the user.
+        ArrayList<City> getTopCapitalCitiesInContinentOrganisedByPopulation = getTopCapitalCitiesInContinentOrganisedByPopulation(20, "Europe");
         //Display the retrieved Cities
-        displayCities(getTopCapitalCitiesOrganisedByPopulation);
+        displayCities(getTopCapitalCitiesInContinentOrganisedByPopulation);
+
+        //22
+        System.out.println("\nThe top N '20' populated capital cities in a region 'Western Europe' where N is provided by the user. \n");
+        //The top N populated Capital cities in the region where N is provided by the user.
+        ArrayList<City> getTopCapitalCitiesInRegionOrganisedByPopulation = getTopCapitalCitiesInRegionOrganisedByPopulation(20, "Western Europe");
+        //Display the retrieved Cities
+        displayCities(getTopCapitalCitiesInRegionOrganisedByPopulation);
 
         //End
         System.out.println("\nThe End.");
@@ -749,6 +756,7 @@ public class App
     /**
      * The top N populated capital cities in a continent where N is provided by the user.
      * @param n determines the number to limit number of rows in results
+     * @param continent the continent to filter the capital cities by
      * @return list of retrieved cities from the database
      */
     public ArrayList<City> getTopCapitalCitiesInContinentOrganisedByPopulation(int n, String continent)
@@ -757,11 +765,31 @@ public class App
         String sql = "SELECT city.name as Name, country.name as Country, city.population, District, country.Continent AS Continent "
                    + "From city "
                    + "JOIN country on city.id = country.capital "
-                   + "WHERE continent = '" + continent + "' "
+                   + "WHERE continent = '" + continent + "' " // the continent to filter by
                    + "Order By city.Population DESC "
                    + "Limit " + n ;  // Limit the Results by N
 
         //Get Report of The top N populated capital cities in a continent where N is provided by the user.
+        return getReport(City.class, sql);
+    }
+
+    /**
+     * The top N populated capital cities in a region where N is provided by the user.
+     * @param n determines the number to limit number of rows in results
+     * @param region the Region to filter the capital cities by
+     * @return list of retrieved cities from the database
+     */
+    public ArrayList<City> getTopCapitalCitiesInRegionOrganisedByPopulation(int n, String region)
+    {
+        //Add string for the SQL statement
+        String sql = "SELECT city.name as Name, country.name as Country, city.population, District, country.Region AS Region "
+                   + "From city "
+                   + "JOIN country on city.id = country.capital "
+                   + "WHERE country.Region = '" + region + "' " // the region to filter by
+                   + "Order By city.Population DESC "
+                   + "Limit " + n ;  // Limit the Results by N
+
+        //Get Report of The top N populated capital cities in a region where N is provided by the user.
         return getReport(City.class, sql);
     }
 
