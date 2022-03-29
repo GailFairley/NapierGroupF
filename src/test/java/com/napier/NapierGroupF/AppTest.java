@@ -13,7 +13,7 @@ package com.napier.NapierGroupF;
 import com.mockrunner.mock.jdbc.MockResultSet;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.TestInstance;
+
 import java.sql.ResultSet;
 import java.util.ArrayList;
 
@@ -37,45 +37,45 @@ public class AppTest<T>
         app = new App();
     }
 
-    //Display Countries Test
+    //Output Countries Test
     /**
-     * Test for displayCountries method when null countries list given
+     * Test for outputCountries method when null countries list given
      */
     @Test
-    void displayCountriesTestNull()
+    void outputCountriesTestNull()
     {
-        app.displayCountries(null);
+        app.outputCountries(null, "country", "Title");
     }
 
     /**
-     * Test for displayCountries method when an Empty countries list given
+     * Test for outputCountries method when an Empty countries list given
      */
     @Test
-    void displayCountriesTestEmpty()
+    void outputCountriesTestEmpty()
     {
         //Empty Country Arraylist
-        app.displayCountries(new ArrayList<Country>());
+        app.outputCountries(new ArrayList<>(), "country", "Title");
     }
 
     /**
-     * Test for displayCountries method when the countries list contains an Empty Country
+     * Test for outputCountries method when the countries list contains a Null Country
      */
     @Test
-    void displayCountriesTestContainsNull()
+    void outputCountriesTestContainsNull()
     {
         //new Countries arraylist
         ArrayList<Country> countries = new ArrayList<Country>();
         //add null country
         countries.add(null);
 
-        app.displayCountries(countries);
+        app.outputCountries(countries, "country", "Title");
     }
 
     /**
-     * Test with Empty City and Population for the Country
+     * Test outputCountries with Empty City and Population for the Country
      */
     @Test
-    void displayCountriesTestEmptyCityPopulation()
+    void outputCountriesTestEmptyCityPopulation()
     {
         //Initialize Countries List
         ArrayList<Country> countries = new ArrayList<Country>();
@@ -92,14 +92,14 @@ public class AppTest<T>
         c.Population = new Population();
         countries.add(c);
 
-        app.displayCountries(countries);
+        app.outputCountries(countries, "country", "Title");
     }
 
     /**
-     * Test with Null City (capital) and Population for the Country
+     * Test outputCountries with Null City (capital) and Population for the Country
      */
     @Test
-    void displayCountriesTestNullCityPopulation()
+    void outputCountriesTestNullCityPopulation()
     {
         //Initialize Countries List
         ArrayList<Country> countries = new ArrayList<Country>();
@@ -113,14 +113,14 @@ public class AppTest<T>
         //Null City and Population
         countries.add(c);
 
-        app.displayCountries(countries);
+        app.outputCountries(countries, "country", "Title");
     }
 
     /**
-     * Test with normal input
+     * Test outputCountries with normal input
      */
     @Test
-    void displayCountriesTest()
+    void outputCountriesTest()
     {
         //Initialize Countries List
         ArrayList<Country> countries = new ArrayList<Country>();
@@ -137,48 +137,98 @@ public class AppTest<T>
         c.Population = new Population(325000000);
         countries.add(c);
 
-        app.displayCountries(countries);
+        app.outputCountries(countries, "country", "Title");
+    }
+
+    /**
+     * Test outputCountries with null Filename and Title
+     */
+    @Test
+    void outputCountriesTestNullFileTitle()
+    {
+        //Initialize Countries List
+        ArrayList<Country> countries = new ArrayList<Country>();
+
+        //Initialize Country obj
+        Country c = new Country();
+        c.Code = "123";
+        c.Name = "America";
+        c.Region = "USA";
+        c.Continent = "Americas";
+        //City Name
+        c.Capital = new City("Washington, D.C.");
+        //Total Population
+        c.Population = new Population(325000000);
+        countries.add(c);
+
+        //Test outputCountries with null Filename and Title
+        app.outputCountries(countries, null, null);
+    }
+
+    /**
+     * Test outputCountries with Empty Filename and Title
+     */
+    @Test
+    void outputCountriesTestEmptyFileTitle()
+    {
+        //Initialize Countries List
+        ArrayList<Country> countries = new ArrayList<Country>();
+
+        //Initialize Country obj
+        Country c = new Country();
+        c.Code = "123";
+        c.Name = "America";
+        c.Region = "USA";
+        c.Continent = "Americas";
+        //City Name
+        c.Capital = new City("Washington, D.C.");
+        //Total Population
+        c.Population = new Population(325000000);
+        countries.add(c);
+
+        //Test outputCountries with empty Filename and Title
+        app.outputCountries(countries, "", "");
     }
 
     //displayCities Tests
     /**
-     * Test for displayCities method when null cities list given
+     * Test for outputCities method when null cities list given
      */
     @Test
-    void displayCitiesTestNull()
+    void outputCitiesTestNull()
     {
-        app.displayCities(null);
+        app.outputCities(null, "city", "Title");
     }
 
     /**
-     * Test for displayCities method when an Empty cities list given
+     * Test for outputCities method when an Empty cities list given
      */
     @Test
-    void displayCitiesTestEmpty()
+    void outputCitiesTestEmpty()
     {
         //Empty Country Arraylist
-        app.displayCities(new ArrayList<>());
+        app.outputCities(new ArrayList<>(), "city", "Title");
     }
 
     /**
-     * Test for displayCities method when the cities list contains an Empty City
+     * Test for outputCities method when the cities list contains an Empty City
      */
     @Test
-    void displayCitiesTestContainsNull()
+    void outputCitiesTestContainsNull()
     {
         //new Cities arraylist
         ArrayList<City> cities = new ArrayList<>();
         //add null city
         cities.add(null);
 
-        app.displayCities(cities);
+        app.outputCities(cities, "city", "Title");
     }
 
     /**
-     * Test with Empty country and Population for the Country
+     * Test outputCities with Empty country and Population
      */
     @Test
-    void displayCitiesTestEmptyCountryPopulation()
+    void outputCitiesTestEmptyCountryPopulation()
     {
         //Initialize Cities List
         ArrayList<City> cities = new ArrayList<>();
@@ -193,14 +243,14 @@ public class AppTest<T>
         c.Population = new Population();
         cities.add(c);
 
-        app.displayCities(cities);
+        app.outputCities(cities, "city", "Title");
     }
 
     /**
-     * Test with Null Country and Population for the City
+     * Test outputCities with Null Country and Population for the City
      */
     @Test
-    void displayCitiesTestNullCountryPopulation()
+    void outputCitiesTestNullCountryPopulation()
     {
         //Initialize Cities List
         ArrayList<City> cities = new ArrayList<>();
@@ -212,14 +262,14 @@ public class AppTest<T>
         //Null Country + Population
         cities.add(c);
 
-        app.displayCities(cities);
+        app.outputCities(cities, "city", "Title");
     }
 
     /**
-     * Test with normal input
+     * Test outputCities with normal input
      */
     @Test
-    void displayCitiesTestNormal()
+    void outputCitiesTestNormal()
     {
         //Initialize Cities List
         ArrayList<City> cities = new ArrayList<>();
@@ -234,7 +284,82 @@ public class AppTest<T>
         c.Population = new Population(692683);
         cities.add(c);
 
-        app.displayCities(cities);
+        app.outputCities(cities, "city", "Title");
+    }
+
+    /**
+     * Test outputCities with null Filename and Title
+     */
+    @Test
+    void outputCitiesTestNullFileTitle()
+    {
+        //Initialize Cities List
+        ArrayList<City> cities = new ArrayList<>();
+
+        //Initialize Cities obj
+        City c = new City();
+        c.Name = "Washington, D.C.";
+        c.District = "Columbia";
+        //Country Name
+        c.Country = new Country("America");
+        //Total Population
+        c.Population = new Population(692683);
+        cities.add(c);
+
+        app.outputCities(cities, null, null);
+    }
+
+    /**
+     * Test outputCities with empty Filename and Title
+     */
+    @Test
+    void outputCitiesTestEmptyFileTitle()
+    {
+        //Initialize Cities List
+        ArrayList<City> cities = new ArrayList<>();
+
+        //Initialize Cities obj
+        City c = new City();
+        c.Name = "Washington, D.C.";
+        c.District = "Columbia";
+        //Country Name
+        c.Country = new Country("America");
+        //Total Population
+        c.Population = new Population(692683);
+        cities.add(c);
+
+        app.outputCities(cities, "", "");
+    }
+
+    /**
+     * Test writeToFile with null Filename and String Builder
+     */
+    @Test
+    void writeToFileTestNull()
+    {
+        app.writeToFile(null, null);
+    }
+
+    /**
+     * Test writeToFile with empty Filename and String Builder
+     */
+    @Test
+    void writeToFileTestEmpty()
+    {
+        app.writeToFile("", new StringBuilder());
+    }
+
+    /**
+     * Test writeToFile Normal
+     */
+    @Test
+    void writeToFileTestNormal()
+    {
+        //Initialize String Builder
+        StringBuilder sb = new StringBuilder();
+        sb.append("Test");
+
+        app.writeToFile("file", sb);
     }
 
     /**
@@ -244,7 +369,7 @@ public class AppTest<T>
     void validateSqlTest()
     {
         //Validate sql normal
-        app.validateSql("SELECT * FROM country");
+        app.validateString("SELECT * FROM country");
     }
 
     /**
@@ -254,7 +379,7 @@ public class AppTest<T>
     void validateSqlNullTest()
     {
         //validate sql null SQL string
-        app.validateSql(null);
+        app.validateString(null);
     }
 
     /**
@@ -264,7 +389,7 @@ public class AppTest<T>
     void validateSqlEmptyTest()
     {
         //validate sql empty SQL string
-        app.validateSql("");
+        app.validateString("");
     }
 
     /**
