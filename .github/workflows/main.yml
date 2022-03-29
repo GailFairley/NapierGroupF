@@ -1,8 +1,5 @@
 name: Coursework
-on:
-  push:
-    branches:
-      - master
+on: push
 
 jobs:
   UnitTests:
