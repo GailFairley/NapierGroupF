@@ -10,10 +10,13 @@
 package com.napier.NapierGroupF;
 
 //Imports
+import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInstance;
 import static org.junit.jupiter.api.Assertions.*;
+
+import java.sql.ResultSet;
 import java.util.ArrayList;
 
 /**
@@ -32,47 +35,66 @@ public class AppIntegrationTest
     {
         app = new App();
         app.connect("localhost:33069", 3000);
-
     }
 
     /**
-     * Test for getReport when the given Type is null
+     * Disconnect from the db after all tests
      */
-    @Test
-    void testGetReportNullType()
+    @AfterAll
+    static void close()
     {
-        //get Report but type is null
-        app.getReport(null, "SELECT * FROM country");
+        app.disconnect();
     }
 
     /**
-     * Test for getReport when the sql is null
+     * Test for executeQuery when the SQL is Normal
      */
     @Test
-    void testGetReportNullSql()
+    void testExecuteQuery()
     {
-        //get Report but Sql is null
-        app.getReport(Country.class, null);
+        //executeQuery Normal
+        app.executeQuery( "SELECT * FROM country");
     }
 
     /**
-     * Test for getReport when the sql is Empty
+     * Test for executeQuery when the sql is null
      */
     @Test
-    void testGetReportEmptySql()
+    void testExecuteSqlNullSql()
     {
-        //get Report but Sql is null
-        app.getReport(Country.class, "");
+        //executeQuery but Sql is null
+        app.executeQuery(null);
     }
 
     /**
-     * Test for getReport when the sql is invalid
+     * Test for executeQuery when the sql is Empty
      */
     @Test
-    void testGetReportInvalidSql()
+    void testExecuteSqlEmptySql()
     {
-        //get Report but Sql is null
-        app.getReport(Country.class, "SELECT * frm country");
+        //executeQuery but Sql is null
+        app.executeQuery("");
+    }
+
+    /**
+     * Test for executeQuery when the sql is invalid
+     */
+    @Test
+    void testExecuteSqlInvalidSql()
+    {
+        //executeQuery but Sql is Invalid
+        app.executeQuery("SELECT * frm country");
+    }
+
+    /**
+     * Test for getAndMapCountries when the sql is invalid
+     */
+    @Test
+    void testGetAndMapCountries()
+    {
+        //getAndMapCountry Test
+        ArrayList<Country> countries = app.getCountries("SELECT * FROM country");
+        assertTrue(countries != null && countries.size() > 0);
     }
 
     /**
