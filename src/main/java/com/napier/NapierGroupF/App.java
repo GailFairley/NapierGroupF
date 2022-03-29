@@ -10,6 +10,10 @@
 package com.napier.NapierGroupF;
 
 //Imports
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.sql.*;
 import java.util.ArrayList;
 
@@ -40,7 +44,7 @@ public class App
             a.connect(args[0], Integer.parseInt(args[1]));
         }
 
-        // Display All the Reports in terminal
+        //generate reports
         a.getAndDisplayAllReports();
 
         // Disconnect from database
@@ -58,11 +62,13 @@ public class App
      */
     public void connect(String loc, int delay)
     {
+        //Try loading db the driver
         try
         {
             // Load Database driver
             Class.forName("com.mysql.cj.jdbc.Driver");
         }
+        //Catch any errors
         catch (ClassNotFoundException e)
         {
             //Catch Drive error
@@ -104,13 +110,16 @@ public class App
      */
     public void disconnect()
     {
+        //Check if connected
         if (con != null)
         {
+            //Try disconnecting
             try
             {
                 // Close connection
                 con.close();
             }
+            //Catch any errors
             catch (Exception e)
             {
                 // Display error - why cannot close the connection
@@ -121,170 +130,171 @@ public class App
 
     public void getAndDisplayAllReports()
     {
+        String title;
+
         //Reports
 
         //Use Case 1
         //1
-        System.out.println("\nAll Countries organised by population Largest to Smallest\n");
+        title = ("All Countries organised by population Largest to Smallest.");
         //All countries organised by population Largest to Smallest
         ArrayList<Country> countriesOrganisedByPopulation = getCountriesOrganisedByPopulation();
-        //Display the retrieved Countries
-        displayCountries(countriesOrganisedByPopulation);
+        //Output the report as a markdown file
+        outputCountries(countriesOrganisedByPopulation, "CountriesOrganisedByPopulation", title);
 
         //2
-        System.out.println("\nAll Countries Given Continent 'Europe' organised by population Largest to Smallest\n");
+        title = ("All Countries Given Continent 'Europe' organised by population Largest to Smallest.");
         //All countries organised by population Largest to Smallest
         ArrayList<Country> countriesInAContinentOrganisedByPopulation = getCountriesInAContinentOrganisedByPopulation("Europe");
-        //Display the retrieved Countries
-        displayCountries(countriesInAContinentOrganisedByPopulation);
+        //Output the report as a markdown file
+        outputCountries(countriesInAContinentOrganisedByPopulation, "CountriesInAContinentOrganisedByPopulation", title);
 
         //3
-        System.out.println("\nAll Countries Given Region 'Eastern Europe' organised by population Largest to Smallest\n");
+        title = ("All Countries Given Region 'Eastern Europe' organised by population Largest to Smallest.");
         //All the countries in a region organised by largest population to smallest.
         ArrayList<Country> countriesInARegionOrganisedByPopulation = getCountriesInARegionOrganisedByPopulation("Eastern Europe");
-        //Display the retrieved Countries
-        displayCountries(countriesInARegionOrganisedByPopulation);
+        //Output the report as a markdown file
+        outputCountries(countriesInARegionOrganisedByPopulation, "CountriesInARegionOrganisedByPopulation", title);
 
         //Use Case 2
         //4
-        System.out.println("\nThe top '100' populated countries in the world.\n");
+        title = ("The top '100' populated countries in the world.");
         //The top N populated countries in the world where N is provided by the user.
         ArrayList<Country> getTopNCountries = getTopNCountries(100);
-        //Display the retrieved Countries
-        displayCountries(getTopNCountries);
+        //Output the report as a markdown file
+        outputCountries(getTopNCountries, "TopNCountries", title);
 
         //5
-        System.out.println("\nThe top '20' populated countries in the world in the continent 'Europe'.\n");
+        title = ("The top '20' populated countries in the world in the continent 'Europe'.");
         //The top N populated countries in a continent where N is provided by the user.
         ArrayList<Country> getTopNCountriesInAContinent = getTopNCountriesInAContinent(20, "Europe");
-        //Display the retrieved Countries
-        displayCountries(getTopNCountriesInAContinent);
+        //Output the report as a markdown file
+        outputCountries(getTopNCountriesInAContinent, "TopNCountriesInAContinent", title);
 
         //6
-        System.out.println("\nThe top '10' populated countries in the world in the Region 'Eastern Europe'.\n");
+        title = ("The top '10' populated countries in the world in the Region 'Eastern Europe'.");
         //The top N populated countries in a region where N is provided by the user.
         ArrayList<Country> getTopNCountriesInARegion = getTopNCountriesInARegion(10, "Eastern Europe");
-        //Display the retrieved Countries
-        displayCountries(getTopNCountriesInARegion);
+        //Output the report as a markdown file
+        outputCountries(getTopNCountriesInARegion, "TopNCountriesInARegion", title);
 
         //Use Case 3
         //7
-        System.out.println("\nAll the Cities in the World Organised by largest population to smallest.\n");
+        title = ("All the Cities in the World Organised by largest population to smallest.");
         //All the cities in the world organised by largest population to smallest.
         ArrayList<City> getCitiesOrganisedByPopulation = getCitiesOrganisedByPopulation();
-        //Display the retrieved Cities
-        displayCities(getCitiesOrganisedByPopulation);
+        //Output the report as a markdown file
+        outputCities(getCitiesOrganisedByPopulation, "AllCitiesInWorldOrganisedByPopulation", title);
 
         //8
-        System.out.println("\nAll the Cities in a Continent 'Asia' organised by largest population to smallest.\n");
+        title = ("All the Cities in a Continent 'Asia' organised by largest population to smallest.");
         //All the cities in a continent organised by largest population to smallest.
         ArrayList<City> getCitiesInContinentOrganisedByPopulation = getCitiesInContinentOrganisedByPopulation("Asia");
-        //Display the retrieved Cities
-        displayCities(getCitiesInContinentOrganisedByPopulation);
+        //Output the report as a markdown file
+        outputCities(getCitiesInContinentOrganisedByPopulation, "AllCitiesInContinentOrganisedByPopulation", title);
 
         //9
-        System.out.println("\nAll the Cities in a Region 'Eastern Europe' organised by largest population to smallest.\n");
+        title = ("All the Cities in a Region 'Eastern Europe' organised by largest population to smallest.");
         //All the cities in a region organised by largest population to smallest.
         ArrayList<City> getCitiesInARegionOrganisedByPopulation = getCitiesInARegionOrganisedByPopulation("Eastern Europe");
-        //Display the retrieved Cities
-        displayCities(getCitiesInARegionOrganisedByPopulation);
+        //Output the report as a markdown file
+        outputCities(getCitiesInARegionOrganisedByPopulation, "AllCitiesInARegionOrganisedByPopulation", title);
 
         //10
-        System.out.println("\nAll the Cities in a Country 'China' organised by largest population to smallest.\n");
+        title = ("All the Cities in a Country 'China' organised by largest population to smallest.");
         //All the cities in a Country organised by largest population to smallest.
         ArrayList<City> getCitiesInCountryOrganisedByPopulation = getCitiesInCountryOrganisedByPopulation("China");
-        //Display the retrieved Cities
-        displayCities(getCitiesInCountryOrganisedByPopulation);
+        //Output the report as a markdown file
+        outputCities(getCitiesInCountryOrganisedByPopulation, "AllCitiesInCountryOrganisedByPopulation", title);
 
         //11
-        System.out.println("\nAll the Cities in a District 'Noord-Holland' organised by largest population to smallest.\n");
+        title = ("All the Cities in a District 'Noord-Holland' organised by largest population to smallest.");
         //All the cities in a District organised by largest population to smallest.
         ArrayList<City> getCitiesInDistrictOrganisedByPopulation = getCitiesInDistrictOrganisedByPopulation("Noord-Holland");
-        //Display the retrieved Cities
-        displayCities(getCitiesInDistrictOrganisedByPopulation);
+        //Output the report as a markdown file
+        outputCities(getCitiesInDistrictOrganisedByPopulation, "AllCitiesInDistrictOrganisedByPopulation", title);
 
         //Use Case 4
         //12
-        System.out.println("\nThe Top N '100' Cities in the World Organised by largest population to smallest.\n");
+        title = ("The Top N '100' Cities in the World Organised by largest population to smallest.");
         //The top N populated cities in the world where N is provided by the user.
         ArrayList<City> getTopCitiesOrganisedByPopulation = getTopCitiesOrganisedByPopulation(100);
-        //Display the retrieved Cities
-        displayCities(getTopCitiesOrganisedByPopulation);
+        //Output the report as a markdown file
+        outputCities(getTopCitiesOrganisedByPopulation, "TopNCitiesInTheWorldOrganisedByPopulation", title);
 
         //13
-        System.out.println("\nThe Top N '100' Cities in a Continent 'Asia' organised by largest population to smallest.\n");
+        title = ("The Top N '100' Cities in a Continent 'Asia' organised by largest population to smallest.");
         //The top N populated cities in a continent where N is provided by the user.
         ArrayList<City> getTopCitiesInContinentOrganisedByPopulation = getTopCitiesInContinentOrganisedByPopulation("Asia", 100);
-        //Display the retrieved Cities
-        displayCities(getTopCitiesInContinentOrganisedByPopulation);
+        //Output the report as a markdown file
+        outputCities(getTopCitiesInContinentOrganisedByPopulation, "TopNCitiesInContinentOrganisedByPopulation", title);
 
         //14
-        System.out.println("\nThe Top N '50' Cities in a Region 'Eastern Europe' organised by largest population to smallest.\n");
+        title = ("The Top N '50' Cities in a Region 'Eastern Europe' organised by largest population to smallest.");
         //The top N populated cities in a region where N is provided by the user.
         ArrayList<City> getTopCitiesInARegionOrganisedByPopulation = getTopCitiesInARegionOrganisedByPopulation("Eastern Europe", 50);
-        //Display the retrieved Cities
-        displayCities(getTopCitiesInARegionOrganisedByPopulation);
+        //Output the report as a markdown file
+        outputCities(getTopCitiesInARegionOrganisedByPopulation, "TopNCitiesInARegionOrganisedByPopulation", title);
 
         //15
-        System.out.println("\nThe Top N '50' Cities in a Country 'China' organised by largest population to smallest.\n");
+        title = ("The Top N '50' Cities in a Country 'China' organised by largest population to smallest.");
         //The top N populated cities in a country where N is provided by the user.
         ArrayList<City> getTopCitiesInCountryOrganisedByPopulation = getTopCitiesInCountryOrganisedByPopulation("China", 50);
-        //Display the retrieved Cities
-        displayCities(getTopCitiesInCountryOrganisedByPopulation);
+        //Output the report as a markdown file
+        outputCities(getTopCitiesInCountryOrganisedByPopulation, "TopNCitiesInCountryOrganisedByPopulation", title);
 
         //16
-        System.out.println("\nThe Top N '5' Cities in a District 'Noord-Holland' organised by largest population to smallest.\n");
+        title = ("The Top N '5' Cities in a District 'Noord-Holland' organised by largest population to smallest.");
         //The top N populated cities in a district where N is provided by the user.
         ArrayList<City> getTopCitiesInDistrictOrganisedByPopulation = getTopCitiesInDistrictOrganisedByPopulation("Noord-Holland", 5);
-        //Display the retrieved Cities
-        displayCities(getTopCitiesInDistrictOrganisedByPopulation);
+        //Output the report as a markdown file
+        outputCities(getTopCitiesInDistrictOrganisedByPopulation, "TopNCitiesInDistrictOrganisedByPopulation", title);
 
         //Use Case 5
         //17
-        System.out.println("\nAll the Capital Cities in the World Organised by largest population to smallest.\n");
+        title = ("All the Capital Cities in the World Organised by largest population to smallest.");
         //All the Capital cities in the world organised by largest population to smallest.
         ArrayList<City> getCapitalCitiesOrganisedByPopulation = getCapitalCitiesOrganisedByPopulation();
-        //Display the retrieved Cities
-        displayCities(getCapitalCitiesOrganisedByPopulation);
+        //Output the report as a markdown file
+        outputCities(getCapitalCitiesOrganisedByPopulation, "AllCapitalCitiesInTheWorldOrganisedByPopulation", title);
 
         //18
-        System.out.println("\nAll the Capital Cities in a Continent 'Europe' organised by largest population to smallest.\n");
+        title = ("All the Capital Cities in a Continent 'Europe' organised by largest population to smallest.");
         //All the Capital cities in a continent organised by largest population to smallest.
         ArrayList<City> getCapitalCitiesInContinentOrganisedByPopulation = getCapitalCitiesInContinentOrganisedByPopulation("Europe");
-        //Display the retrieved Cities
-        displayCities(getCapitalCitiesInContinentOrganisedByPopulation);
+        //Output the report as a markdown file
+        outputCities(getCapitalCitiesInContinentOrganisedByPopulation, "AllCapitalCitiesInContinentOrganisedByPopulation", title);
 
         //19
-        System.out.println("\nAll the Capital Cities in a Region 'Western Europe' organised by largest population to smallest.\n");
+        title = ("All the Capital Cities in a Region 'Western Europe' organised by largest population to smallest.");
         //All the Capital cities in a region organised by largest population to smallest.
         ArrayList<City> getCapitalCitiesInARegionOrganisedByPopulation = getCapitalCitiesInARegionOrganisedByPopulation("Western Europe");
-        //Display the retrieved Cities
-        displayCities(getCapitalCitiesInARegionOrganisedByPopulation);
+        //Output the report as a markdown file
+        outputCities(getCapitalCitiesInARegionOrganisedByPopulation, "AllCapitalCitiesInARegionOrganisedByPopulation", title);
 
         //Use Case 6
         //20
-        System.out.println("\nThe Top N '100' Capital Cities in the world organised by largest population to smallest.\n");
+        title = ("The Top N '100' Capital Cities in the world organised by largest population to smallest.");
         //The top N populated Capital cities in the world where N is provided by the user.
         ArrayList<City> getTopCapitalCitiesOrganisedByPopulation = getTopCapitalCitiesOrganisedByPopulation( 100);
-        //Display the retrieved Cities
-        displayCities(getTopCapitalCitiesOrganisedByPopulation);
+        //Output the report as a markdown file
+        outputCities(getTopCapitalCitiesOrganisedByPopulation, "TopNCapitalCitiesInTheWorldOrganisedByPopulation", title);
 
         //21
-        System.out.println("\nThe Top N '20' Capital Cities in the Continent 'Europe' organised by largest population to smallest.\n");
+        title = ("The Top N '20' Capital Cities in the Continent 'Europe' organised by largest population to smallest.");
         //The top N populated Capital cities in the continent where N is provided by the user.
         ArrayList<City> getTopCapitalCitiesInContinentOrganisedByPopulation = getTopCapitalCitiesInContinentOrganisedByPopulation(20, "Europe");
-        //Display the retrieved Cities
-        displayCities(getTopCapitalCitiesInContinentOrganisedByPopulation);
+        //Output the report as a markdown file
+        outputCities(getTopCapitalCitiesInContinentOrganisedByPopulation, "TopNCapitalCitiesInContinentOrganisedByPopulation", title);
 
         //22
-        System.out.println("\nThe top N '20' populated capital cities in a region 'Western Europe' where N is provided by the user. \n");
+        title = ("The top N '20' populated capital cities in a region 'Western Europe' where N is provided by the user.");
         //The top N populated Capital cities in the region where N is provided by the user.
         ArrayList<City> getTopCapitalCitiesInRegionOrganisedByPopulation = getTopCapitalCitiesInRegionOrganisedByPopulation(20, "Western Europe");
-        //Display the retrieved Cities
-        displayCities(getTopCapitalCitiesInRegionOrganisedByPopulation);
+        //Output the report as a markdown file
+        outputCities(getTopCapitalCitiesInRegionOrganisedByPopulation, "TopNCapitalCitiesInRegionOrganisedByPopulation", title);
 
         //End
-        System.out.println("\nThe End.");
     }
 
     /**
@@ -321,7 +331,7 @@ public class App
     public ArrayList<Country> getCountries(String sql)
     {
         //Validate Sql not null or empty
-        validateSql(sql);
+        validateString(sql);
 
         //Get the ResultSet of the SQL query
         ResultSet rset = executeQuery(sql);
@@ -382,7 +392,7 @@ public class App
     public ArrayList<City> getCities(String sql)
     {
         //Validate Sql not null or empty
-        validateSql(sql);
+        validateString(sql);
 
         //Get the ResultSet of the SQL query
         ResultSet rset = executeQuery(sql);
@@ -435,17 +445,17 @@ public class App
     }
 
     /**
-     * Validate the Given SQL Statement check if it's not null or empty
-     * @param sql SQL Statement to validate
+     * Validate the Given String Statement check if it's not null or empty
+     * @param string The String to validate
      */
-    public void validateSql(String sql)
+    public void validateString(String string)
     {
-        //Try to Validate Sql not null or empty
+        //Try to Validate String not null or empty
         try
         {
             //Check if sql is not null or Empty
-            if (sql == null || sql.isEmpty()) {
-                throw new InvalidStringException("Error: Empty or Null Sql Statement provided!", new Exception());
+            if (string == null || string.isEmpty()) {
+                throw new InvalidStringException("Error: Empty or Null String provided!", new Exception());
             }
         }
         //Catch InvalidStringException
@@ -891,62 +901,109 @@ public class App
     }
 
     /**
-     * Displays the list of Countries
+     * Outputs Countries report to Markdown file
+     * @param filename The name of the file to output to
      * @param countries The list of countries to Display
+     * @param title The title of the report
      */
-    public void displayCountries(ArrayList<Country> countries)
+    public void outputCountries(ArrayList<Country> countries, String filename, String title)
     {
-        //check if countries in null
+        // Check countries list is not null or empty
         if (countries == null)
         {
-            //If null display error and exit this method
-            System.out.println("The Countries list provided is null!");
+            System.out.println("Error: Null Countries List provided!");
             return;
         }
-        //Display the Header
-        System.out.printf("%-4s %-60s %-15s %-26s %-30s %-10s%n", "Code", "Name", "Continent", "Region", "Population", "Capital");
 
-        //For each Country Display each country information
+        //initiate String builder
+        StringBuilder sb = new StringBuilder();
+
+        // Print header
+        sb.append("# " + ((title != null && !title.isEmpty()) ? title : "Country Report") + "\n");
+        sb.append("\n| Code | Name | Continent | Region | Population | Capital |\r\n");
+        sb.append("| --- | --- | --- | --- | --- | --- |\r\n");
+
+        // Loop over all employees in the list
         for (Country c : countries)
         {
-            //Continue if this country is null
-            if (c == null)
-            {
-                continue;
-            }
+            // Continue if this country is null
+            if (c == null) continue;
 
-            //Display country information
-            System.out.printf("%-4s %-60s %-15s %-26s %-30s %-10s%n", c.Code, c.Name, c.Continent, c.Region, c.Population != null ? c.Population.TotalPopulation : "-", c.Capital != null ? c.Capital.Name : "-");
+            // Add the Country variables to the StringBuilder
+            sb.append("| " + c.Code + " | " + c.Name + " | " + c.Continent + " | " + c.Region + " | " + (c.Population != null ? c.Population.TotalPopulation : "-") + " | " + (c.Capital != null ? c.Capital.Name : "-") + " |\r\n");
         }
+        //Try creating reports directory and write string reader to file
+        writeToFile(filename, sb);
     }
 
     /**
-     * Displays the list of cities
+     * Outputs Cities report to Markdown
+     * @param filename The name of the file to output to
      * @param cities The list of cities to Display
+     * @param title The title of the report
      */
-    public void displayCities(ArrayList<City> cities)
+    public void outputCities(ArrayList<City> cities, String filename, String title)
     {
-        //check if cities in null
+        // Check cities is not null
         if (cities == null)
         {
-            //If null display error and exit this method
-            System.out.println("The Cities list provided is null!");
+            System.out.println("Error: Null Cities List provided!");
             return;
         }
-        //Display the Header
-        System.out.printf("%-36s %-60s %-25s %-20s%n", "Name", "Country", "District", "Population");
 
-        //For each Country Display each country information
+        //initiate String builder
+        StringBuilder sb = new StringBuilder();
+
+        // Print header
+        sb.append("# " + ((title != null && !title.isEmpty()) ? title : "City Report") + "\n");
+        sb.append("\n| Name | Country | District | Population |\r\n");
+        sb.append("| --- | --- | --- | --- |\r\n");
+
+        // Loop over all employees in the list
         for (City c : cities)
         {
-            //Continue if this City is null
-            if (c == null)
-            {
-                continue;
-            }
+            // Continue if this country is null
+            if (c == null) continue;
 
-            //Display city information
-            System.out.printf("%-36s %-60s %-25s %-20s%n", c.Name, c.Country != null ? c.Country.Name : "-", c.District, c.Population != null ? c.Population.TotalPopulation : "-");
+            // Add the City variable to the StringBuilder
+            sb.append("| " + c.Name + " | " + (c.Country != null ? c.Country.Name : "-") + " | " + c.District + " | " + (c.Population != null ? c.Population.TotalPopulation : "-") + " |\r\n");
+        }
+        //Try creating reports directory and write string reader to file
+        writeToFile(filename, sb);
+    }
+
+    /**
+     * Create reports directory and write string reader to file
+     * @param filename The name of the file to output to
+     * @param sb The string reader to write to file
+     */
+    public void writeToFile(String filename, StringBuilder sb)
+    {
+        //Try creating reports directory and write string reader to file
+        try
+        {
+            new File("./reports/").mkdir();
+            //validate file name
+            validateString(filename);
+            //Create new Writer file with the filename provided
+            BufferedWriter writer = new BufferedWriter(new FileWriter("./reports/" + filename + ".md"));
+            //Terminate if the string builder is null
+            if (sb == null)
+            {
+                writer.close();
+                System.out.println("Error: Could not write to file!");
+                return;
+            }
+            //Write the string builder to the file
+            writer.write(sb.toString());
+            //Close the writer
+            writer.close();
+        }
+        //Catch any IO errors
+        catch (IOException | NullPointerException e)
+        {
+            e.printStackTrace();
+            System.out.println("Error: Could not write to file!");
         }
     }
 }
