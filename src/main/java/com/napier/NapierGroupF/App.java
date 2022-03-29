@@ -13,9 +13,16 @@ package com.napier.NapierGroupF;
 import java.sql.*;
 import java.util.ArrayList;
 
-//Main class to connect to db and display reports
+
+/**
+ * Main class to connect to db and display reports
+ */
 public class App
 {
+    /**
+     * The Main method of the program
+     * @param args Arguments passed to the program
+     */
     public static void main(String[] args)
     {
         // Create new Application
@@ -25,7 +32,7 @@ public class App
         //if no args given run with local host
         if (args.length < 1)
         {
-            a.connect("localhost:33069", 30000);
+            a.connect("localhost:33069", 3000);
         }
         else
         {
@@ -59,7 +66,7 @@ public class App
         catch (ClassNotFoundException e)
         {
             //Catch Drive error
-            System.out.println("Could not load SQL driver");
+            System.out.println("Error: Could not load SQL driver");
             System.exit(-1);
         }
 
@@ -67,7 +74,7 @@ public class App
         int retries = 10;
         for (int i = 0; i < retries; ++i)
         {
-            System.out.println("Connecting to database...");
+            System.out.println("Debug: Connecting to database...");
             try
             {
                 // Wait a bit for db to start
@@ -75,19 +82,19 @@ public class App
 
                 // Connect to database
                 con = DriverManager.getConnection("jdbc:mysql://" + loc + "/world?allowPublicKeyRetrieval=true&useSSL=false", "root", "world");
-                System.out.println("Successfully connected");
+                System.out.println("Debug: Successfully connected");
                 break;
             }
             catch (SQLException sqle)
             {
                 //Catch sql Connection or Query error
-                System.out.println("Failed to connect to database attempt " + i);
+                System.out.println("Error: Failed to connect to database attempt " + i);
                 System.out.println(sqle.getMessage());
             }
             catch (InterruptedException ie)
             {
                 //Catch interruption error
-                System.out.println("Thread interrupted? Should not happen.");
+                System.out.println("Error: Thread interrupted? Should not happen.");
             }
         }
     }
@@ -107,7 +114,7 @@ public class App
             catch (Exception e)
             {
                 // Display error - why cannot close the connection
-                System.out.println("Error closing connection to database");
+                System.out.println("Error: Error closing connection to database");
             }
         }
     }
@@ -281,92 +288,171 @@ public class App
     }
 
     /**
-     * Get a report by passing a Class type and Sql
-     * @param t Generic t of the Class type required
-     * @param sql The SQL statement provided
-     * @return ArrayList of Passed Class
+     * Execute the given SQL query
+     * @param sql The SQL query to execute
+     * @return ResultSet The Result set of the query
      */
-    public <T> ArrayList<T> getReport(Class<T> t, String sql)
+    public ResultSet executeQuery(String sql)
     {
+        //Try executing the SQL query
         try
         {
             //Create an SQL Statement
             Statement stmnt = con.createStatement();
 
-            //Check if sql is not null
-            if(sql == null || sql.isEmpty())
-            {
-                System.out.println("Empty or Null Sql Statement provided!");
-                return null;
-            }
-
-            //Execute the SQL statement
-            ResultSet rset = stmnt.executeQuery(sql);
-
-            //Check if Class type provided
-            if(t == null)
-            {
-                System.out.println("Null Class Given!");
-                return null;
-            }
-
-            if (t.isInstance(new Country()))
-            {
-                //Extract each Country information
-                ArrayList<T> countries = new ArrayList<>();
-                //While there is a Row
-                while (rset.next())
-                {
-                    //Get Each Country information and add it to countries arraylist
-
-                    //Initialize Country
-                    Country country = new Country();
-
-                    //Map SQL Column values to Country Variables
-                    country.Code = rset.getString("Code");
-                    country.Name = rset.getString("Name");
-                    country.Continent = rset.getString("Continent");
-                    country.Region = rset.getString("Region");
-                    country.Population = new Population(rset.getLong("Population"));
-                    country.Capital = new City(rset.getString("Capital"));
-                    countries.add(t.cast(country));
-                }
-
-                return countries;
-            }
-            else if (t.isInstance(new City()))
-            {
-                //Extract each City information
-                ArrayList<T> cities = new ArrayList<>();
-                //While there is a Row
-                while (rset.next())
-                {
-                    //Get Each City information and add it to cities arraylist
-                    City city = new City();
-                    city.Country = new Country(rset.getString("Country"));//Country Name
-                    //Extra Columns for tests
-                    city.Country.Continent = findColumn(rset,"Continent")  ? rset.getString("Continent") : "";
-                    city.Country.Region = findColumn(rset,"Region") ? rset.getString("Region") : "";
-
-                    city.Name = rset.getString("Name");//city Name
-                    city.District = rset.getString("District");
-                    city.Population = new Population(rset.getLong("Population"));
-                    cities.add(t.cast(city));
-                }
-
-                return cities;
-            }
-
-            return null;
+            //Execute the SQL statement and return the result
+            return stmnt.executeQuery(sql);
         }
-
-        //Catch Exception
+        //Catch the SQLException
         catch (SQLException e)
         {
             //Print Exception error message
             System.out.println(e.getMessage());
-            System.out.println("Failed to get " + t.getSimpleName() + " details");
+            System.out.println("Error: Failed to Execute Query!");
             return null;
+        }
+    }
+
+    /**
+     * Retrieve from the ResultSet and Map to Country Variables
+     * @param sql The given SQL statement to be executed
+     * @return countries ArrayList of Countries
+     */
+    public ArrayList<Country> getCountries(String sql)
+    {
+        //Validate Sql not null or empty
+        validateSql(sql);
+
+        //Get the ResultSet of the SQL query
+        ResultSet rset = executeQuery(sql);
+
+        //initiate new Countries list
+        ArrayList<Country> countries = new ArrayList<>();
+
+        //Map Countries
+        mapCountries(countries, rset);
+
+        //Return Countries ArrayList
+        return countries;
+    }
+
+    /**
+     * Map Result set Sql Columns to Country Variables
+     * @param countries ArrayList of Countries to Map
+     * @param rset The ResultSet of the SQL query
+     */
+    public void mapCountries (ArrayList<Country> countries, ResultSet rset)
+    {
+        //Try Map the ResultSet to Country Variables
+        try
+        {
+            //While there is a Row
+            while (rset.next())
+            {
+                //Get Each Country information and add it to countries arraylist
+                //Initialize Country
+                Country country = new Country();
+
+                //Try Finding the column and if not found set to -
+                country.Code = findColumn(rset, "Code") ? rset.getString("Code") : "-";
+                country.Name = findColumn(rset, "Name") ? rset.getString("Name") : "-";
+                country.Continent = findColumn(rset, "Continent") ? rset.getString("Continent") : "-";
+                country.Region = findColumn(rset, "Region") ? rset.getString("Region") : "-";
+                country.Population = findColumn(rset, "Population") ? new Population(rset.getLong("Population")) : new Population(0);
+                country.Capital = findColumn(rset, "Capital") ? new City(rset.getString("Capital")) : new City("-");
+
+                //Add Country to Countries ArrayList
+                countries.add(country);
+            }
+        }
+        //Catch the SQLException + NullPointerException
+        catch (SQLException | NullPointerException e)
+        {
+            //Print Exception error message
+            System.out.println(e.getMessage());
+            System.out.println("Error: Failed to Map Countries!");
+        }
+    }
+
+    /**
+     * Retrieve from the ResultSet and Map to City Variables
+     * @param sql The given SQL statement to be executed
+     * @return cities All Retrieved Cities
+     */
+    public ArrayList<City> getCities(String sql)
+    {
+        //Validate Sql not null or empty
+        validateSql(sql);
+
+        //Get the ResultSet of the SQL query
+        ResultSet rset = executeQuery(sql);
+
+        //Extract each City information
+        ArrayList<City> cities = new ArrayList<>();
+
+        //Map Cities
+        mapCities(rset, cities);
+
+        //Return cities arraylist
+        return cities;
+    }
+
+    /**
+     * Map Result set Sql Columns to City Variables
+     * @param rset Result set of the SQL query
+     * @param cities Cities to Map to
+     */
+    public void mapCities(ResultSet rset, ArrayList<City> cities)
+    {
+        //Try Map the ResultSet to City Variables
+        try
+        {
+            //While there is a Row
+            while (rset.next())
+            {
+                //Get Each City information and add it to cities arraylist
+                City city = new City();
+
+                //Try Finding the column and if not found set to -
+                city.Country = findColumn(rset,"Country") ? new Country(rset.getString("Country")) : new Country("-");//Country Name
+                city.Country.Continent = findColumn(rset,"Continent")  ? rset.getString("Continent") : "";//Continent
+                city.Country.Region = findColumn(rset,"Region") ? rset.getString("Region") : "";//Region
+                city.Name = findColumn(rset,"Name") ? rset.getString("Name") : "-";//City Name
+                city.District = findColumn(rset,"District") ? rset.getString("District") : "-";//District
+                city.Population = findColumn(rset,"Population") ? new Population(rset.getLong("Population")) : new Population();//Population
+
+                //Add City to cities arraylist
+                cities.add(city);
+            }
+        }
+        //Catch any SQL exceptions
+        catch (SQLException | NullPointerException e)
+        {
+            //Print Exception error message
+            System.out.println(e.getMessage());
+            System.out.println("Error: Failed to Map Cities!");
+        }
+    }
+
+    /**
+     * Validate the Given SQL Statement check if it's not null or empty
+     * @param sql SQL Statement to validate
+     */
+    public void validateSql(String sql)
+    {
+        //Try to Validate Sql not null or empty
+        try
+        {
+            //Check if sql is not null or Empty
+            if (sql == null || sql.isEmpty()) {
+                throw new InvalidStringException("Error: Empty or Null Sql Statement provided!", new Exception());
+            }
+        }
+        //Catch InvalidStringException
+        catch (InvalidStringException e)
+        {
+            //Print Exception error message
+            System.out.println(e.getMessage());
         }
     }
 
@@ -378,12 +464,23 @@ public class App
      */
     public boolean findColumn(ResultSet rs, String column)
     {
+        //Check if column exists in the Result set
         try
         {
+            //Check if Column string Valid
+            if (column == null || column.isEmpty())
+            {
+                throw new InvalidStringException("Empty or Null Column Name provided!", new Exception());
+            }
+
+            //Find the column in the Result set
             rs.findColumn(column);
+            //Return True if found
             return true;
         }
-        catch (SQLException ignored) {}
+        //Catch and Ignore SQL + InvalidString Exception
+        catch (SQLException | InvalidStringException ignored) {}
+        //If column not found return false
         return false;
     }
 
@@ -400,7 +497,7 @@ public class App
                    + "Order By Population DESC";
 
         //Get All countries organised by population Largest to Smallest
-        return getReport(Country.class, sql);
+        return getCountries(sql);
     }
 
     /**
@@ -418,7 +515,7 @@ public class App
                    + "Order By country.Population DESC ";
 
         //Get All the countries in a continent organised by largest population to smallest
-        return getReport(Country.class, sql);
+        return getCountries(sql);
     }
 
     /**
@@ -436,7 +533,7 @@ public class App
                    + "Order By country.Population DESC ";
 
         //All the countries in a region organised by largest population to smallest.
-        return getReport(Country.class, sql);
+        return getCountries(sql);
     }
 
     /**
@@ -454,7 +551,7 @@ public class App
                    + "LIMIT " + n;//Given number to limit by
 
         //The top N populated countries in the world where N is provided by the user.
-        return getReport(Country.class, sql);
+        return getCountries(sql);
     }
 
     /**
@@ -474,7 +571,7 @@ public class App
                    + "LIMIT " + n;//Given number to limit by
 
         //The top N populated countries in a continent where N is provided by the user.
-        return getReport(Country.class, sql);
+        return getCountries(sql);
     }
 
     /**
@@ -494,7 +591,7 @@ public class App
                    + "LIMIT " + n;//Given number to limit by
 
         //The top N populated countries in a region where N is provided by the user.
-        return getReport(Country.class, sql);
+        return getCountries(sql);
     }
 
     /**
@@ -510,7 +607,7 @@ public class App
                    + "Order By city.Population DESC ";
 
         //All the cities in the world organised by largest population to smallest.
-        return getReport(City.class, sql);
+        return getCities(sql);
     }
 
     /**
@@ -521,14 +618,14 @@ public class App
     public ArrayList<City> getCitiesInContinentOrganisedByPopulation(String continent)
     {
         //Add string for the SQL statement
-        String sql = "SELECT city.Name AS Name, country.name as Country, District, city.Population AS Population, country.Continent AS Continent "
+        String sql = "SELECT city.Name AS Name, country.name as Country, District, city.Population AS Population, country.Continent AS Continent, country.Region AS Region "
                    + "From city "
                    + "JOIN country on city.CountryCode = country.code "
                    + "WHERE country.Continent = '" + continent + "' " // Given continent
                    + "Order By city.Population DESC ";
 
         //All the cities in a continent organised by largest population to smallest.
-        return getReport(City.class, sql);
+        return getCities(sql);
     }
 
     /**
@@ -539,14 +636,14 @@ public class App
     public ArrayList<City> getCitiesInARegionOrganisedByPopulation(String region)
     {
         //Add string for the SQL statement
-        String sql = "SELECT city.Name AS Name, country.name as Country, District, city.Population AS Population, country.Region AS Region "
+        String sql = "SELECT city.Name AS Name, country.name as Country, District, city.Population AS Population, country.Region AS Region, country.Continent AS Continent "
                    + "From city "
                    + "JOIN country on city.CountryCode = country.code "
                    + "WHERE country.Region = '" + region + "' " // Given region
                    + "Order By city.Population DESC ";
 
         //All the cities in a region organised by largest population to smallest.
-        return getReport(City.class, sql);
+        return getCities(sql);
     }
 
     /**
@@ -564,7 +661,7 @@ public class App
                    + "Order By city.Population DESC ";
 
         //All the cities in a Country organised by largest population to smallest.
-        return getReport(City.class, sql);
+        return getCities(sql);
     }
 
     /**
@@ -582,7 +679,7 @@ public class App
                    + "Order By city.Population DESC ";
 
         //All the cities in a District organised by largest population to smallest.
-        return getReport(City.class, sql);
+        return getCities(sql);
     }
 
     /**
@@ -600,7 +697,7 @@ public class App
                    + "LIMIT " + n ; // Limit the Results by N
 
         //The top N populated cities in the world where N is provided by the user.
-        return getReport(City.class, sql);
+        return getCities(sql);
     }
 
     /**
@@ -620,7 +717,7 @@ public class App
                    + "LIMIT " + n ; // Limit the Results by N
 
         //The top N populated cities in a continent where N is provided by the user.
-        return getReport(City.class, sql);
+        return getCities(sql);
     }
 
     /**
@@ -640,7 +737,7 @@ public class App
                    + "LIMIT " + n ; // Limit the Results by N
 
         //The top N populated cities in a region where N is provided by the user.
-        return getReport(City.class, sql);
+        return getCities(sql);
     }
 
     /**
@@ -660,7 +757,7 @@ public class App
                    + "LIMIT " + n ; // Limit the Results by N
 
         //The top N populated cities in a country where N is provided by the user.
-        return getReport(City.class, sql);
+        return getCities(sql);
     }
 
     /**
@@ -680,7 +777,7 @@ public class App
                    + "LIMIT " + n ;  // Limit the Results by N
 
         //The top N populated cities in a district where N is provided by the user.
-        return getReport(City.class, sql);
+        return getCities(sql);
     }
 
     /**
@@ -696,7 +793,7 @@ public class App
                    + "Order By city.Population DESC ";
 
         //All the capital cities in the world organised by largest population to smallest.
-        return getReport(City.class, sql);
+        return getCities(sql);
     }
 
     /**
@@ -714,7 +811,7 @@ public class App
                    + "Order By city.Population DESC ";
 
         //All the capital cities in a continent organised by largest population to smallest.
-        return getReport(City.class, sql);
+        return getCities(sql);
     }
 
     /**
@@ -732,7 +829,7 @@ public class App
                 + "Order By city.Population DESC ";
 
         //All the capital cities in a region organised by largest to smallest.
-        return getReport(City.class, sql);
+        return getCities(sql);
     }
 
     /**
@@ -750,7 +847,7 @@ public class App
                    + "Limit " + n ;  // Limit the Results by N
 
         //Get Report of The top N capital cities in the world where N is provided by the user.
-        return getReport(City.class, sql);
+        return getCities(sql);
     }
 
     /**
@@ -770,7 +867,7 @@ public class App
                    + "Limit " + n ;  // Limit the Results by N
 
         //Get Report of The top N populated capital cities in a continent where N is provided by the user.
-        return getReport(City.class, sql);
+        return getCities(sql);
     }
 
     /**
@@ -790,7 +887,7 @@ public class App
                    + "Limit " + n ;  // Limit the Results by N
 
         //Get Report of The top N populated capital cities in a region where N is provided by the user.
-        return getReport(City.class, sql);
+        return getCities(sql);
     }
 
     /**
