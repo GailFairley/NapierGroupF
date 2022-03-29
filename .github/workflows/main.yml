@@ -2,8 +2,7 @@ name: Coursework
 on:
   push:
     branches:
-      - '*'
-      - '!master'
+      - master
 
 jobs:
   UnitTests:
@@ -71,3 +70,11 @@ jobs:
         run: |
           mvn package -DskipTests
           docker-compose up --abort-on-container-exit
+      - uses: "marvinpinto/action-automatic-releases@latest"
+        if: github.ref == 'refs/heads/master'
+        with:
+          repo_token: "${{ secrets.GITHUB_TOKEN }}"
+          prerelease: false
+          automatic_release_tag: "latest"
+          files: |
+            ./target/*.jar
