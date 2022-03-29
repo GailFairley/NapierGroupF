@@ -3,7 +3,7 @@
  * Package: com.napier.NapierGroupF
  * User: Hamza Shabir - 40425459
  * Date Created: 27/02/22 4:54 PM
- * Date last updated: 21/03/22
+ * Date last updated: 29/03/22
  * Class Description: A Country class which represents the required columns for a country report.
  */
 
@@ -50,40 +50,6 @@ public class Country
     public Country (String n)
     {
         Name = n;
-    }
-
-    /**
-     * Constructor with all Variables
-     * @param n Name
-     * @param c Country Code
-     * @param con Continent
-     * @param r Region
-     * @param p Population
-     * @param city Capital City
-     */
-    public Country (String n, String c, String con, String r, Population p, City city)
-    {
-        Name = n;
-        Code = c;
-        Continent = con;
-        Region = r;
-        Population = p;
-        Capital = city;
-    }
-
-    /**
-     * Constructor with 4 Variables
-     * @param n Name
-     * @param c Country Code
-     * @param con Continent
-     * @param r Region
-     */
-    public Country (String n, String c, String con, String r)
-    {
-        Name = n;
-        Code = c;
-        Continent = con;
-        Region = r;
     }
 
     /**

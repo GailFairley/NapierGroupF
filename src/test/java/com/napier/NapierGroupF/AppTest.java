@@ -10,11 +10,14 @@
 package com.napier.NapierGroupF;
 
 //Imports
+import com.mockrunner.mock.jdbc.MockResultSet;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInstance;
+import java.sql.ResultSet;
 import java.util.ArrayList;
 
+import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 /**
@@ -32,8 +35,6 @@ public class AppTest<T>
     static void init()
     {
         app = new App();
-        app.connect("localhost:33069", 30000);
-
     }
 
     //Display Countries Test
@@ -237,42 +238,206 @@ public class AppTest<T>
     }
 
     /**
-     * Test for getReport when the given Type is null
+     * Test for validateSql when the sql is not null or empty
      */
     @Test
-    void getReportNullTypeTest()
+    void validateSqlTest()
     {
-        //get Report but type is null
-        app.getReport(null, "SELECT * FROM country");
+        //Validate sql normal
+        app.validateSql("SELECT * FROM country");
     }
 
     /**
-     * Test for getReport when the sql is null
+     * Test for validateSql when the sql is null
      */
     @Test
-    void getReportNullSqlTest()
+    void validateSqlNullTest()
     {
-        //get Report but Sql is null
-        app.getReport(Country.class, null);
+        //validate sql null SQL string
+        app.validateSql(null);
     }
 
     /**
-     * Test for getReport when the sql is Empty
+     * Test for validateSql when the sql is Empty
      */
     @Test
-    void getReportEmptySqlTest()
+    void validateSqlEmptyTest()
     {
-        //get Report but Sql is null
-        app.getReport(Country.class, "");
+        //validate sql empty SQL string
+        app.validateSql("");
     }
 
     /**
-     * Test for getReport when the sql is invalid
+     * Test for findColumn Normal
      */
     @Test
-    void getReportInvalidSqlTest()
+    void findColumnTest()
     {
-        //get Report but Sql is null
-        app.getReport(Country.class, "SELECT * frm country");
+        //find column normal
+        assertTrue(app.findColumn(countryResultSet(), "Code"));
+    }
+
+    /**
+     * Test for findColumn Normal for City Result set
+     */
+    @Test
+    void findColumnCitiesTest()
+    {
+        //find column normal
+        assertTrue(app.findColumn(cityResultSet(), "Country"));
+    }
+
+    /**
+     * Test for findColumn column doesnt exist
+     */
+    @Test
+    void findColumnNotExistsTest()
+    {
+        //find column where column doesnt exist
+        assertFalse(app.findColumn(countryResultSet(), "Employee"));
+    }
+
+    /**
+     * Test for findColumn Normal for City Result set column doesn't exist
+     */
+    @Test
+    void findColumnCitiesNotExistsTest()
+    {
+        //find column where column doesnt exist
+        assertFalse(app.findColumn(cityResultSet(), "Code"));
+    }
+
+    /**
+     * Test for findColumn when Result test is empty
+     */
+    @Test
+    void findColumnEmptyResultSetTest()
+    {
+        //Empty ResultSet
+        var rs = new MockResultSet("country");
+        //find column empty ResultSet
+        assertFalse(app.findColumn(rs, "Code"));
+    }
+
+    /**
+     * Test for findColumn when Column name is Empty
+     */
+    @Test
+    void findColumnEmptyColumnNameTest()
+    {
+        //find column empty Column name
+        assertFalse(app.findColumn(countryResultSet(), ""));
+    }
+
+    /**
+     * Test for findColumn when Column name is Null
+     */
+    @Test
+    void findColumnNullColumnNameTest()
+    {
+        //find column null Column name
+        assertFalse(app.findColumn(countryResultSet(), null));
+    }
+
+    /**
+     * Test for mapCountries normal
+     */
+    @Test
+    void mapCountriesTest()
+    {
+        //mapCountries Test
+        app.mapCountries(new ArrayList<>(), countryResultSet());
+    }
+
+    /**
+     * Test for mapCountries when Country Arraylist is null
+     */
+    @Test
+    void mapCountriesNullCountryListTest()
+    {
+        //mapCountries Test
+        app.mapCountries(null, countryResultSet());
+    }
+
+    /**
+     * Test for mapCountries when Result set is Empty
+     */
+    @Test
+    void mapCountriesEmptyResultSetTest()
+    {
+        //mapCountries Test
+        app.mapCountries(new ArrayList<>(), new MockResultSet("country"));
+    }
+
+    /**
+     * Test for mapCities normal
+     */
+    @Test
+    void mapCitiesTest()
+    {
+        //mapCities Test
+        app.mapCities(cityResultSet(), new ArrayList<>());
+    }
+
+    /**
+     * Test for mapCities when City Arraylist is null
+     */
+    @Test
+    void mapCitiesNullCountryListTest()
+    {
+        //mapCities Test
+        app.mapCities(cityResultSet(), null);
+    }
+
+    /**
+     * Test for mapCities when the Result set is empty
+     */
+    @Test
+    void mapCitiesEmptyResultSetTest()
+    {
+        //mapCities Test
+        app.mapCities(new MockResultSet("country"), new ArrayList<>());
+    }
+
+    /**
+     * Method to populate mock Result set
+     * @return Mock Result set
+     */
+    ResultSet countryResultSet()
+    {
+        //Initiate Mock Result set
+        var rs = new MockResultSet("country");
+
+        //Add Mocked Country Columns
+        rs.addColumn("Code",  new String[]{"01", "02", "03", "04", "05", "06", "07", "08"});
+        rs.addColumn("Name",  new String[]{"UK", "USA", "Canada", "Australia", "India", "Russia", "China", "South Africa"});
+        rs.addColumn("Continent",  new String[]{"Europe", "Americas", "Americas", "Australia", "Asia", "Europe", "Asia", "Africa"});
+        rs.addColumn("Region",  new String[]{"E.U", "NORTH AMERICA", "NORTH AMERICA", "OCEANIA", "SOUTH ASIA", "EASTERN EUROPE", "EASTERN ASIA", "NORTH AFRICA"});
+        rs.addColumn("Population",  new Long[]{2500000L, 125000000L, 38900000L, 4000000L, 160000000L, 89000000L, 180000000L, 20500000L});
+        rs.addColumn("Capital",  new String[]{"London", "Washington D.C", "Ottawa", "Canberra", "New Delhi", "Moscow", "Beijing", "Cape Town"});
+
+        //Return Mock Result set
+        return rs;
+    }
+
+    /**
+     * Method to populate mock Result set
+     * @return Mock Result set
+     */
+    ResultSet cityResultSet()
+    {
+        //Initiate Mock Result set
+        var rs = new MockResultSet("city");
+
+        //Add Mocked Country Columns
+        rs.addColumn("Country",  new String[]{"UK", "USA", "Canada", "Australia", "India", "Russia", "China", "South Africa"});
+        rs.addColumn("Continent",  new String[]{"Europe", "Americas", "Americas", "Australia", "Asia", "Europe", "Asia", "Africa"});
+        rs.addColumn("Region",  new String[]{"E.U", "NORTH AMERICA", "NORTH AMERICA", "OCEANIA", "SOUTH ASIA", "EASTERN EUROPE", "EASTERN ASIA", "NORTH AFRICA"});
+        rs.addColumn("Population",  new Long[]{2500000L, 125000000L, 38900000L, 4000000L, 160000000L, 89000000L, 180000000L, 20500000L});
+        rs.addColumn("Name",  new String[]{"London", "Washington D.C", "Ottawa", "Canberra", "New Delhi", "Moscow", "Beijing", "Cape Town"});
+        rs.addColumn("District",  new String[]{"London District", "Washington District", "Ottawa District", "Canberra District", "New Delhi District", "Moscow District", "Beijing District", "Cape Town District"});
+
+        //Return Mock Result set
+        return rs;
     }
 }
