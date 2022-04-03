@@ -453,7 +453,7 @@ public class App
         //Try to Validate String not null or empty
         try
         {
-            //Check if sql is not null or Empty
+            //Check if string is not null or Empty
             if (string == null || string.isEmpty()) {
                 throw new InvalidStringException("Error: Empty or Null String provided!", new Exception());
             }
@@ -923,7 +923,7 @@ public class App
         sb.append("\n| Code | Name | Continent | Region | Population | Capital |\r\n");
         sb.append("| --- | --- | --- | --- | --- | --- |\r\n");
 
-        // Loop over all employees in the list
+        // Loop over all countries in the list
         for (Country c : countries)
         {
             // Continue if this country is null
@@ -959,10 +959,10 @@ public class App
         sb.append("\n| Name | Country | District | Population |\r\n");
         sb.append("| --- | --- | --- | --- |\r\n");
 
-        // Loop over all employees in the list
+        // Loop over all cities in the list
         for (City c : cities)
         {
-            // Continue if this country is null
+            // Continue if this city is null
             if (c == null) continue;
 
             // Add the City variable to the StringBuilder
