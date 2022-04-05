@@ -136,21 +136,21 @@ public class App
 
         //Use Case 1
         //1
-        title = ("All Countries organised by population Largest to Smallest.");
+        title = ("1. All Countries organised by population Largest to Smallest.");
         //All countries organised by population Largest to Smallest
         ArrayList<Country> countriesOrganisedByPopulation = getCountriesOrganisedByPopulation();
         //Output the report as a markdown file
         outputCountries(countriesOrganisedByPopulation, "CountriesOrganisedByPopulation", title);
 
         //2
-        title = ("All Countries Given Continent 'Europe' organised by population Largest to Smallest.");
+        title = ("2. All Countries Given Continent 'Europe' organised by population Largest to Smallest.");
         //All countries organised by population Largest to Smallest
         ArrayList<Country> countriesInAContinentOrganisedByPopulation = getCountriesInAContinentOrganisedByPopulation("Europe");
         //Output the report as a markdown file
         outputCountries(countriesInAContinentOrganisedByPopulation, "CountriesInAContinentOrganisedByPopulation", title);
 
         //3
-        title = ("All Countries Given Region 'Eastern Europe' organised by population Largest to Smallest.");
+        title = ("3. All Countries Given Region 'Eastern Europe' organised by population Largest to Smallest.");
         //All the countries in a region organised by largest population to smallest.
         ArrayList<Country> countriesInARegionOrganisedByPopulation = getCountriesInARegionOrganisedByPopulation("Eastern Europe");
         //Output the report as a markdown file
@@ -158,21 +158,21 @@ public class App
 
         //Use Case 2
         //4
-        title = ("The top '100' populated countries in the world.");
+        title = ("4. The top '100' populated countries in the world.");
         //The top N populated countries in the world where N is provided by the user.
         ArrayList<Country> getTopNCountries = getTopNCountries(100);
         //Output the report as a markdown file
         outputCountries(getTopNCountries, "TopNCountries", title);
 
         //5
-        title = ("The top '20' populated countries in the world in the continent 'Europe'.");
+        title = ("5. The top '20' populated countries in the world in the continent 'Europe'.");
         //The top N populated countries in a continent where N is provided by the user.
         ArrayList<Country> getTopNCountriesInAContinent = getTopNCountriesInAContinent(20, "Europe");
         //Output the report as a markdown file
         outputCountries(getTopNCountriesInAContinent, "TopNCountriesInAContinent", title);
 
         //6
-        title = ("The top '10' populated countries in the world in the Region 'Eastern Europe'.");
+        title = ("6. The top '10' populated countries in the world in the Region 'Eastern Europe'.");
         //The top N populated countries in a region where N is provided by the user.
         ArrayList<Country> getTopNCountriesInARegion = getTopNCountriesInARegion(10, "Eastern Europe");
         //Output the report as a markdown file
@@ -180,35 +180,35 @@ public class App
 
         //Use Case 3
         //7
-        title = ("All the Cities in the World Organised by largest population to smallest.");
+        title = ("7. All the Cities in the World Organised by largest population to smallest.");
         //All the cities in the world organised by largest population to smallest.
         ArrayList<City> getCitiesOrganisedByPopulation = getCitiesOrganisedByPopulation();
         //Output the report as a markdown file
         outputCities(getCitiesOrganisedByPopulation, "AllCitiesInWorldOrganisedByPopulation", title);
 
         //8
-        title = ("All the Cities in a Continent 'Asia' organised by largest population to smallest.");
+        title = ("8. All the Cities in a Continent 'Asia' organised by largest population to smallest.");
         //All the cities in a continent organised by largest population to smallest.
         ArrayList<City> getCitiesInContinentOrganisedByPopulation = getCitiesInContinentOrganisedByPopulation("Asia");
         //Output the report as a markdown file
         outputCities(getCitiesInContinentOrganisedByPopulation, "AllCitiesInContinentOrganisedByPopulation", title);
 
         //9
-        title = ("All the Cities in a Region 'Eastern Europe' organised by largest population to smallest.");
+        title = ("9. All the Cities in a Region 'Eastern Europe' organised by largest population to smallest.");
         //All the cities in a region organised by largest population to smallest.
         ArrayList<City> getCitiesInARegionOrganisedByPopulation = getCitiesInARegionOrganisedByPopulation("Eastern Europe");
         //Output the report as a markdown file
         outputCities(getCitiesInARegionOrganisedByPopulation, "AllCitiesInARegionOrganisedByPopulation", title);
 
         //10
-        title = ("All the Cities in a Country 'China' organised by largest population to smallest.");
+        title = ("10. All the Cities in a Country 'China' organised by largest population to smallest.");
         //All the cities in a Country organised by largest population to smallest.
         ArrayList<City> getCitiesInCountryOrganisedByPopulation = getCitiesInCountryOrganisedByPopulation("China");
         //Output the report as a markdown file
         outputCities(getCitiesInCountryOrganisedByPopulation, "AllCitiesInCountryOrganisedByPopulation", title);
 
         //11
-        title = ("All the Cities in a District 'Noord-Holland' organised by largest population to smallest.");
+        title = ("11. All the Cities in a District 'Noord-Holland' organised by largest population to smallest.");
         //All the cities in a District organised by largest population to smallest.
         ArrayList<City> getCitiesInDistrictOrganisedByPopulation = getCitiesInDistrictOrganisedByPopulation("Noord-Holland");
         //Output the report as a markdown file
@@ -216,35 +216,35 @@ public class App
 
         //Use Case 4
         //12
-        title = ("The Top N '100' Cities in the World Organised by largest population to smallest.");
+        title = ("12. The Top N '100' Cities in the World Organised by largest population to smallest.");
         //The top N populated cities in the world where N is provided by the user.
         ArrayList<City> getTopCitiesOrganisedByPopulation = getTopCitiesOrganisedByPopulation(100);
         //Output the report as a markdown file
         outputCities(getTopCitiesOrganisedByPopulation, "TopNCitiesInTheWorldOrganisedByPopulation", title);
 
         //13
-        title = ("The Top N '100' Cities in a Continent 'Asia' organised by largest population to smallest.");
+        title = ("13. The Top N '100' Cities in a Continent 'Asia' organised by largest population to smallest.");
         //The top N populated cities in a continent where N is provided by the user.
         ArrayList<City> getTopCitiesInContinentOrganisedByPopulation = getTopCitiesInContinentOrganisedByPopulation("Asia", 100);
         //Output the report as a markdown file
         outputCities(getTopCitiesInContinentOrganisedByPopulation, "TopNCitiesInContinentOrganisedByPopulation", title);
 
         //14
-        title = ("The Top N '50' Cities in a Region 'Eastern Europe' organised by largest population to smallest.");
+        title = ("14. The Top N '50' Cities in a Region 'Eastern Europe' organised by largest population to smallest.");
         //The top N populated cities in a region where N is provided by the user.
         ArrayList<City> getTopCitiesInARegionOrganisedByPopulation = getTopCitiesInARegionOrganisedByPopulation("Eastern Europe", 50);
         //Output the report as a markdown file
         outputCities(getTopCitiesInARegionOrganisedByPopulation, "TopNCitiesInARegionOrganisedByPopulation", title);
 
         //15
-        title = ("The Top N '50' Cities in a Country 'China' organised by largest population to smallest.");
+        title = ("15. The Top N '50' Cities in a Country 'China' organised by largest population to smallest.");
         //The top N populated cities in a country where N is provided by the user.
         ArrayList<City> getTopCitiesInCountryOrganisedByPopulation = getTopCitiesInCountryOrganisedByPopulation("China", 50);
         //Output the report as a markdown file
         outputCities(getTopCitiesInCountryOrganisedByPopulation, "TopNCitiesInCountryOrganisedByPopulation", title);
 
         //16
-        title = ("The Top N '5' Cities in a District 'Noord-Holland' organised by largest population to smallest.");
+        title = ("16. The Top N '5' Cities in a District 'Noord-Holland' organised by largest population to smallest.");
         //The top N populated cities in a district where N is provided by the user.
         ArrayList<City> getTopCitiesInDistrictOrganisedByPopulation = getTopCitiesInDistrictOrganisedByPopulation("Noord-Holland", 5);
         //Output the report as a markdown file
@@ -252,21 +252,21 @@ public class App
 
         //Use Case 5
         //17
-        title = ("All the Capital Cities in the World Organised by largest population to smallest.");
+        title = ("17. All the Capital Cities in the World Organised by largest population to smallest.");
         //All the Capital cities in the world organised by largest population to smallest.
         ArrayList<City> getCapitalCitiesOrganisedByPopulation = getCapitalCitiesOrganisedByPopulation();
         //Output the report as a markdown file
         outputCities(getCapitalCitiesOrganisedByPopulation, "AllCapitalCitiesInTheWorldOrganisedByPopulation", title);
 
         //18
-        title = ("All the Capital Cities in a Continent 'Europe' organised by largest population to smallest.");
+        title = ("18. All the Capital Cities in a Continent 'Europe' organised by largest population to smallest.");
         //All the Capital cities in a continent organised by largest population to smallest.
         ArrayList<City> getCapitalCitiesInContinentOrganisedByPopulation = getCapitalCitiesInContinentOrganisedByPopulation("Europe");
         //Output the report as a markdown file
         outputCities(getCapitalCitiesInContinentOrganisedByPopulation, "AllCapitalCitiesInContinentOrganisedByPopulation", title);
 
         //19
-        title = ("All the Capital Cities in a Region 'Western Europe' organised by largest population to smallest.");
+        title = ("19. All the Capital Cities in a Region 'Western Europe' organised by largest population to smallest.");
         //All the Capital cities in a region organised by largest population to smallest.
         ArrayList<City> getCapitalCitiesInARegionOrganisedByPopulation = getCapitalCitiesInARegionOrganisedByPopulation("Western Europe");
         //Output the report as a markdown file
@@ -274,21 +274,21 @@ public class App
 
         //Use Case 6
         //20
-        title = ("The Top N '100' Capital Cities in the world organised by largest population to smallest.");
+        title = ("20. The Top N '100' Capital Cities in the world organised by largest population to smallest.");
         //The top N populated Capital cities in the world where N is provided by the user.
         ArrayList<City> getTopCapitalCitiesOrganisedByPopulation = getTopCapitalCitiesOrganisedByPopulation( 100);
         //Output the report as a markdown file
         outputCities(getTopCapitalCitiesOrganisedByPopulation, "TopNCapitalCitiesInTheWorldOrganisedByPopulation", title);
 
         //21
-        title = ("The Top N '20' Capital Cities in the Continent 'Europe' organised by largest population to smallest.");
+        title = ("21. The Top N '20' Capital Cities in the Continent 'Europe' organised by largest population to smallest.");
         //The top N populated Capital cities in the continent where N is provided by the user.
         ArrayList<City> getTopCapitalCitiesInContinentOrganisedByPopulation = getTopCapitalCitiesInContinentOrganisedByPopulation(20, "Europe");
         //Output the report as a markdown file
         outputCities(getTopCapitalCitiesInContinentOrganisedByPopulation, "TopNCapitalCitiesInContinentOrganisedByPopulation", title);
 
         //22
-        title = ("The top N '20' populated capital cities in a region 'Western Europe' where N is provided by the user.");
+        title = ("22. The top N '20' populated capital cities in a region 'Western Europe' where N is provided by the user.");
         //The top N populated Capital cities in the region where N is provided by the user.
         ArrayList<City> getTopCapitalCitiesInRegionOrganisedByPopulation = getTopCapitalCitiesInRegionOrganisedByPopulation(20, "Western Europe");
         //Output the report as a markdown file
