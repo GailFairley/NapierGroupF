@@ -53,7 +53,10 @@ public class AppIntegrationTest
     void testExecuteQuery()
     {
         //executeQuery Normal
-        app.executeQuery( "SELECT * FROM country");
+        var rs = app.executeQuery( "SELECT * FROM country");
+
+        //Check if the returned ResultSet isn't null
+        assertNotNull(rs);
     }
 
     /**
