@@ -3,7 +3,7 @@
  * Package: com.napier.NapierGroupF
  * User Created: Hamza Shabir
  * Date Created: 21/03/2022
- * Date Last Updated: 21/03/2022
+ * Date Last Updated: 24/04/2022
  * File Description: The App test java file which will have all the Unit tests for the App.java class.
  **/
 
@@ -441,6 +441,22 @@ public class AppTest<T>
         app.mapPopulation(populationLanguageResultSet(), populations);
 
         app.outputPopulation(populations, "population", "Title", "Language");
+    }
+
+    /**
+     * Test for Is population type valid
+     */
+    @Test
+    void isPopulationTypeValidTest()
+    {
+        //Test with null population type
+        assertFalse(app.isPopulationType(null));
+
+        //Test with empty population type
+        assertFalse(app.isPopulationType(""));
+
+        //Test with valid population type
+        assertTrue(app.isPopulationType("Region"));
     }
 
     @Test

@@ -3,21 +3,20 @@
  * Package: com.napier.NapierGroupF
  * User Created: Josh McQueen
  * Date Created: 06/02/2022
- * Date Last Updated: 21/03/2022
+ * Date Last Updated: 24/04/2022
  * File Description: The main java file which will connect to db and display all the relevant reports.
  **/
 
 package com.napier.NapierGroupF;
 
 //Imports
-import com.mysql.cj.util.StringUtils;
-
 import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.sql.*;
 import java.util.ArrayList;
+import java.util.Arrays;
 
 
 /**
@@ -320,10 +319,50 @@ public class App
 
         //Use Case 8
         //26
+        title = ("26. The total Population of the world.");
+        //The total population of the world
+        ArrayList<Population> getTotalPopulationOfWorld = getTotalPopulationOfWorld();
+        //Output the report as a markdown file
+        outputPopulation(getTotalPopulationOfWorld, "TotalPopulationOfWorld", title, "World");
+
+        //27
+        title = ("27. The total Population of a given continent.");
+        //The total population of a given continent
+        ArrayList<Population> getTotalPopulationOfContinent = getTotalPopulationOfContinent("Europe");
+        //Output the report as a markdown file
+        outputPopulation(getTotalPopulationOfContinent, "TotalPopulationOfContinent", title, "Continent");
+
+        //28
+        title = ("28. The total Population of a given region.");
+        //The total population of a given region
+        ArrayList<Population> getTotalPopulationOfRegion = getTotalPopulationOfRegion("Western Europe");
+        //Output the report as a markdown file
+        outputPopulation(getTotalPopulationOfRegion, "TotalPopulationOfRegion", title, "Region");
+
+        //29
+        title = ("29. The total Population of a given country.");
+        //The total population of a given country
+        ArrayList<Population> getTotalPopulationOfCountry = getTotalPopulationOfCountry("China");
+        //Output the report as a markdown file
+        outputPopulation(getTotalPopulationOfCountry, "TotalPopulationOfCountry", title, "Country");
+
+        //30
+        title = ("30. The total Population of a given city.");
+        //The total population of a given city
+        ArrayList<Population> getTotalPopulationOfCity = getTotalPopulationOfCity("Glasgow");
+        //Output the report as a markdown file
+        outputPopulation(getTotalPopulationOfCity, "TotalPopulationOfCity", title, "City");
+
+        //31
+        title = ("31. The total Population of a given district.");
+        //The total population of a given district
+        ArrayList<Population> getTotalPopulationOfDistrict = getTotalPopulationOfDistrict("Ontario");
+        //Output the report as a markdown file
+        outputPopulation(getTotalPopulationOfDistrict, "TotalPopulationOfDistrict", title, "District");
 
         //Use Case 9
-        //27
-        title = ("A Report for the number of people who speak the following languages (Chinese, English, Hindi, Spanish, Arabic) from the greatest number to smallest, including the percentage of the world population.");
+        //32
+        title = ("32. A Report for the number of people who speak the following languages (Chinese, English, Hindi, Spanish, Arabic) from the greatest number to smallest, including the percentage of the world population.");
         //The number of people who speak the following languages (Chinese, English, Hindi, Spanish, Arabic) from the greatest number to smallest, including the percentage of the world population
         ArrayList<Population> getPopulationOfLanguages = getPopulationOfLanguages();
         //Output the report as a markdown file
@@ -1084,6 +1123,98 @@ public class App
     }
 
     /**
+     * Get Total Population of the world
+     * @return a population object with the total population of the world
+     */
+    public ArrayList<Population> getTotalPopulationOfWorld()
+    {
+        //Add string for the SQL statement
+        String sql = "SELECT SUM(population) AS TotalPopulation "
+                   + "FROM country";
+
+        //Get population language Report
+        return getPopulation(sql);
+    }
+
+    /**
+     * Get total population of a given continent
+     * @param continent the continent to get the population of
+     */
+    public ArrayList<Population> getTotalPopulationOfContinent(String continent)
+    {
+        //Add string for the SQL statement
+        String sql = "SELECT Continent AS Name, SUM(population) AS TotalPopulation "
+                   + "FROM country "
+                   + "WHERE Continent = '" + continent + "' "
+                   + "GROUP BY Continent";
+
+        //Get population language Report
+        return getPopulation(sql);
+    }
+
+    /**
+     * Get total population of a given country
+     * @param country name of the country to get population of
+     */
+    public ArrayList<Population> getTotalPopulationOfCountry(String country)
+    {
+        //Add string for the SQL statement
+        String sql = "SELECT Name, population AS TotalPopulation "
+                   + "FROM country "
+                   + "WHERE Name = '" + country + "'";
+
+        //Get population language Report
+        return getPopulation(sql);
+    }
+
+    /**
+     * Get total population of a given city
+     * @param city The city to get the population of
+     */
+    public ArrayList<Population> getTotalPopulationOfCity(String city)
+    {
+        //Add string for the SQL statement
+        String sql = "SELECT Name, population AS TotalPopulation "
+                   + "FROM city "
+                   + "WHERE Name = '" + city + "'";
+
+        //Get population language Report
+        return getPopulation(sql);
+    }
+
+    /**
+     * Get total population of a given District
+     * @param district The district to get the population of
+     */
+    public ArrayList<Population> getTotalPopulationOfDistrict(String district)
+    {
+        //Add string for the SQL statement
+        String sql = "SELECT District AS Name, SUM(population) AS TotalPopulation "
+                   + "FROM city "
+                   + "WHERE District = '" + district + "' "
+                   + "GROUP BY District";
+
+        //Get population language Report
+        return getPopulation(sql);
+    }
+
+    /**
+     * Get total population of a given region
+     * @param region The region to get the population of
+     */
+    public ArrayList<Population> getTotalPopulationOfRegion(String region)
+    {
+        //Add string for the SQL statement
+        String sql = "SELECT Region AS Name, SUM(population) AS TotalPopulation "
+                   + "FROM country "
+                   + "WHERE Region = '" + region + "' "
+                   + "GROUP BY Region";
+
+        //Get population language Report
+        return getPopulation(sql);
+    }
+
+    /**
      * Outputs Countries report to Markdown file
      * @param filename The name of the file to output to
      * @param countries The list of countries to Display
@@ -1174,7 +1305,7 @@ public class App
         StringBuilder sb = new StringBuilder();
 
         //Initialize row string
-        String row = "";
+        String row;
 
         // Print header
         sb.append("# " + ((title != null && !title.isEmpty()) ? title : "Population Report") + "\n");
@@ -1184,6 +1315,11 @@ public class App
         {
             sb.append("\n| " + populationType + " | Total Population | Population Percentage |\r\n");
             sb.append("| --- | --- | --- |\r\n");
+        }
+        else if (isPopulationType(populationType))
+        {
+            sb.append("\n| " + populationType + " | Total Population |\r\n");
+            sb.append("| --- | --- |\r\n");
         }
         else
         {
@@ -1199,6 +1335,7 @@ public class App
 
             //If population type is language we want different column name
             row = (populationType.equals("Language")) ? ("| " + p.Name + " | " + (p.TotalPopulation != 0 ? p.TotalPopulation : "-") + " | " + p.PopulationPercentage  + " |\r\n")
+                    : (isPopulationType(populationType)) ? ("| " + p.Name + " | " + (p.TotalPopulation != 0 ? p.TotalPopulation : "-") + " |\r\n")
                     : ("| " + p.Name + " | " + (p.TotalPopulation != 0 ? p.TotalPopulation : "-") + " | " + (p.UrbanPopulation != 0 ? p.UrbanPopulation : "-") + " | " + (p.RuralPopulation != 0 ? p.RuralPopulation : "-") + "|\r\n");
 
             // Add the Population variable to the StringBuilder
@@ -1206,6 +1343,21 @@ public class App
         }
         //Try creating reports directory and write string reader to file
         writeToFile(filename, sb);
+    }
+
+    /**
+     * Check if the Population type is valid
+     * @param populationType The population type to check
+     * @return boolean true if population type is in the list of valid population types
+     */
+    public boolean isPopulationType(String populationType)
+    {
+        if (populationType != null && !populationType.isEmpty())
+        {
+            String[] values = {"World", "Country", "City","Continent","Region","District"};
+            return Arrays.asList(values).contains(populationType);
+        }
+        return false;
     }
 
     /**
