@@ -294,6 +294,28 @@ public class App
         //Output the report as a markdown file
         outputCities(getTopCapitalCitiesInRegionOrganisedByPopulation, "TopNCapitalCitiesInRegionOrganisedByPopulation", title);
 
+        //Use Case 7
+        //23
+        title = ("23. The population of people living in cities, and people not living in cities in each continent.");
+        //The population of people living in cities, and people not living in cities in each continent
+        ArrayList<Population> getPopulationInCitiesAndNotInCitiesInContinents = getPopulationInCitiesAndNotInCitiesInContinents();
+        //Output the report as a markdown file
+        outputPopulation(getPopulationInCitiesAndNotInCitiesInContinents, "PopulationOfPeopleInCitiesAndNotInCitiesInContinents", title, "Continent");
+
+        //24
+        title = ("24. The population of people living in cities, and people not living in cities in each region.");
+        //The population of people living in cities, and people not living in cities in each region
+        ArrayList<Population> getPopulationInCitiesAndNotInCitiesInRegions = getPopulationInCitiesAndNotInCitiesInRegions();
+        //Output the report as a markdown file
+        outputPopulation(getPopulationInCitiesAndNotInCitiesInRegions, "PopulationOfPeopleInCitiesAndNotInCitiesInRegions", title, "Region");
+
+        //25
+        title = ("25. The population of people living in cities, and people not living in cities in each country.");
+        //The population of people living in cities, and people not living in cities in each country
+        ArrayList<Population> getPopulationInCitiesAndNotInCitiesInCountries = getPopulationInCitiesAndNotInCitiesInRegions();
+        //Output the report as a markdown file
+        outputPopulation(getPopulationInCitiesAndNotInCitiesInCountries, "PopulationOfPeopleInCitiesAndNotInCitiesInCountries", title, "Country");
+
         //End
     }
 
@@ -309,6 +331,9 @@ public class App
         {
             //Create an SQL Statement
             Statement stmnt = con.createStatement();
+
+            //Validate Sql not null or empty
+            validateString(sql);
 
             //Execute the SQL statement and return the result
             return stmnt.executeQuery(sql);
@@ -330,9 +355,6 @@ public class App
      */
     public ArrayList<Country> getCountries(String sql)
     {
-        //Validate Sql not null or empty
-        validateString(sql);
-
         //Get the ResultSet of the SQL query
         ResultSet rset = executeQuery(sql);
 
@@ -391,9 +413,6 @@ public class App
      */
     public ArrayList<City> getCities(String sql)
     {
-        //Validate Sql not null or empty
-        validateString(sql);
-
         //Get the ResultSet of the SQL query
         ResultSet rset = executeQuery(sql);
 
@@ -445,6 +464,65 @@ public class App
     }
 
     /**
+     * Retrieve from the ResultSet and Map to Population Variables
+     * @param sql The given SQL statement to be executed
+     * @return population the retrieved population arraylist
+     */
+    public ArrayList<Population> getPopulation(String sql)
+    {
+        //Validate Sql not null or empty
+        validateString(sql);
+
+        //Get the ResultSet of the SQL query
+        ResultSet rset = executeQuery(sql);
+
+        //Extract each Population information
+        ArrayList<Population> populations = new ArrayList<>();
+
+        //Map Cities
+        mapPopulation(rset, populations);
+
+        //Return population arraylist
+        return populations;
+    }
+
+    /**
+     * Map Result set Sql Columns to Populations Variables
+     * @param rset Result set of the SQL query
+     * @param populations Populations arraylist to Map to
+     */
+    public void mapPopulation(ResultSet rset, ArrayList<Population> populations)
+    {
+        //Try Map the ResultSet to Population Variables
+        try
+        {
+            //While there is a Row
+            while (rset.next())
+            {
+                //Get Each Population information and add it to populations arraylist
+                Population population = new Population();
+
+                //Try Finding the column and if not found set to default
+                population.Name = findColumn(rset,"Country") ? rset.getString("Country") : "-";//Country/Region/Continent Name
+                population.TotalPopulation = findColumn(rset, "TotalPopulation") ? rset.getLong("TotalPopulation") : 0;//Total Population
+                population.UrbanPopulation = findColumn(rset, "UrbanPopulation") ? rset.getLong("UrbanPopulation") : 0;//Urban Population
+                population.RuralPopulation = findColumn(rset, "RuralPopulation") ? rset.getLong("RuralPopulation") : 0;//Rural Population
+                population.PopulationPercentage = findColumn(rset, "PopulationPercentage") ? rset.getDouble("PopulationPercentage") : 0;//Population Percentage
+
+                //Add population to populations arraylist
+                populations.add(population);
+            }
+        }
+        //Catch any SQL exceptions
+        catch (SQLException | NullPointerException e)
+        {
+            //Print Exception error message
+            System.out.println(e.getMessage());
+            System.out.println("Error: Failed to Map Population!");
+        }
+    }
+
+    /**
      * Validate the Given String Statement check if it's not null or empty
      * @param string The String to validate
      */
@@ -454,7 +532,8 @@ public class App
         try
         {
             //Check if string is not null or Empty
-            if (string == null || string.isEmpty()) {
+            if (string == null || string.isEmpty())
+            {
                 throw new InvalidStringException("Error: Empty or Null String provided!", new Exception());
             }
         }
@@ -901,6 +980,72 @@ public class App
     }
 
     /**
+     * The population of people living in cities, and people not living in cities in each continent.
+     * @return list of retrieved Population report from the database
+     */
+    public ArrayList<Population> getPopulationInCitiesAndNotInCitiesInContinents()
+    {
+        //Add string for the SQL statement
+        String sql = "SELECT Name, TotalPopulation, UrbanPopulation, TotalPopulation - UrbanPopulation as RuralPopulation "
+                   + "FROM "
+                   + "(SELECT Continent AS Name, SUM(population) as TotalPopulation FROM country "
+                   + "GROUP BY Continent) as tp "
+                   + "JOIN "
+                   + "(SELECT Continent, SUM(city.population) as UrbanPopulation "
+                   + " FROM country "
+                   + " JOIN city on country.code = city.countrycode "
+                   + " GROUP BY Continent) as up "
+                   + "ON tp.Name = up.Continent ";
+
+        //Get Report of The population of people living in cities, and people not living in cities in each continent.
+        return getPopulation(sql);
+    }
+
+    /**
+     * The population of people living in cities, and people not living in cities in each region.
+     * @return list of retrieved Population report from the database
+     */
+    public ArrayList<Population> getPopulationInCitiesAndNotInCitiesInRegions()
+    {
+        //Add string for the SQL statement
+        String sql = "SELECT Name, TotalPopulation, UrbanPopulation, TotalPopulation - UrbanPopulation as RuralPopulation "
+                   + "FROM "
+                   + "(SELECT Region AS Name, SUM(population) as TotalPopulation FROM country "
+                   + "GROUP BY Region) as tp "
+                   + "JOIN "
+                   + "(SELECT Region, SUM(city.population) as UrbanPopulation "
+                   + " FROM country "
+                   + " JOIN city on country.code = city.countrycode "
+                   + " GROUP BY Region) as up "
+                   + "ON tp.Name = up.Region ";
+
+        //Get Report of The population of people living in cities, and people not living in cities in each region.
+        return getPopulation(sql);
+    }
+
+    /**
+     * The population of people living in cities, and people not living in cities in each country.
+     * @return list of retrieved Population report from the database
+     */
+    public ArrayList<Population> getPopulationInCitiesAndNotInCitiesInCountries()
+    {
+        //Add string for the SQL statement
+        String sql = "SELECT Name, TotalPopulation, UrbanPopulation, TotalPopulation - UrbanPopulation as RuralPopulation "
+                   + "FROM "
+                   + "(SELECT country.name AS Name, SUM(population) as TotalPopulation FROM country "
+                   + "GROUP BY country.name) as tp "
+                   + "JOIN "
+                   + "(SELECT country.name AS UName, SUM(city.population) as UrbanPopulation "
+                   + " FROM country "
+                   + " JOIN city on country.code = city.countrycode "
+                   + " GROUP BY country.name) as up "
+                   + "ON tp.Name = up.UName ";
+
+        //Get Report of The population of people living in cities, and people not living in cities in each country.
+        return getPopulation(sql);
+    }
+
+    /**
      * Outputs Countries report to Markdown file
      * @param filename The name of the file to output to
      * @param countries The list of countries to Display
@@ -909,9 +1054,9 @@ public class App
     public void outputCountries(ArrayList<Country> countries, String filename, String title)
     {
         // Check countries list is not null or empty
-        if (countries == null)
+        if (countries == null || countries.isEmpty())
         {
-            System.out.println("Error: Null Countries List provided!");
+            System.out.println("Error: Null or Empty Countries List provided!");
             return;
         }
 
@@ -945,9 +1090,9 @@ public class App
     public void outputCities(ArrayList<City> cities, String filename, String title)
     {
         // Check cities is not null
-        if (cities == null)
+        if (cities == null || cities.isEmpty())
         {
-            System.out.println("Error: Null Cities List provided!");
+            System.out.println("Error: Null or Empty Cities List provided!");
             return;
         }
 
@@ -967,6 +1112,59 @@ public class App
 
             // Add the City variable to the StringBuilder
             sb.append("| " + c.Name + " | " + (c.Country != null ? c.Country.Name : "-") + " | " + c.District + " | " + (c.Population != null ? c.Population.TotalPopulation : "-") + " |\r\n");
+        }
+        //Try creating reports directory and write string reader to file
+        writeToFile(filename, sb);
+    }
+
+    /**
+     * Outputs Populations report to Markdown
+     * @param filename The name of the file to output to
+     * @param populations The list of populations to Display
+     * @param title The title of the report
+     */
+    public void outputPopulation(ArrayList<Population> populations, String filename, String title, String populationType)
+    {
+        // Check populations ArrayList is not null
+        if (populations == null || populations.isEmpty())
+        {
+            System.out.println("Error: Null or Empty Populations List provided!");
+            return;
+        }
+
+        //initiate String builder
+        StringBuilder sb = new StringBuilder();
+
+        //Initialize row string
+        String row = "";
+
+        // Print header
+        sb.append("# " + ((title != null && !title.isEmpty()) ? title : "Population Report") + "\n");
+
+        //If population type is Language we want different headers
+        if (populationType.equals("Language"))
+        {
+            sb.append("\n| " + populationType + " | Total Population | Population Percentage |\r\n");
+            sb.append("| --- | --- | --- |\r\n");
+        }
+        else
+        {
+            sb.append("\n| " + populationType + " | Total Population | Urban Population | Rural Population |\r\n");
+            sb.append("| --- | --- | --- | --- |\r\n");
+        }
+
+        // Loop over all populations in the list
+        for (Population p : populations)
+        {
+            // Continue if this population entry is null
+            if (p == null) continue;
+
+            //If population type is language we want different column name
+            row = (populationType.equals("Language")) ? ("| " + p.Name + " | " + (p.TotalPopulation != 0 ? p.TotalPopulation : "-") + " | " + p.PopulationPercentage  + " |\r\n")
+                    : ("| " + p.Name + " | " + (p.TotalPopulation != 0 ? p.TotalPopulation : "-") + " | " + (p.UrbanPopulation != 0 ? p.UrbanPopulation : "-") + " | " + (p.RuralPopulation != 0 ? p.RuralPopulation : "-") + "|\r\n");
+
+            // Add the Population variable to the StringBuilder
+            sb.append(row);
         }
         //Try creating reports directory and write string reader to file
         writeToFile(filename, sb);

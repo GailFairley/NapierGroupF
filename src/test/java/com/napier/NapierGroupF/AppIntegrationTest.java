@@ -470,4 +470,50 @@ public class AppIntegrationTest
             assertEquals(region, c.Country.Region);
         }
     }
+
+    /**
+     * Test for Population in cities and not in cities for each continent
+     */
+    @Test
+    void testGetPopulationInCitiesAndNotInCitiesForEachContinent()
+    {
+        //Get all Population in Cities and not in Cities for each Continent
+        ArrayList<Population> populations = app.getPopulationInCitiesAndNotInCitiesInContinents();
+        //Check if the returned list isn't null or empty
+        assertTrue( populations != null && populations.size() > 0);
+    }
+
+    /**
+     * Test for Population in cities and not in cities for each region
+     */
+    @Test
+    void testGetPopulationInCitiesAndNotInCitiesForEachRegion()
+    {
+        //Get all Population in Cities and not in Cities for each Region
+        ArrayList<Population> populations = app.getPopulationInCitiesAndNotInCitiesInRegions();
+        //Check if the returned list isn't null or empty
+        assertTrue( populations != null && populations.size() > 0);
+    }
+
+    /**
+     * Test for Population in cities and not in cities for each country
+     */
+    @Test
+    void testGetPopulationInCitiesAndNotInCitiesForEachCountry()
+    {
+        //Get all Population in Cities and not in Cities for each Country
+        ArrayList<Population> populations = app.getPopulationInCitiesAndNotInCitiesInCountries();
+        //Check if the returned list isn't null or empty
+        assertTrue( populations != null && populations.size() > 0);
+    }
+
+    /**
+     * Test of all Get Reports Methods
+     */
+    @Test
+    void testGetReports()
+    {
+        //Get and Display all Reports
+        app.getAndDisplayAllReports();
+    }
 }

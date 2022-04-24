@@ -25,24 +25,20 @@ public class Population
     public long TotalPopulation;
 
     /**
-     * The population of a Continent/Region/Country living in Cities
+     * The population of a Continent/Region/Country as a Percentage
      */
-    public long PopulationInCities;
+    public double PopulationPercentage;
 
     /**
-     * The population of a Continent/Region/Country living in Cities as a Percentage
+     * The population of a Continent/Region/Country living in Cities
      */
-    public double PercentageOfPopulationInCities;
+    public long UrbanPopulation;
 
     /**
      * The population of a Continent/Region/Country not living in Cities
      */
-    public long PopulationNotInCities;
+    public long RuralPopulation;
 
-    /**
-     * The population of a Continent/Region/Country not living in Cities as a Percentage
-     */
-    public double PercentageOfPopulationNotInCities;
 
     /**
      * Constructor with only Total Population

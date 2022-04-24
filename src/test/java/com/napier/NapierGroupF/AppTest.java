@@ -41,7 +41,7 @@ public class AppTest<T>
      * Test for outputCountries method when null countries list given
      */
     @Test
-    void outputCountriesTestNull()
+    void outputCountriesNullTest()
     {
         app.outputCountries(null, "country", "Title");
     }
@@ -50,7 +50,7 @@ public class AppTest<T>
      * Test for outputCountries method when an Empty countries list given
      */
     @Test
-    void outputCountriesTestEmpty()
+    void outputCountriesEmptyTest()
     {
         //Empty Country Arraylist
         app.outputCountries(new ArrayList<>(), "country", "Title");
@@ -60,7 +60,7 @@ public class AppTest<T>
      * Test for outputCountries method when the countries list contains a Null Country
      */
     @Test
-    void outputCountriesTestContainsNull()
+    void outputCountriesContainsNullTest()
     {
         //new Countries arraylist
         ArrayList<Country> countries = new ArrayList<Country>();
@@ -74,7 +74,7 @@ public class AppTest<T>
      * Test outputCountries with Empty City and Population for the Country
      */
     @Test
-    void outputCountriesTestEmptyCityPopulation()
+    void outputCountriesEmptyCityPopulationTest()
     {
         //Initialize Countries List
         ArrayList<Country> countries = new ArrayList<Country>();
@@ -98,7 +98,7 @@ public class AppTest<T>
      * Test outputCountries with Null City (capital) and Population for the Country
      */
     @Test
-    void outputCountriesTestNullCityPopulation()
+    void outputCountriesNullCityPopulationTest()
     {
         //Initialize Countries List
         ArrayList<Country> countries = new ArrayList<Country>();
@@ -143,7 +143,7 @@ public class AppTest<T>
      * Test outputCountries with null Filename and Title
      */
     @Test
-    void outputCountriesTestNullFileTitle()
+    void outputCountriesNullFileTitleTest()
     {
         //Initialize Countries List
         ArrayList<Country> countries = new ArrayList<Country>();
@@ -168,7 +168,7 @@ public class AppTest<T>
      * Test outputCountries with Empty Filename and Title
      */
     @Test
-    void outputCountriesTestEmptyFileTitle()
+    void outputCountriesEmptyFileTitleTest()
     {
         //Initialize Countries List
         ArrayList<Country> countries = new ArrayList<Country>();
@@ -194,7 +194,7 @@ public class AppTest<T>
      * Test for outputCities method when null cities list given
      */
     @Test
-    void outputCitiesTestNull()
+    void outputCitiesNullTest()
     {
         app.outputCities(null, "city", "Title");
     }
@@ -203,17 +203,17 @@ public class AppTest<T>
      * Test for outputCities method when an Empty cities list given
      */
     @Test
-    void outputCitiesTestEmpty()
+    void outputCitiesEmptyTest()
     {
         //Empty Country Arraylist
         app.outputCities(new ArrayList<>(), "city", "Title");
     }
 
     /**
-     * Test for outputCities method when the cities list contains an Empty City
+     * Test for outputCities method when the cities list contains a Null City
      */
     @Test
-    void outputCitiesTestContainsNull()
+    void outputCitiesContainsNullCityTest()
     {
         //new Cities arraylist
         ArrayList<City> cities = new ArrayList<>();
@@ -224,10 +224,24 @@ public class AppTest<T>
     }
 
     /**
+     * Test for outputCities method when the cities list contains an Empty City
+     */
+    @Test
+    void outputCitiesContainsEmptyCityTest()
+    {
+        //new Cities arraylist
+        ArrayList<City> cities = new ArrayList<>();
+        //add null city
+        cities.add(new City());
+
+        app.outputCities(cities, "city", "Title");
+    }
+
+    /**
      * Test outputCities with Empty country and Population
      */
     @Test
-    void outputCitiesTestEmptyCountryPopulation()
+    void outputCitiesEmptyCountryPopulationTest()
     {
         //Initialize Cities List
         ArrayList<City> cities = new ArrayList<>();
@@ -249,7 +263,7 @@ public class AppTest<T>
      * Test outputCities with Null Country and Population for the City
      */
     @Test
-    void outputCitiesTestNullCountryPopulation()
+    void outputCitiesNullCountryPopulationTest()
     {
         //Initialize Cities List
         ArrayList<City> cities = new ArrayList<>();
@@ -268,7 +282,7 @@ public class AppTest<T>
      * Test outputCities with normal input
      */
     @Test
-    void outputCitiesTestNormal()
+    void outputCitiesNormalTest()
     {
         //Initialize Cities List
         ArrayList<City> cities = new ArrayList<>();
@@ -290,7 +304,7 @@ public class AppTest<T>
      * Test outputCities with null Filename and Title
      */
     @Test
-    void outputCitiesTestNullFileTitle()
+    void outputCitiesNullFileTitleTest()
     {
         //Initialize Cities List
         ArrayList<City> cities = new ArrayList<>();
@@ -312,7 +326,7 @@ public class AppTest<T>
      * Test outputCities with empty Filename and Title
      */
     @Test
-    void outputCitiesTestEmptyFileTitle()
+    void outputCitiesEmptyFileTitleTest()
     {
         //Initialize Cities List
         ArrayList<City> cities = new ArrayList<>();
@@ -330,9 +344,105 @@ public class AppTest<T>
         app.outputCities(cities, "", "");
     }
 
+    //Output Population tests
     /**
-     * Test writeToFile with null Filename and String Builder
+     * Test outputPopulation with null populations list
      */
+    @Test
+    void outputPopulationNullListTest()
+    {
+        app.outputPopulation(null, "population", "Title", "Region");
+    }
+
+    /**
+     * Test outputPopulation with Empty populations list
+     */
+    @Test
+    void outputPopulationEmptyListTest()
+    {
+        app.outputPopulation(null, "population", "Title", "Region");
+    }
+
+    /**
+     * Test outputPopulation with null population entry in the list
+     */
+    @Test
+    void outputPopulationNullPopulationTest()
+    {
+        //Initialize Population List
+        ArrayList<Population> populations = new ArrayList<>();
+        //add null population
+        populations.add(null);
+
+        app.outputPopulation(populations, "population", "Title", "Continent");
+    }
+
+    /**
+     * Test outputPopulation with empty population entry in the list
+     */
+    @Test
+    void outputPopulationEmptyPopulationTest()
+    {
+        //Initialize Population List
+        ArrayList<Population> populations = new ArrayList<>();
+        //add empty population
+        populations.add(new Population());
+
+        app.outputPopulation(populations, "population", "Title", "Continent");
+    }
+
+    /**
+     * Test outputPopulation with normal input
+     */
+    @Test
+    void outputPopulationNormalTest()
+    {
+        //Initialize Population List and Map the Test Result set
+        ArrayList<Population> populations = new ArrayList<>();
+        app.mapPopulation(populationContinentResultSet(), populations);
+
+        app.outputPopulation(populations, "population", "Title", "Continent");
+    }
+
+    /**
+     * Test outputPopulation with null Filename and Title
+     */
+    @Test
+    void outputPopulationNullFileTitleTest()
+    {
+        //Initialize Population List and Map the Test Result set
+        ArrayList<Population> populations = new ArrayList<>();
+        app.mapPopulation(populationContinentResultSet(), populations);
+
+        app.outputPopulation(populations, null, null, "Continent");
+    }
+
+    /**
+     * Test outputPopulation with empty Filename and Title
+     */
+    @Test
+    void outputPopulationEmptyFileTitleTest()
+    {
+        //Initialize Population List and Map the Test Result set
+        ArrayList<Population> populations = new ArrayList<>();
+        app.mapPopulation(populationContinentResultSet(), populations);
+
+        app.outputPopulation(populations, "", "", "Continent");
+    }
+
+    /**
+     * Output Population Language population type test
+     */
+    @Test
+    void outputPopulationLanguageTest()
+    {
+        //Initialize Population List and Map the Test Result set
+        ArrayList<Population> populations = new ArrayList<>();
+        app.mapPopulation(populationLanguageResultSet(), populations);
+
+        app.outputPopulation(populations, "population", "Title", "Language");
+    }
+
     @Test
     void writeToFileTestNull()
     {
@@ -494,6 +604,16 @@ public class AppTest<T>
     }
 
     /**
+     * Test for mapCountries when the Result set is Null
+     */
+    @Test
+    void mapCountriesNullResultSetTest()
+    {
+        //mapCities Test
+        app.mapCountries(new ArrayList<>(), null);
+    }
+
+    /**
      * Test for mapCities normal
      */
     @Test
@@ -524,7 +644,77 @@ public class AppTest<T>
     }
 
     /**
-     * Method to populate mock Result set
+     * Test for mapCities when the Result set is Null
+     */
+    @Test
+    void mapCitiesNullResultSetTest()
+    {
+        //mapCities Test
+        app.mapCities(null, new ArrayList<>());
+    }
+
+    /**
+     * Test for mapPopulation normal - Continent
+     */
+    @Test
+    void mapPopulationContinentTest()
+    {
+        //mapPopulation Test
+        app.mapPopulation(populationContinentResultSet(), new ArrayList<>());
+    }
+
+    /**
+     * Test for mapPopulation normal - Region
+     */
+    @Test
+    void mapPopulationRegionTest()
+    {
+        //mapPopulation Test
+        app.mapPopulation(populationRegionResultSet(), new ArrayList<>());
+    }
+
+    /**
+     * Test for mapPopulation normal - Country
+     */
+    @Test
+    void mapPopulationCountryTest()
+    {
+        //mapPopulation Test
+        app.mapPopulation(populationCountryResultSet(), new ArrayList<>());
+    }
+
+    /**
+     * Test for mapPopulation when Population Arraylist is null
+     */
+    @Test
+    void mapPopulationNullListTest()
+    {
+        //mapPopulation Test
+        app.mapPopulation(populationCountryResultSet(), null);
+    }
+
+    /**
+     * Test for mapPopulation when the Result set is empty
+     */
+    @Test
+    void mapPopulationEmptyResultSetTest()
+    {
+        //mapPopulation Test
+        app.mapPopulation(new MockResultSet("population"), new ArrayList<>());
+    }
+
+    /**
+     * Test for mapPopulation when the Result set is Null
+     */
+    @Test
+    void mapPopulationNullResultSetTest()
+    {
+        //mapPopulation Test
+        app.mapPopulation(null, new ArrayList<>());
+    }
+
+    /**
+     * Method to populate mock Result set for Country
      * @return Mock Result set
      */
     ResultSet countryResultSet()
@@ -545,7 +735,7 @@ public class AppTest<T>
     }
 
     /**
-     * Method to populate mock Result set
+     * Method to populate mock Result set for City
      * @return Mock Result set
      */
     ResultSet cityResultSet()
@@ -560,6 +750,81 @@ public class AppTest<T>
         rs.addColumn("Population",  new Long[]{2500000L, 125000000L, 38900000L, 4000000L, 160000000L, 89000000L, 180000000L, 20500000L});
         rs.addColumn("Name",  new String[]{"London", "Washington D.C", "Ottawa", "Canberra", "New Delhi", "Moscow", "Beijing", "Cape Town"});
         rs.addColumn("District",  new String[]{"London District", "Washington District", "Ottawa District", "Canberra District", "New Delhi District", "Moscow District", "Beijing District", "Cape Town District"});
+
+        //Return Mock Result set
+        return rs;
+    }
+
+    /**
+     * Method to populate mock Result set for Country population
+     * @return Mock Result set
+     */
+    ResultSet populationCountryResultSet()
+    {
+        //Initiate Mock Result set
+        var rs = new MockResultSet("countryPopulation");
+
+        //Add Mocked Population Columns
+        rs.addColumn("Name",  new String[]{"UK", "USA", "Canada", "Australia", "India", "Russia", "China", "South Africa"});
+        rs.addColumn("TotalPopulation",  new Long[]{2500000L, 125000000L, 38900000L, 4000000L, 160000000L, 89000000L, 180000000L, 20500000L});
+        rs.addColumn("UrbanPopulation",  new Long[]{2000000L, 120000000L, 30000000L, 2900000L, 100000000L, 80000000L, 100000000L, 20000000L});
+        rs.addColumn("RuralPopulation",  new Long[]{500000L, 5000000L, 8900000L, 1100000L, 60000000L, 9000000L, 80000000L, 500000L});
+
+        //Return Mock Result set
+        return rs;
+    }
+
+    /**
+     * Method to populate mock Result set for Region population
+     * @return Mock Result set
+     */
+    ResultSet populationRegionResultSet()
+    {
+        //Initiate Mock Result set
+        var rs = new MockResultSet("regionPopulation");
+
+        //Add Mocked Population Columns
+        rs.addColumn("Name",  new String[]{"Western Europe", "Caribbean", "Southern Europe", "Middle East", "British Islands", "Eastern Africa", "Southern and Central Asia", "South America"});
+        rs.addColumn("TotalPopulation",  new Long[]{25000000L, 121000000L, 39000000L, 4000000L, 180000000L, 90000000L, 190000000L, 20800000L});
+        rs.addColumn("UrbanPopulation",  new Long[]{20000000L, 120000000L, 30000000L, 3000000L, 100000000L, 80000000L, 100000000L, 20000000L});
+        rs.addColumn("RuralPopulation",  new Long[]{500000L, 1000000L, 9000000L, 1000000L, 80000000L, 10000000L, 90000000L, 800000L});
+
+        //Return Mock Result set
+        return rs;
+    }
+
+    /**
+     * Method to populate mock Result set for Continent population
+     * @return Mock Result set
+     */
+    ResultSet populationContinentResultSet()
+    {
+        //Initiate Mock Result set
+        var rs = new MockResultSet("continentPopulation");
+
+        //Add Mocked Population Columns
+        rs.addColumn("Name",  new String[]{"Asia", "Europe", "North America", "Africa", "Oceania", "South America"});
+        rs.addColumn("TotalPopulation",  new Long[]{35000000L, 125000000L, 40000000L, 4000000L, 180000000L, 90000000L});
+        rs.addColumn("UrbanPopulation",  new Long[]{30000000L, 120000000L, 29000000L, 3000000L, 100000000L, 80000000L});
+        rs.addColumn("RuralPopulation",  new Long[]{500000L, 5000000L, 11000000L, 1000000L, 80000000L, 10000000L});
+
+        //Return Mock Result set
+        return rs;
+    }
+
+    /**
+     * Method to populate mock Result set for Language population report
+     * @return Mock Result set
+     */
+    ResultSet populationLanguageResultSet()
+    {
+        //Initiate Mock Result set
+        var rs = new MockResultSet("languagePopulation");
+
+        //Add Mocked Population Columns
+        rs.addColumn("Name",  new String[]{"English", "Arabic", "Chinese", "Hindi", "Spanish"});
+        rs.addColumn("TotalPopulation",  new Long[]{35000000L, 125000000L, 40000000L, 4000000L, 180000000L});
+        rs.addColumn("Percentage",  new Integer[]{21, 9, 30, 24, 14});
 
         //Return Mock Result set
         return rs;
