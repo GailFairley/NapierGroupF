@@ -508,6 +508,18 @@ public class AppIntegrationTest
     }
 
     /**
+     * Test for Languages population Report
+     */
+    @Test
+    void testGetLanguagesPopulationReport()
+    {
+        //Get all Population in Cities and not in Cities for each Country
+        ArrayList<Population> populations = app.getPopulationOfLanguages();
+        //Check if the returned list isn't null or empty
+        assertTrue( populations != null && populations.size() > 0);
+    }
+
+    /**
      * Test of all Get Reports Methods
      */
     @Test

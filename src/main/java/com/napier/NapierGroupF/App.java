@@ -10,6 +10,8 @@
 package com.napier.NapierGroupF;
 
 //Imports
+import com.mysql.cj.util.StringUtils;
+
 import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileWriter;
@@ -315,6 +317,17 @@ public class App
         ArrayList<Population> getPopulationInCitiesAndNotInCitiesInCountries = getPopulationInCitiesAndNotInCitiesInRegions();
         //Output the report as a markdown file
         outputPopulation(getPopulationInCitiesAndNotInCitiesInCountries, "PopulationOfPeopleInCitiesAndNotInCitiesInCountries", title, "Country");
+
+        //Use Case 8
+        //26
+
+        //Use Case 9
+        //27
+        title = ("A Report for the number of people who speak the following languages (Chinese, English, Hindi, Spanish, Arabic) from the greatest number to smallest, including the percentage of the world population.");
+        //The number of people who speak the following languages (Chinese, English, Hindi, Spanish, Arabic) from the greatest number to smallest, including the percentage of the world population
+        ArrayList<Population> getPopulationOfLanguages = getPopulationOfLanguages();
+        //Output the report as a markdown file
+        outputPopulation(getPopulationOfLanguages, "LanguagesPopulationReport", title, "Language");
 
         //End
     }
@@ -1042,6 +1055,31 @@ public class App
                    + "ON tp.Name = up.UName ";
 
         //Get Report of The population of people living in cities, and people not living in cities in each country.
+        return getPopulation(sql);
+    }
+
+    /**
+     * A Report for the number of people who speak the following languages (Chinese, English, Hindi, Spanish, Arabic) from the greatest number to smallest, including the percentage of the world population.
+     * @return list of retrieved Population report from the database
+     */
+    public ArrayList<Population> getPopulationOfLanguages()
+    {
+        //Add string for the SQL statement
+        String sql = "SELECT Name, TotalPopulation, Round(TotalPopulation/total_population * 100,2) AS PopulationPercentage "
+                   + "FROM "
+                   + "    (SELECT Language AS Name, Round(SUM(people_speaking),0) AS TotalPopulation "
+                   + "    FROM "
+                   + "        (SELECT language, population / Percentage AS people_speaking "
+                   + "            FROM countrylanguage "
+                   + "            JOIN country ON countrylanguage.CountryCode = country.Code "
+                   + "            WHERE Language IN ('Hindi','English','Spanish','Chinese','Arabic') "
+                   + "        ) AS peeps_speak "
+                   + "    GROUP BY language "
+                   + "    ) AS ts "
+                   + "JOIN ( select sum(population) AS total_population FROM country) as tp "
+                   + "ORDER BY TotalPopulation desc";
+
+        //Get population language Report
         return getPopulation(sql);
     }
 
