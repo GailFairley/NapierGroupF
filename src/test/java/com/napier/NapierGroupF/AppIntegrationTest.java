@@ -3,7 +3,7 @@
  * Package: com.napier.NapierGroupF
  * User Created: Hamza Shabir
  * Date Created: 21/03/2022
- * Date Last Updated: 21/03/2022
+ * Date Last Updated: 24/04/2022
  * File Description: The App test java file which will have all the Integration tests for the App.java class.
  **/
 
@@ -469,5 +469,136 @@ public class AppIntegrationTest
         {
             assertEquals(region, c.Country.Region);
         }
+    }
+
+    /**
+     * Test for Population in cities and not in cities for each continent
+     */
+    @Test
+    void testGetPopulationInCitiesAndNotInCitiesForEachContinent()
+    {
+        //Get all Population in Cities and not in Cities for each Continent
+        ArrayList<Population> populations = app.getPopulationInCitiesAndNotInCitiesInContinents();
+        //Check if the returned list isn't null or empty
+        assertTrue( populations != null && populations.size() > 0);
+    }
+
+    /**
+     * Test for Population in cities and not in cities for each region
+     */
+    @Test
+    void testGetPopulationInCitiesAndNotInCitiesForEachRegion()
+    {
+        //Get all Population in Cities and not in Cities for each Region
+        ArrayList<Population> populations = app.getPopulationInCitiesAndNotInCitiesInRegions();
+        //Check if the returned list isn't null or empty
+        assertTrue( populations != null && populations.size() > 0);
+    }
+
+    /**
+     * Test for Population in cities and not in cities for each country
+     */
+    @Test
+    void testGetPopulationInCitiesAndNotInCitiesForEachCountry()
+    {
+        //Get all Population in Cities and not in Cities for each Country
+        ArrayList<Population> populations = app.getPopulationInCitiesAndNotInCitiesInCountries();
+        //Check if the returned list isn't null or empty
+        assertTrue( populations != null && populations.size() > 0);
+    }
+
+    /**
+     * Test for Languages population Report
+     */
+    @Test
+    void testGetLanguagesPopulationReport()
+    {
+        //Get all Population in Cities and not in Cities for each Country
+        ArrayList<Population> populations = app.getPopulationOfLanguages();
+        //Check if the returned list isn't null or empty
+        assertTrue( populations != null && populations.size() > 0);
+    }
+
+    /**
+     * Test for Total World Population
+     */
+    @Test
+    void testGetTotalWorldPopulation()
+    {
+        //Get Total World Population
+        Population p = app.getTotalPopulationOfWorld().get(0);
+        //Check if the returned value is greater than 0
+        assertTrue( p.TotalPopulation > 0);
+    }
+
+    /**
+     * Test for Total World Population
+     */
+    @Test
+    void testGetTotalContinentPopulation()
+    {
+        //Get Total Continent Population
+        Population p = app.getTotalPopulationOfContinent("Europe").get(0);
+        //Check if the returned value is greater than 0
+        assertTrue( p.TotalPopulation > 0);
+    }
+
+    /**
+     * Test for Total Region Population
+     */
+    @Test
+    void testGetTotalRegionPopulation()
+    {
+        //Get Total Region Population
+        Population p = app.getTotalPopulationOfRegion("Western Europe").get(0);
+        //Check if the returned value is greater than 0
+        assertTrue( p.TotalPopulation > 0 );
+    }
+
+    /**
+     * Test for Total Country Population
+     */
+    @Test
+    void testGetTotalCountryPopulation()
+    {
+        //Get Total Country Population
+        Population p = app.getTotalPopulationOfCountry("China").get(0);
+        //Check if the returned value is greater than 0
+        assertTrue( p.TotalPopulation > 0 );
+    }
+
+    /**
+     * Test for Total City Population
+     */
+    @Test
+    void testGetTotalCityPopulation()
+    {
+        //Get Total City Population
+        Population p = app.getTotalPopulationOfCity("London").get(0);
+        //Check if the returned value is greater than 0
+        assertTrue( p.TotalPopulation > 0 );
+    }
+
+    /**
+     * Test for Total District Population
+     */
+    @Test
+    void testGetTotalDistrictPopulation()
+    {
+        //Get Total District Population
+        Population p = app.getTotalPopulationOfDistrict("Ontario").get(0);
+        //Check if the returned value is greater than 0
+        assertTrue( p.TotalPopulation > 0 );
+    }
+
+
+    /**
+     * Test of all Get Reports Methods
+     */
+    @Test
+    void testGetReports()
+    {
+        //Get and Display all Reports
+        app.getAndDisplayAllReports();
     }
 }
