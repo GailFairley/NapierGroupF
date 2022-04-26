@@ -312,7 +312,7 @@ public class App
         //25
         title = ("25. The population of people living in cities, and people not living in cities in each country.");
         //The population of people living in cities, and people not living in cities in each country
-        ArrayList<Population> getPopulationInCitiesAndNotInCitiesInCountries = getPopulationInCitiesAndNotInCitiesInRegions();
+        ArrayList<Population> getPopulationInCitiesAndNotInCitiesInCountries = getPopulationInCitiesAndNotInCitiesInCountries();
         //Output the report as a markdown file
         outputPopulation(getPopulationInCitiesAndNotInCitiesInCountries, "PopulationOfPeopleInCitiesAndNotInCitiesInCountries", title, "Country", false);
 
