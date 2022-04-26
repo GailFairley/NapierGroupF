@@ -351,7 +351,7 @@ public class AppTest<T>
     @Test
     void outputPopulationNullListTest()
     {
-        app.outputPopulation(null, "population", "Title", "Region");
+        app.outputPopulation(null, "population", "Title", "Region", false);
     }
 
     /**
@@ -360,7 +360,8 @@ public class AppTest<T>
     @Test
     void outputPopulationEmptyListTest()
     {
-        app.outputPopulation(null, "population", "Title", "Region");
+        var populations = new ArrayList<Population>();
+        app.outputPopulation(populations, "population", "Title", "Region", false);
     }
 
     /**
@@ -374,7 +375,7 @@ public class AppTest<T>
         //add null population
         populations.add(null);
 
-        app.outputPopulation(populations, "population", "Title", "Continent");
+        app.outputPopulation(populations, "population", "Title", "Continent", false);
     }
 
     /**
@@ -388,7 +389,7 @@ public class AppTest<T>
         //add empty population
         populations.add(new Population());
 
-        app.outputPopulation(populations, "population", "Title", "Continent");
+        app.outputPopulation(populations, "population", "Title", "Continent", false);
     }
 
     /**
@@ -401,7 +402,7 @@ public class AppTest<T>
         ArrayList<Population> populations = new ArrayList<>();
         app.mapPopulation(populationContinentResultSet(), populations);
 
-        app.outputPopulation(populations, "population", "Title", "Continent");
+        app.outputPopulation(populations, "population", "Title", "Continent", false);
     }
 
     /**
@@ -414,7 +415,7 @@ public class AppTest<T>
         ArrayList<Population> populations = new ArrayList<>();
         app.mapPopulation(populationContinentResultSet(), populations);
 
-        app.outputPopulation(populations, null, null, "Continent");
+        app.outputPopulation(populations, null, null, "Continent", false);
     }
 
     /**
@@ -427,7 +428,7 @@ public class AppTest<T>
         ArrayList<Population> populations = new ArrayList<>();
         app.mapPopulation(populationContinentResultSet(), populations);
 
-        app.outputPopulation(populations, "", "", "Continent");
+        app.outputPopulation(populations, "", "", "Continent", false);
     }
 
     /**
@@ -440,23 +441,20 @@ public class AppTest<T>
         ArrayList<Population> populations = new ArrayList<>();
         app.mapPopulation(populationLanguageResultSet(), populations);
 
-        app.outputPopulation(populations, "population", "Title", "Language");
+        app.outputPopulation(populations, "population", "Title", "Language", false);
     }
 
     /**
-     * Test for Is population type valid
+     * Output Population Language population type test
      */
     @Test
-    void isPopulationTypeValidTest()
+    void outputPopulationOnlyTotalPopulationTest()
     {
-        //Test with null population type
-        assertFalse(app.isPopulationType(null));
+        //Initialize Population List and Map the Test Result set
+        ArrayList<Population> populations = new ArrayList<>();
+        app.mapPopulation(populationLanguageResultSet(), populations);
 
-        //Test with empty population type
-        assertFalse(app.isPopulationType(""));
-
-        //Test with valid population type
-        assertTrue(app.isPopulationType("Region"));
+        app.outputPopulation(populations, "population", "Title", "Language", true);
     }
 
     @Test

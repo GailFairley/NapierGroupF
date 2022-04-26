@@ -16,7 +16,6 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.sql.*;
 import java.util.ArrayList;
-import java.util.Arrays;
 
 
 /**
@@ -301,21 +300,21 @@ public class App
         //The population of people living in cities, and people not living in cities in each continent
         ArrayList<Population> getPopulationInCitiesAndNotInCitiesInContinents = getPopulationInCitiesAndNotInCitiesInContinents();
         //Output the report as a markdown file
-        outputPopulation(getPopulationInCitiesAndNotInCitiesInContinents, "PopulationOfPeopleInCitiesAndNotInCitiesInContinents", title, "Continent");
+        outputPopulation(getPopulationInCitiesAndNotInCitiesInContinents, "PopulationOfPeopleInCitiesAndNotInCitiesInContinents", title, "Continent", false);
 
         //24
         title = ("24. The population of people living in cities, and people not living in cities in each region.");
         //The population of people living in cities, and people not living in cities in each region
         ArrayList<Population> getPopulationInCitiesAndNotInCitiesInRegions = getPopulationInCitiesAndNotInCitiesInRegions();
         //Output the report as a markdown file
-        outputPopulation(getPopulationInCitiesAndNotInCitiesInRegions, "PopulationOfPeopleInCitiesAndNotInCitiesInRegions", title, "Region");
+        outputPopulation(getPopulationInCitiesAndNotInCitiesInRegions, "PopulationOfPeopleInCitiesAndNotInCitiesInRegions", title, "Region", false);
 
         //25
         title = ("25. The population of people living in cities, and people not living in cities in each country.");
         //The population of people living in cities, and people not living in cities in each country
         ArrayList<Population> getPopulationInCitiesAndNotInCitiesInCountries = getPopulationInCitiesAndNotInCitiesInRegions();
         //Output the report as a markdown file
-        outputPopulation(getPopulationInCitiesAndNotInCitiesInCountries, "PopulationOfPeopleInCitiesAndNotInCitiesInCountries", title, "Country");
+        outputPopulation(getPopulationInCitiesAndNotInCitiesInCountries, "PopulationOfPeopleInCitiesAndNotInCitiesInCountries", title, "Country", false);
 
         //Use Case 8
         //26
@@ -323,42 +322,42 @@ public class App
         //The total population of the world
         ArrayList<Population> getTotalPopulationOfWorld = getTotalPopulationOfWorld();
         //Output the report as a markdown file
-        outputPopulation(getTotalPopulationOfWorld, "TotalPopulationOfWorld", title, "World");
+        outputPopulation(getTotalPopulationOfWorld, "TotalPopulationOfWorld", title, "World", true);
 
         //27
         title = ("27. The total Population of a given continent.");
         //The total population of a given continent
         ArrayList<Population> getTotalPopulationOfContinent = getTotalPopulationOfContinent("Europe");
         //Output the report as a markdown file
-        outputPopulation(getTotalPopulationOfContinent, "TotalPopulationOfContinent", title, "Continent");
+        outputPopulation(getTotalPopulationOfContinent, "TotalPopulationOfContinent", title, "Continent", true);
 
         //28
         title = ("28. The total Population of a given region.");
         //The total population of a given region
         ArrayList<Population> getTotalPopulationOfRegion = getTotalPopulationOfRegion("Western Europe");
         //Output the report as a markdown file
-        outputPopulation(getTotalPopulationOfRegion, "TotalPopulationOfRegion", title, "Region");
+        outputPopulation(getTotalPopulationOfRegion, "TotalPopulationOfRegion", title, "Region", true);
 
         //29
         title = ("29. The total Population of a given country.");
         //The total population of a given country
         ArrayList<Population> getTotalPopulationOfCountry = getTotalPopulationOfCountry("China");
         //Output the report as a markdown file
-        outputPopulation(getTotalPopulationOfCountry, "TotalPopulationOfCountry", title, "Country");
+        outputPopulation(getTotalPopulationOfCountry, "TotalPopulationOfCountry", title, "Country", true);
 
         //30
         title = ("30. The total Population of a given city.");
         //The total population of a given city
         ArrayList<Population> getTotalPopulationOfCity = getTotalPopulationOfCity("Glasgow");
         //Output the report as a markdown file
-        outputPopulation(getTotalPopulationOfCity, "TotalPopulationOfCity", title, "City");
+        outputPopulation(getTotalPopulationOfCity, "TotalPopulationOfCity", title, "City", true);
 
         //31
         title = ("31. The total Population of a given district.");
         //The total population of a given district
         ArrayList<Population> getTotalPopulationOfDistrict = getTotalPopulationOfDistrict("Ontario");
         //Output the report as a markdown file
-        outputPopulation(getTotalPopulationOfDistrict, "TotalPopulationOfDistrict", title, "District");
+        outputPopulation(getTotalPopulationOfDistrict, "TotalPopulationOfDistrict", title, "District", true);
 
         //Use Case 9
         //32
@@ -366,7 +365,7 @@ public class App
         //The number of people who speak the following languages (Chinese, English, Hindi, Spanish, Arabic) from the greatest number to smallest, including the percentage of the world population
         ArrayList<Population> getPopulationOfLanguages = getPopulationOfLanguages();
         //Output the report as a markdown file
-        outputPopulation(getPopulationOfLanguages, "LanguagesPopulationReport", title, "Language");
+        outputPopulation(getPopulationOfLanguages, "LanguagesPopulationReport", title, "Language", false);
 
         //End
     }
@@ -555,7 +554,7 @@ public class App
                 Population population = new Population();
 
                 //Try Finding the column and if not found set to default
-                population.Name = findColumn(rset,"Country") ? rset.getString("Country") : "-";//Country/Region/Continent Name
+                population.Name = findColumn(rset,"Name") ? rset.getString("Name") : "-";//Country/Region/Continent Name
                 population.TotalPopulation = findColumn(rset, "TotalPopulation") ? rset.getLong("TotalPopulation") : 0;//Total Population
                 population.UrbanPopulation = findColumn(rset, "UrbanPopulation") ? rset.getLong("UrbanPopulation") : 0;//Urban Population
                 population.RuralPopulation = findColumn(rset, "RuralPopulation") ? rset.getLong("RuralPopulation") : 0;//Rural Population
@@ -1292,7 +1291,7 @@ public class App
      * @param populations The list of populations to Display
      * @param title The title of the report
      */
-    public void outputPopulation(ArrayList<Population> populations, String filename, String title, String populationType)
+    public void outputPopulation(ArrayList<Population> populations, String filename, String title, String populationType, boolean showOnlyTotalPopulation)
     {
         // Check populations ArrayList is not null
         if (populations == null || populations.isEmpty())
@@ -1316,7 +1315,7 @@ public class App
             sb.append("\n| " + populationType + " | Total Population | Population Percentage |\r\n");
             sb.append("| --- | --- | --- |\r\n");
         }
-        else if (isPopulationType(populationType))
+        else if (showOnlyTotalPopulation)
         {
             sb.append("\n| " + populationType + " | Total Population |\r\n");
             sb.append("| --- | --- |\r\n");
@@ -1335,7 +1334,7 @@ public class App
 
             //If population type is language we want different column name
             row = (populationType.equals("Language")) ? ("| " + p.Name + " | " + (p.TotalPopulation != 0 ? p.TotalPopulation : "-") + " | " + p.PopulationPercentage  + " |\r\n")
-                    : (isPopulationType(populationType)) ? ("| " + p.Name + " | " + (p.TotalPopulation != 0 ? p.TotalPopulation : "-") + " |\r\n")
+                    : (showOnlyTotalPopulation) ? ("| " + p.Name + " | " + (p.TotalPopulation != 0 ? p.TotalPopulation : "-") + " |\r\n")
                     : ("| " + p.Name + " | " + (p.TotalPopulation != 0 ? p.TotalPopulation : "-") + " | " + (p.UrbanPopulation != 0 ? p.UrbanPopulation : "-") + " | " + (p.RuralPopulation != 0 ? p.RuralPopulation : "-") + "|\r\n");
 
             // Add the Population variable to the StringBuilder
@@ -1343,21 +1342,6 @@ public class App
         }
         //Try creating reports directory and write string reader to file
         writeToFile(filename, sb);
-    }
-
-    /**
-     * Check if the Population type is valid
-     * @param populationType The population type to check
-     * @return boolean true if population type is in the list of valid population types
-     */
-    public boolean isPopulationType(String populationType)
-    {
-        if (populationType != null && !populationType.isEmpty())
-        {
-            String[] values = {"World", "Country", "City","Continent","Region","District"};
-            return Arrays.asList(values).contains(populationType);
-        }
-        return false;
     }
 
     /**
