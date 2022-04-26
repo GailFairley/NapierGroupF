@@ -196,7 +196,7 @@ public class AppTest<T>
     @Test
     void outputCitiesNullTest()
     {
-        app.outputCities(null, "city", "Title");
+        app.outputCities(null, "city", "Title", false);
     }
 
     /**
@@ -206,7 +206,7 @@ public class AppTest<T>
     void outputCitiesEmptyTest()
     {
         //Empty Country Arraylist
-        app.outputCities(new ArrayList<>(), "city", "Title");
+        app.outputCities(new ArrayList<>(), "city", "Title", false);
     }
 
     /**
@@ -220,7 +220,7 @@ public class AppTest<T>
         //add null city
         cities.add(null);
 
-        app.outputCities(cities, "city", "Title");
+        app.outputCities(cities, "city", "Title", false);
     }
 
     /**
@@ -234,7 +234,7 @@ public class AppTest<T>
         //add null city
         cities.add(new City());
 
-        app.outputCities(cities, "city", "Title");
+        app.outputCities(cities, "city", "Title", false);
     }
 
     /**
@@ -256,7 +256,7 @@ public class AppTest<T>
         c.Population = new Population();
         cities.add(c);
 
-        app.outputCities(cities, "city", "Title");
+        app.outputCities(cities, "city", "Title", false);
     }
 
     /**
@@ -275,7 +275,7 @@ public class AppTest<T>
         //Null Country + Population
         cities.add(c);
 
-        app.outputCities(cities, "city", "Title");
+        app.outputCities(cities, "city", "Title", false);
     }
 
     /**
@@ -297,7 +297,7 @@ public class AppTest<T>
         c.Population = new Population(692683);
         cities.add(c);
 
-        app.outputCities(cities, "city", "Title");
+        app.outputCities(cities, "city", "Title", false);
     }
 
     /**
@@ -319,7 +319,7 @@ public class AppTest<T>
         c.Population = new Population(692683);
         cities.add(c);
 
-        app.outputCities(cities, null, null);
+        app.outputCities(cities, null, null, true);
     }
 
     /**
@@ -341,7 +341,7 @@ public class AppTest<T>
         c.Population = new Population(692683);
         cities.add(c);
 
-        app.outputCities(cities, "", "");
+        app.outputCities(cities, "", "", true);
     }
 
     //Output Population tests
