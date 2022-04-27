@@ -1282,8 +1282,8 @@ public class App
 
         // Print header
         sb.append("# " + ((title != null && !title.isEmpty()) ? title : "City Report") + "\n");
-        sb.append("\n| " + name + " | Country |" + (isCapital ? "" : " District ") + "| Population |\r\n");
-        sb.append("| --- | --- | --- | --- |\r\n");
+        sb.append("\n| " + name + " | Country |" + (isCapital ? "" : " District |") + " Population |\r\n");
+        sb.append("| --- | --- |" + (isCapital ? "" : " --- |") + " --- |\r\n");
 
         // Loop over all cities in the list
         for (City c : cities)
