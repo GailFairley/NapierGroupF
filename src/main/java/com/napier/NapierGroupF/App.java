@@ -3,7 +3,7 @@
  * Package: com.napier.NapierGroupF
  * User Created: Josh McQueen
  * Date Created: 06/02/2022
- * Date Last Updated: 24/04/2022
+ * Date Last Updated: 27/04/2022
  * File Description: The main java file which will connect to db and display all the relevant reports.
  **/
 
@@ -557,7 +557,9 @@ public class App
                 population.Name = findColumn(rset,"Name") ? rset.getString("Name") : "-";//Country/Region/Continent Name
                 population.TotalPopulation = findColumn(rset, "TotalPopulation") ? rset.getLong("TotalPopulation") : 0;//Total Population
                 population.UrbanPopulation = findColumn(rset, "UrbanPopulation") ? rset.getLong("UrbanPopulation") : 0;//Urban Population
+                population.UrbanPopulationPercentage = findColumn(rset, "UrbanPopulationPercentage") ? rset.getDouble("UrbanPopulationPercentage") : 0;//Urban Population Percentage
                 population.RuralPopulation = findColumn(rset, "RuralPopulation") ? rset.getLong("RuralPopulation") : 0;//Rural Population
+                population.RuralPopulationPercentage = findColumn(rset, "RuralPopulationPercentage") ? rset.getDouble("RuralPopulationPercentage") : 0;//Rural Population Percentage
                 population.PopulationPercentage = findColumn(rset, "PopulationPercentage") ? rset.getDouble("PopulationPercentage") : 0;//Population Percentage
 
                 //Add population to populations arraylist
@@ -1037,16 +1039,19 @@ public class App
     public ArrayList<Population> getPopulationInCitiesAndNotInCitiesInContinents()
     {
         //Add string for the SQL statement
-        String sql = "SELECT Name, TotalPopulation, UrbanPopulation, TotalPopulation - UrbanPopulation as RuralPopulation "
+        String sql = "SELECT Name, TotalPopulation, UrbanPopulation, UrbanPopulationPercentage, RuralPopulation, 100 - UrbanPopulationPercentage AS RuralPopulationPercentage "
                    + "FROM "
-                   + "(SELECT Continent AS Name, SUM(population) as TotalPopulation FROM country "
-                   + "GROUP BY Continent) as tp "
+                   + "(SELECT tp.continent AS Name, TotalPopulation, UrbanPopulation,Round(UrbanPopulation/TotalPopulation * 100,2) AS UrbanPopulationPercentage, TotalPopulation - UrbanPopulation AS RuralPopulation "
+                   + "FROM "
+                   + "(SELECT continent, SUM(population) AS TotalPopulation "
+                   + "FROM country "
+                   + "GROUP BY continent) AS tp "
                    + "JOIN "
-                   + "(SELECT Continent, SUM(city.population) as UrbanPopulation "
-                   + " FROM country "
-                   + " JOIN city on country.code = city.countrycode "
-                   + " GROUP BY Continent) as up "
-                   + "ON tp.Name = up.Continent ";
+                   + "(SELECT continent, SUM(city.population) AS UrbanPopulation "
+                   + "FROM country "
+                   + "JOIN city on country.code = city.countrycode "
+                   + "GROUP BY Continent) AS up "
+                   + "ON tp.Continent = up.Continent ) AS continentpopdivide";
 
         //Get Report of The population of people living in cities, and people not living in cities in each continent.
         return getPopulation(sql);
@@ -1059,16 +1064,19 @@ public class App
     public ArrayList<Population> getPopulationInCitiesAndNotInCitiesInRegions()
     {
         //Add string for the SQL statement
-        String sql = "SELECT Name, TotalPopulation, UrbanPopulation, TotalPopulation - UrbanPopulation as RuralPopulation "
+        String sql = "SELECT Name, TotalPopulation, UrbanPopulation, UrbanPopulationPercentage, RuralPopulation, 100 - UrbanPopulationPercentage AS RuralPopulationPercentage "
                    + "FROM "
-                   + "(SELECT Region AS Name, SUM(population) as TotalPopulation FROM country "
-                   + "GROUP BY Region) as tp "
+                   + "(SELECT tp.region AS Name, TotalPopulation, UrbanPopulation,Round(UrbanPopulation/TotalPopulation * 100,2) AS UrbanPopulationPercentage, TotalPopulation - UrbanPopulation AS RuralPopulation "
+                   + "FROM "
+                   + "(SELECT region, SUM(population) AS TotalPopulation "
+                   + "FROM country "
+                   + "GROUP BY region) AS tp "
                    + "JOIN "
-                   + "(SELECT Region, SUM(city.population) as UrbanPopulation "
-                   + " FROM country "
-                   + " JOIN city on country.code = city.countrycode "
-                   + " GROUP BY Region) as up "
-                   + "ON tp.Name = up.Region ";
+                   + "(SELECT region, SUM(city.population) AS UrbanPopulation "
+                   + "FROM country "
+                   + "JOIN city on country.code = city.countrycode "
+                   + "GROUP BY region) AS up "
+                   + "ON tp.region = up.region ) AS continentpopdivide";
 
         //Get Report of The population of people living in cities, and people not living in cities in each region.
         return getPopulation(sql);
@@ -1081,16 +1089,19 @@ public class App
     public ArrayList<Population> getPopulationInCitiesAndNotInCitiesInCountries()
     {
         //Add string for the SQL statement
-        String sql = "SELECT Name, TotalPopulation, UrbanPopulation, TotalPopulation - UrbanPopulation as RuralPopulation "
+        String sql = "SELECT Name, TotalPopulation, UrbanPopulation, UrbanPopulationPercentage, RuralPopulation, 100 - UrbanPopulationPercentage AS RuralPopulationPercentage "
                    + "FROM "
-                   + "(SELECT country.name AS Name, SUM(population) as TotalPopulation FROM country "
-                   + "GROUP BY country.name) as tp "
+                   + "(SELECT tp.Name AS Name, TotalPopulation, UrbanPopulation,Round(UrbanPopulation/TotalPopulation * 100,2) AS UrbanPopulationPercentage, TotalPopulation - UrbanPopulation AS RuralPopulation "
+                   + "FROM "
+                   + "(SELECT country.Name, SUM(population) AS TotalPopulation "
+                   + "FROM country "
+                   + "GROUP BY country.Name) AS tp "
                    + "JOIN "
-                   + "(SELECT country.name AS UName, SUM(city.population) as UrbanPopulation "
-                   + " FROM country "
-                   + " JOIN city on country.code = city.countrycode "
-                   + " GROUP BY country.name) as up "
-                   + "ON tp.Name = up.UName ";
+                   + "(SELECT country.Name, SUM(city.population) AS UrbanPopulation "
+                   + "FROM country "
+                   + "JOIN city on country.code = city.countrycode "
+                   + "GROUP BY country.Name) AS up "
+                   + "ON tp.Name = up.Name ) AS continentpopdivide";
 
         //Get Report of The population of people living in cities, and people not living in cities in each country.
         return getPopulation(sql);
@@ -1271,7 +1282,7 @@ public class App
 
         // Print header
         sb.append("# " + ((title != null && !title.isEmpty()) ? title : "City Report") + "\n");
-        sb.append("\n| " + name + " | Country |" + (isCapital ? "" : " District |") + " Population |\r\n");
+        sb.append("\n| " + name + " | Country |" + (isCapital ? "" : " District ") + "| Population |\r\n");
         sb.append("| --- | --- | --- | --- |\r\n");
 
         // Loop over all cities in the list
@@ -1324,8 +1335,8 @@ public class App
         }
         else
         {
-            sb.append("\n| " + populationType + " | Total Population | Urban Population | Rural Population |\r\n");
-            sb.append("| --- | --- | --- | --- |\r\n");
+            sb.append("\n| " + populationType + " | Total Population | Urban Population | Urban Population Percentage | Rural Population | Rural Population Percentage |\r\n");
+            sb.append("| --- | --- | --- | --- | --- | --- |\r\n");
         }
 
         // Loop over all populations in the list
@@ -1335,9 +1346,9 @@ public class App
             if (p == null) continue;
 
             //If population type is language we want different column name
-            row = (populationType.equals("Language")) ? ("| " + p.Name + " | " + (p.TotalPopulation != 0 ? p.TotalPopulation : "-") + " | " + p.PopulationPercentage  + " |\r\n")
+            row = (populationType.equals("Language")) ? ("| " + p.Name + " | " + (p.TotalPopulation != 0 ? p.TotalPopulation : "-") + " | " + p.PopulationPercentage + "%" + " |\r\n")
                     : (showOnlyTotalPopulation) ? ("| " + p.Name + " | " + (p.TotalPopulation != 0 ? p.TotalPopulation : "-") + " |\r\n")
-                    : ("| " + p.Name + " | " + (p.TotalPopulation != 0 ? p.TotalPopulation : "-") + " | " + (p.UrbanPopulation != 0 ? p.UrbanPopulation : "-") + " | " + (p.RuralPopulation != 0 ? p.RuralPopulation : "-") + "|\r\n");
+                    : ("| " + p.Name + " | " + (p.TotalPopulation != 0 ? p.TotalPopulation : "-") + " | " + (p.UrbanPopulation != 0 ? p.UrbanPopulation : "-") + " | " + (p.UrbanPopulationPercentage != 0 ? p.UrbanPopulationPercentage + "%" : "-") + " | " +  (p.RuralPopulation != 0 ? p.RuralPopulation : "-") + " | " +  (p.RuralPopulationPercentage != 0 ? p.RuralPopulationPercentage + "%" : "-") + "|\r\n");
 
             // Add the Population variable to the StringBuilder
             sb.append(row);
