@@ -1,6 +1,6 @@
-## NapierGroupF
+# NapierGroupF
 
-GitHub Repository for Coursework
+### GitHub Repository for Coursework
 
 Master Build Status:
 
