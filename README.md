@@ -22,7 +22,7 @@ Code Cov:
 
 [![codecov](https://codecov.io/gh/GailFairley/NapierGroupF/branch/master/graph/badge.svg?token=JOLN7FFQ9W)](https://codecov.io/gh/GailFairley/NapierGroupF)
 
-Requirements Met:
+## Requirements Met:
 
 | Use Case | ID | Name | Met | Link |
 | --- | --- | --- | --- | --- |
@@ -51,7 +51,7 @@ Requirements Met:
 | 7 | 23 | The population of people living in cities, and people not living in cities in each continent. | ✅  | [LINK](https://github.com/GailFairley/NapierGroupF/blob/reports/PopulationOfPeopleInCitiesAndNotInCitiesInContinents.md) |
 | 7 | 24 | The population of people living in cities, and people not living in cities in each region. | ✅  | [LINK](https://github.com/GailFairley/NapierGroupF/blob/reports/PopulationOfPeopleInCitiesAndNotInCitiesInRegions.md) |
 | 7 | 25 | The population of people living in cities, and people not living in cities in each country. | ✅  | [LINK](https://github.com/GailFairley/NapierGroupF/blob/reports/PopulationOfPeopleInCitiesAndNotInCitiesInCountries.md) |
-| 8 | 26 | The total Population of the world. | ✅  |  |
+| 8 | 26 | The total Population of the world. | ✅  | [LINK](https://github.com/GailFairley/NapierGroupF/blob/reports/TotalPopulationOfWorld.md) |
 | 8 | 27 | The total Population of a given continent. | ✅  | [LINK](https://github.com/GailFairley/NapierGroupF/blob/reports/TotalPopulationOfContinent.md) |
 | 8 | 28 | The total Population of a given region. | ✅  | [LINK](https://github.com/GailFairley/NapierGroupF/blob/reports/TotalPopulationOfRegion.md) |
 | 8 | 29 | The total Population of a given country. | ✅  | [LINK](https://github.com/GailFairley/NapierGroupF/blob/reports/TotalPopulationOfCountry.md) |
