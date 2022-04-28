@@ -4,11 +4,11 @@
 
 Master Build Status:
 
-[![Master](https://github.com/GailFairley/NapierGroupF/actions/workflows/main.yml/badge.svg?branch=master)](https://github.com/GailFairley/NapierGroupF/actions/workflows/main.yml)
+[![Master](https://github.com/GailFairley/NapierGroupF/actions/workflows/main.yml/badge.svg?branch=master)](https://github.com/GailFairley/NapierGroupF/actions/workflows/main.yml?query=branch%3Amaster)
 
 Develop Build Status:
 
-[![Develop](https://github.com/GailFairley/NapierGroupF/actions/workflows/main.yml/badge.svg?branch=develop)](https://github.com/GailFairley/NapierGroupF/actions/workflows/main.yml)
+[![Develop](https://github.com/GailFairley/NapierGroupF/actions/workflows/main.yml/badge.svg?branch=develop)](https://github.com/GailFairley/NapierGroupF/actions/workflows/main.yml?query=branch%3Adevelop)
 
 License:
 
