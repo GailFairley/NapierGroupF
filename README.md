@@ -4,11 +4,11 @@
 
 Master Build Status:
 
-![workflow](https://github.com/GailFairley/NapierGroupF/actions/workflows/main.yml/badge.svg)
+[![Master](https://github.com/GailFairley/NapierGroupF/actions/workflows/main.yml/badge.svg?branch=master)](https://github.com/GailFairley/NapierGroupF/actions/workflows/main.yml)
 
 Develop Build Status:
 
-![develop](https://img.shields.io/github/workflow/status/GailFairley/NapierGroupF/Coursework/develop?style=plastic)
+[![Develop](https://github.com/GailFairley/NapierGroupF/actions/workflows/main.yml/badge.svg?branch=develop)](https://github.com/GailFairley/NapierGroupF/actions/workflows/main.yml)
 
 License:
 
